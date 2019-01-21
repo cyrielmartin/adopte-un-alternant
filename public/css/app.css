@@ -1,0 +1,15 @@
+.card {
+    margin:2rem;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing:-0.1rem;
+    word-spacing: -0.4rem;
+    text-transform: capitalize;
+}
+
+.footer-button {
+    margin: 1rem;
+}

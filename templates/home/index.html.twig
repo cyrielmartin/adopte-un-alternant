@@ -1,20 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Adopte un alternant{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
+<div class="row justify-content-around">
+  <div class="col-md-6">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Vous êtes un candidat ?</h5>
+        <a href="#" class="btn btn-primary">Cliquez ici</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Vous êtes une entreprise ?</h5>
+        <a href="#" class="btn btn-primary">Cliquez ici</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row justify-content-center">
+     <div class="col-md-6">
+        <div class="card text-center">
+          <div class="card-body">
+        <h5 class="card-title">Vous voulez en savoir plus sur l'alternance ?</h5>
+        <a href="#" class="btn btn-primary">Cliquez ici</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="card text-center">
+            <div class="card-header">
+                Le témoignage de la semaine
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                <p>"L'alternance, c'est ma vie, c'est mon essence"</p>
+                <footer class="blockquote-footer">Roger Alternation</footer>
+                </blockquote>
+            </div> 
+        </div>
+    </div>
+</div>
+
 </div>
 {% endblock %}
