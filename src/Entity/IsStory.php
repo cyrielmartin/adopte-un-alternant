@@ -21,6 +21,11 @@ class IsStory
      */
     private $witness_name;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Article", cascade={"persist", "remove"})
+     */
+    private $article;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class IsStory
     public function setWitnessName(string $witness_name): self
     {
         $this->witness_name = $witness_name;
+
+        return $this;
+    }
+
+    public function getArticle(): ?Article
+    {
+        return $this->article;
+    }
+
+    public function setArticle(?Article $article): self
+    {
+        $this->article = $article;
 
         return $this;
     }

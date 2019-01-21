@@ -22,3 +22,6 @@ Création des Entity suivante :
 
 Fichier de migration **sans** relation : \
 `Version20190121174649.php`
+
+Fichier de migration **avec** relation : \
+`Version20190121184658.php`

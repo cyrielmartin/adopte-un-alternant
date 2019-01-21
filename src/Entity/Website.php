@@ -26,6 +26,11 @@ class Website
      */
     private $link;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VisitCard", inversedBy="websites")
+     */
+    private $visitCard;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Website
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getVisitCard(): ?VisitCard
+    {
+        return $this->visitCard;
+    }
+
+    public function setVisitCard(?VisitCard $visitCard): self
+    {
+        $this->visitCard = $visitCard;
 
         return $this;
     }

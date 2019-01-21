@@ -41,6 +41,21 @@ class Formation
      */
     private $endedAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VisitCard", inversedBy="formations")
+     */
+    private $visitCard;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AwardLevel", inversedBy="formations")
+     */
+    private $awardLevel;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\School", inversedBy="formations")
+     */
+    private $school;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +117,42 @@ class Formation
     public function setEndedAt(?\DateTimeInterface $endedAt): self
     {
         $this->endedAt = $endedAt;
+
+        return $this;
+    }
+
+    public function getVisitCard(): ?VisitCard
+    {
+        return $this->visitCard;
+    }
+
+    public function setVisitCard(?VisitCard $visitCard): self
+    {
+        $this->visitCard = $visitCard;
+
+        return $this;
+    }
+
+    public function getAwardLevel(): ?AwardLevel
+    {
+        return $this->awardLevel;
+    }
+
+    public function setAwardLevel(?AwardLevel $awardLevel): self
+    {
+        $this->awardLevel = $awardLevel;
+
+        return $this;
+    }
+
+    public function getSchool(): ?School
+    {
+        return $this->school;
+    }
+
+    public function setSchool(?School $school): self
+    {
+        $this->school = $school;
 
         return $this;
     }

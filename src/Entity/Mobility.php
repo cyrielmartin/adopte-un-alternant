@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,16 @@ class Mobility
      * @ORM\Column(type="string", length=5)
      */
     private $departmentCode;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", inversedBy="mobilities")
+     */
+    private $visitCards;
+
+    public function __construct()
+    {
+        $this->visitCards = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +63,32 @@ class Mobility
     public function setDepartmentCode(string $departmentCode): self
     {
         $this->departmentCode = $departmentCode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|VisitCard[]
+     */
+    public function getVisitCards(): Collection
+    {
+        return $this->visitCards;
+    }
+
+    public function addVisitCard(VisitCard $visitCard): self
+    {
+        if (!$this->visitCards->contains($visitCard)) {
+            $this->visitCards[] = $visitCard;
+        }
+
+        return $this;
+    }
+
+    public function removeVisitCard(VisitCard $visitCard): self
+    {
+        if ($this->visitCards->contains($visitCard)) {
+            $this->visitCards->removeElement($visitCard);
+        }
 
         return $this;
     }

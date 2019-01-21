@@ -41,6 +41,11 @@ class Experience
      */
     private $description;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VisitCard", inversedBy="experiences")
+     */
+    private $visitCard;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +107,18 @@ class Experience
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getVisitCard(): ?VisitCard
+    {
+        return $this->visitCard;
+    }
+
+    public function setVisitCard(?VisitCard $visitCard): self
+    {
+        $this->visitCard = $visitCard;
 
         return $this;
     }

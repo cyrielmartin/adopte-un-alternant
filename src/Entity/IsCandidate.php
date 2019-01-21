@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,6 +27,21 @@ class IsCandidate
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $picture;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\IsRecruiter", inversedBy="isCandidates")
+     */
+    private $isRecruiters;
+
+    public function __construct()
+    {
+        $this->isRecruiters = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -51,6 +68,44 @@ class IsCandidate
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|IsRecruiter[]
+     */
+    public function getIsRecruiters(): Collection
+    {
+        return $this->isRecruiters;
+    }
+
+    public function addIsRecruiter(IsRecruiter $isRecruiter): self
+    {
+        if (!$this->isRecruiters->contains($isRecruiter)) {
+            $this->isRecruiters[] = $isRecruiter;
+        }
+
+        return $this;
+    }
+
+    public function removeIsRecruiter(IsRecruiter $isRecruiter): self
+    {
+        if ($this->isRecruiters->contains($isRecruiter)) {
+            $this->isRecruiters->removeElement($isRecruiter);
+        }
 
         return $this;
     }

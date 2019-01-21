@@ -21,6 +21,11 @@ class IsApprenticeship
      */
     private $academicPace;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Formation", cascade={"persist", "remove"})
+     */
+    private $formation;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class IsApprenticeship
     public function setAcademicPace(string $academicPace): self
     {
         $this->academicPace = $academicPace;
+
+        return $this;
+    }
+
+    public function getFormation(): ?Formation
+    {
+        return $this->formation;
+    }
+
+    public function setFormation(?Formation $formation): self
+    {
+        $this->formation = $formation;
 
         return $this;
     }

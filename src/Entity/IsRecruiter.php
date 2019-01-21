@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,21 @@ class IsRecruiter
      * @ORM\Column(type="text", nullable=true)
      */
     private $emailCustom;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\IsCandidate", mappedBy="isRecruiters")
+     */
+    private $isCandidates;
+
+    public function __construct()
+    {
+        $this->isCandidates = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +102,46 @@ class IsRecruiter
     public function setEmailCustom(?string $emailCustom): self
     {
         $this->emailCustom = $emailCustom;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|IsCandidate[]
+     */
+    public function getIsCandidates(): Collection
+    {
+        return $this->isCandidates;
+    }
+
+    public function addIsCandidate(IsCandidate $isCandidate): self
+    {
+        if (!$this->isCandidates->contains($isCandidate)) {
+            $this->isCandidates[] = $isCandidate;
+            $isCandidate->addIsRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIsCandidate(IsCandidate $isCandidate): self
+    {
+        if ($this->isCandidates->contains($isCandidate)) {
+            $this->isCandidates->removeElement($isCandidate);
+            $isCandidate->removeIsRecruiter($this);
+        }
 
         return $this;
     }

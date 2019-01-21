@@ -26,6 +26,11 @@ class Additional
      */
     private $content;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\VisitCard", inversedBy="additionals")
+     */
+    private $visitCard;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Additional
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getVisitCard(): ?VisitCard
+    {
+        return $this->visitCard;
+    }
+
+    public function setVisitCard(?VisitCard $visitCard): self
+    {
+        $this->visitCard = $visitCard;
 
         return $this;
     }
