@@ -11,21 +11,52 @@
 				<div class="card-body">
 					<h5 class="card-title">Ils recherchent:</h5>
                     <ul>
+                        <select class="custom-select  mt-3" >
+                            <option selected>Trier les candidats selon:</option>
+                            <option value="1">Compétences</option>
+                            <option value="2">Diplôme</option>
+                            <option value="3">Ville</option>
+                        </select>
                     {% for visitCard in visitCards %}
+                        {% if visitCard.adopted == 0 %}
+                            {% if visitCard.visibilityChoice == 0 %}
+                                <li class="card text-center font-weight-bold">Anonyme 
+                                    <span class="text-danger">à adopter</span>
+                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                </li>
+                            {% elseif visitCard.visibilityChoice == 1 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
+                                    <span class="text-danger">à adopter</span>
+                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                </li>
 
-                        {% if visitCard.visibilityChoice == 0 %}
-                            <li class="card text-left">Anonyme:
-                                <p>{{visitCard.about}}</p>
-                            </li>
-                        {% elseif visitCard.visibilityChoice == 1 %}
-                            <li class="card text-left">{{visitCard.isCandidate.user.firstname}}:
-                                 <p>{{visitCard.about}}</p>
-                            </li>
+                            {% else %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}
+                                    <span class="text-danger">à adopter</span>
+                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                </li>
+                            {% endif %}
 
-                        {% else %}
-                            <li class="card text-left">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}:
-                                <p>{{visitCard.about}}</p>
-                            </li>
+                        {% elseif visitCard.adopted == 1 %}
+                            
+                            {% if visitCard.visibilityChoice == 0 %}
+                                <li class="card text-center font-weight-bold">Anonyme 
+                                    <span class="text-success">déjà adopté</span>
+                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                </li>
+                            {% elseif visitCard.visibilityChoice == 1 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
+                                    <span class="text-success">déjà adopté</span>
+                                    <p class ="font-weight-light">{{visitCard.about}}</p>
+                                </li>
+
+                            {% else %}
+                                <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
+                                    <span class="text-success">déjà adopté</span>
+                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                </li>
+                            {% endif %}
+
                         {% endif %}
 
 

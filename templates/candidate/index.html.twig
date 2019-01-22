@@ -17,10 +17,10 @@
                         {% if visitCard.visibilityChoice == 0 %}
 
                         {% elseif visitCard.visibilityChoice == 1 %}
-                        <li class="card text-left">{{visitCard.isCandidate.user.firstname}}</li>
+                        <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}}</li>
 
                         {% else %}
-                        <li class="card text-left">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}</li>
+                        <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}</li>
 
                         {% endif %}
 
