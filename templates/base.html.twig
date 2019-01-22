@@ -50,13 +50,14 @@
         {% block body %}{% endblock %}
 
     {# Footer #}
-    <nav class="navbar navbar-light bg-light justify-content-center">
-        <form class="form-inline">
-            <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button>
-            <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button>
-        </form>
-    </nav>
-
+    <footer>
+        <nav class="navbar footer fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button>
+                <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button>
+            </form>
+        </nav>
+    </footer>
         {% block javascripts %}{% endblock %}
 
         <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">

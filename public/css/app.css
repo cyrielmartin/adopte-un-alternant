@@ -1,6 +1,7 @@
 body {
-    background-color: #F69C6F;
+    margin-bottom: 7rem;
 }
+
 
 .card {
     margin:2rem;
@@ -16,4 +17,8 @@ body {
 
 .footer-button {
     margin: 1rem;
+}
+
+.home-block {
+   background-color:rgba(255, 180, 135, 0.5);
 }
