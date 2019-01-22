@@ -1,20 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CandidateController!{% endblock %}
+{% block title %}Je suis une entreprise{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	{#bloc synthèse du profil et boc ils ont vu votre profil#}
+	
+		<div class="col-md-12">
+			<div class="card text-center shadow home-choice mt-3">
+				<div class="card-body">
+					<h5 class="card-title">Ils recherchent</h5>
+                    <ul>
+                    {% for userCandidate in users %}
+                        {% if userCandidate.role.id == 3 %}
+                    
+                        <li>{{userCandidate.firstname}}</li>
+                        {% else %}
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+						<a href="#" class="btn btn-light">Voir plus</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="card text-center shadow home-choice mt-3">
+				<div class="card-body">
+					<h5 class="card-title">En savoir plus sur l'alternance</h5>
+						<a href="#" class="btn btn-light">Voir</a>
+				</div>
+			</div>
+		</div>
+	
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/src/Controller/CandidateController.php'|file_link(0) }}">src/Controller/CandidateController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/templates/candidate/index.html.twig'|file_link(0) }}">templates/candidate/index.html.twig</a></code></li>
-    </ul>
+	{#bloc expérience et boc en savoir plus sur l'alternance#}
+	
+		<div class="col-md-12">
+			<div class="card text-center shadow home-choice mt-3">
+				<div class="card-body">
+					<h5 class="card-title">Ils témoignent.....</h5>
+						<a href="#" class="btn btn-light">Voir</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12 ">
+			<div class="card text-center shadow home-choice mt-3 mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Inscription</h5>
+						<a href="#" class="btn btn-light">Cliquez ici</a>
+				</div>
+			</div>
+		</div>
+	
+
+   
+
 </div>
+
 {% endblock %}
