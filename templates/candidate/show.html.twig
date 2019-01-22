@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Je suis une entreprise{% endblock %}
+
+{% block body %}
+<div class="container">
+
+	
+		<div class="col-md-12">
+			<div class="card text-center shadow home-choice mt-3">
+				<div class="card-body">
+					<h5 class="card-title">Ils recherchent:</h5>
+                    <ul>
+                    {% for visitCard in visitCards %}
+
+                        {% if visitCard.visibilityChoice == 0 %}
+                            <li class="card text-left">Anonyme:
+                                <p>{{visitCard.about}}</p>
+                            </li>
+                        {% elseif visitCard.visibilityChoice == 1 %}
+                            <li class="card text-left">{{visitCard.isCandidate.user.firstname}}:
+                                 <p>{{visitCard.about}}</p>
+                            </li>
+
+                        {% else %}
+                            <li class="card text-left">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}:
+                                <p>{{visitCard.about}}</p>
+                            </li>
+                        {% endif %}
+
+
+                    {% endfor %}
+                    
+                    </ul>
+						<a href="{{ path('entreprise_index') }}" class="btn btn-light">Retour</a>
+				</div>
+			</div>
+		</div>
+		
+</div>
+
+{% endblock %}

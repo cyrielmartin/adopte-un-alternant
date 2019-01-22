@@ -10,17 +10,25 @@
 		<div class="col-md-12">
 			<div class="card text-center shadow home-choice mt-3">
 				<div class="card-body">
-					<h5 class="card-title">Ils recherchent</h5>
+					<h5 class="card-title">Ils recherchent:</h5>
                     <ul>
-                    {% for userCandidate in users %}
-                        {% if userCandidate.role.id == 3 %}
-                    
-                        <li>{{userCandidate.firstname}}</li>
+                    {% for visitCard in visitCards %}
+
+                        {% if visitCard.visibilityChoice == 0 %}
+
+                        {% elseif visitCard.visibilityChoice == 1 %}
+                        <li class="card text-left">{{visitCard.isCandidate.user.firstname}}</li>
+
                         {% else %}
+                        <li class="card text-left">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}</li>
+
                         {% endif %}
+
+
                     {% endfor %}
+                    
                     </ul>
-						<a href="#" class="btn btn-light">Voir plus</a>
+						<a href="{{ path('candidates_list') }}" class="btn btn-light">Voir plus</a>
 				</div>
 			</div>
 		</div>
