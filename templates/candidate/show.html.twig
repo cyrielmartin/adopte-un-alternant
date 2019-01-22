@@ -21,18 +21,18 @@
                         {% if visitCard.adopted == 0 %}
                             {% if visitCard.visibilityChoice == 0 %}
                                 <li class="card text-center font-weight-bold">Anonyme 
-                                    <span class="text-danger">à adopter</span>
+                                    <span class="text-danger">Orphelin</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
                             {% elseif visitCard.visibilityChoice == 1 %}
                                 <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
-                                    <span class="text-danger">à adopter</span>
+                                    <span class="text-danger">Orphelin</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
 
                             {% else %}
                                 <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}
-                                    <span class="text-danger">à adopter</span>
+                                    <span class="text-danger">Orphelin</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
                             {% endif %}
@@ -41,18 +41,18 @@
                             
                             {% if visitCard.visibilityChoice == 0 %}
                                 <li class="card text-center font-weight-bold">Anonyme 
-                                    <span class="text-success">déjà adopté</span>
+                                    <span class="text-success">Déjà adopté</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
                             {% elseif visitCard.visibilityChoice == 1 %}
                                 <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
-                                    <span class="text-success">déjà adopté</span>
+                                    <span class="text-success">Déjà adopté</span>
                                     <p class ="font-weight-light">{{visitCard.about}}</p>
                                 </li>
 
                             {% else %}
                                 <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
-                                    <span class="text-success">déjà adopté</span>
+                                    <span class="text-success">Déjà adopté</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
                             {% endif %}
