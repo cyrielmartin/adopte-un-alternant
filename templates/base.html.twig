@@ -20,7 +20,10 @@
 
     {# Navbar header #}
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="{{path('home')}}"><img src="{{ asset('docs/assets/adopte.png') }}" width="40" height="40"/> Adopte un alternant</a>
+        <a class="navbar-brand" href="{{path('home')}}">
+            <img src="{{ asset('docs/assets/adopte.png') }}" width="40" height="40" class="pr-1"/> 
+            Adopte un alternant
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -51,7 +54,7 @@
 
     {# Footer #}
     <footer>
-        <nav class="navbar footer fixed-bottom navbar-light bg-light justify-content-center">
+        <nav class="navbar footer navbar-light bg-light justify-content-center">
             <form class="form-inline">
                 <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button>
                 <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button>

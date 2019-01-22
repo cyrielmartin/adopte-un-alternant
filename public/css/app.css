@@ -1,11 +1,48 @@
+html {
+    height: 100%;
+}
 body {
-    margin-bottom: 7rem;
+    height: 80%;
 }
 
-
-.card {
-    margin:2rem;
+.home-choice {
+    height: 100%;
 }
+
+.recruiter {
+    background-image: url('/docs/assets/recruiter.png');
+    background-position: center;
+    background-size: contain ;
+    background-repeat: no-repeat;
+    margin-bottom: 5rem;
+    color: darkgrey;
+}
+
+.candidate {
+    background-image: url('/docs/assets/candidate.png');
+    background-size: contain ;
+    background-repeat: no-repeat;
+    margin-bottom: 5rem;
+    color: darkgrey;
+}
+
+.recruiter:hover,
+.candidate:hover {
+    background-color: rgb(245, 244, 244);
+    text-decoration: none;
+    color:grey;
+}
+
+.recruiter p,
+.candidate p {
+    background-color: white;
+}
+
+.recruiter:hover p,
+.candidate:hover p {
+    background-color: rgb(245, 244, 244);
+}
+
 
 .navbar-brand {
     font-size: 2rem;
@@ -22,3 +59,4 @@ body {
 .home-block {
    background-color:rgba(255, 180, 135, 0.5);
 }
+
