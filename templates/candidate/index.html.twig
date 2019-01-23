@@ -50,20 +50,20 @@
                                     
                                     {% if visitCard.visibilityChoice == 1 %}
                                         <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}}
-                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                             <span class="text-success">Déjà adopté</span>
                                             <p class ="font-weight-light">{{visitCard.about}}</p>
                                         </li>
                                     {% elseif visitCard.visibilityChoice == 2 %}
                                         <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}}
-                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                             <span class="text-success">Déjà adopté</span>
                                             <p class ="font-weight-light">{{visitCard.about}}</p>
                                         </li>
 
                                     {% else %}
                                         <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
-                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                             <span class="text-success">Déjà adopté</span>
                                             <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                         </li>
