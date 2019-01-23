@@ -19,39 +19,45 @@
                         </select>
                     {% for visitCard in visitCards %}
                         {% if visitCard.adopted == 0 %}
-                            {% if visitCard.visibilityChoice == 0 %}
-                                <li class="card text-center font-weight-bold">Anonyme 
-                                    <span class="text-danger">Orphelin</span>
+                            {% if visitCard.visibilityChoice == 1 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}} 
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                    <span class="text-danger">En recherche</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
-                            {% elseif visitCard.visibilityChoice == 1 %}
-                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
-                                    <span class="text-danger">Orphelin</span>
+                            {% elseif visitCard.visibilityChoice == 2 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.picture}}
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                    <span class="text-danger">En recherche</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
 
                             {% else %}
-                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}
-                                    <span class="text-danger">Orphelin</span>
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} {{visitCard.isCandidate.picture}}
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                    <span class="text-danger">En recherche</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
                             {% endif %}
 
                         {% elseif visitCard.adopted == 1 %}
                             
-                            {% if visitCard.visibilityChoice == 0 %}
-                                <li class="card text-center font-weight-bold">Anonyme 
+                            {% if visitCard.visibilityChoice == 1 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}}
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                     <span class="text-success">Déjà adopté</span>
-                                    <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                    <p class ="font-weight-light">{{visitCard.about}}</p>
                                 </li>
-                            {% elseif visitCard.visibilityChoice == 1 %}
-                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} 
+                            {% elseif visitCard.visibilityChoice == 2 %}
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}}
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                     <span class="text-success">Déjà adopté</span>
                                     <p class ="font-weight-light">{{visitCard.about}}</p>
                                 </li>
 
                             {% else %}
-                                <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
+                                <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
+                                    <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
                                     <span class="text-success">Déjà adopté</span>
                                     <p class ="font-weight-light text-left">{{visitCard.about}}</p>
                                 </li>
