@@ -2,18 +2,24 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ArticleRepository;
+use App\Repository\IsStoryRepository;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog", name="blog")
+     * @Route("/editorial", name="editorial")
      */
-    public function index()
+    public function show(ArticleRepository $articleRepo, IsStoryRepository $storyRepo)
     {
-        return $this->render('blog/index.html.twig', [
-            'controller_name' => 'BlogController',
+        $articles = $articleRepo->findBy(['isStory' => 0], ['listOrder'=> 'ASC']);
+        $stories = $storyRepo->findAll();
+
+        return $this->render('blog/editorial.html.twig', [
+            'articles' => $articles,
+            'stories' => $stories,
         ]);
     }
 }

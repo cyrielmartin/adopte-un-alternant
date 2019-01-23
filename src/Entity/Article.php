@@ -53,6 +53,16 @@ class Article
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isStory;
+
+    /**
+     * @ORM\Column(type="string", length=250)
+     */
+    private $slug;
+
 
     public function getId(): ?int
     {
@@ -139,6 +149,30 @@ class Article
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getIsStory(): ?bool
+    {
+        return $this->isStory;
+    }
+
+    public function setIsStory(bool $isStory): self
+    {
+        $this->isStory = $isStory;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

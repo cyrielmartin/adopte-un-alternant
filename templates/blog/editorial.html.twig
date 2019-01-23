@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page éditoriale{% endblock %}
+
+{% block body %}
+
+<div class="col-12 col-md-8  mx-auto my-3">
+
+    <div class="card">
+        <div class="card-header">
+            <h2 class="h5 mb-0 text-center text-secondary">
+                Tous nos articles
+            </h2>
+        </div>
+        {% for article in articles %}
+            <div class="card-body border-bottom" id="{{ article.slug }}">
+                <h3 class="h6 font-weight-bold text-center mb-4"> 
+                    {{ article.title }} 
+                </h3>
+
+                <p>
+                    {{ article.content }}
+                </p>
+
+                <div class="text-secondary font-italic">
+                    Ecrit par {{ article.user.firstname }} {{ article.user.lastname }} 
+                    le {{ article.publishedAt|date('m/d/y') }} 
+                    à {{ article.publishedAt|date('H:m') }}.
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="h5 mb-0 text-center text-secondary">
+                Tous les témoignages de nos utilisateurs
+            </h3>
+        </div>
+        {% for story in stories %}
+        <div class="card-body border-bottom" id="{{ story.article.slug }}">
+            <h3 class="h6 font-weight-bold text-center mb-4"> 
+                {{ story.article.title }} 
+            </h3>
+
+            <p>
+                {{ story.article.content }}
+            </p>
+
+            <div class="text-secondary font-italic">
+                Témoignage de {{ story.witnessName }}. <br>
+                Ecrit le {{ story.article.publishedAt|date('m/d/y') }} 
+                à {{ story.article.publishedAt|date('H:m') }}.
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <a href="#" class=" h5 d-block text-center text-secondary">
+                Inscrivez vous
+            </a>
+        </div>
+    </div>
+
+</div>
+
+    
+{% endblock %}
