@@ -98,7 +98,7 @@
                             {% for article in articles %}
                                 {#{% if article.isStory == 0 %}#}
                             {#à modifier=> id par le slug quand on aura le slug#}
-                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                <a href="{{path('editorial')}}#{{article.slug}}" class="btn btn-light  col-md-12  mt-3 mb-3">
                                     
                                     {{article.title}}
                                     
