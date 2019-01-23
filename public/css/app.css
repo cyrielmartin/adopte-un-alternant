@@ -44,7 +44,6 @@ body {
     background-color: rgb(245, 244, 244);
 }
 
-
 .navbar-brand {
     font-size: 2rem;
     font-weight: bold;
@@ -61,3 +60,6 @@ body {
    background-color:rgba(255, 180, 135, 0.5);
 }
 
+.connected-ul {
+    margin-right: 7.5rem;
+}

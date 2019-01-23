@@ -21,7 +21,7 @@
     {# Navbar header #}
     <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="{{path('home')}}">
-            <img src="{{ asset('docs/assets/adopte.png') }}" width="40" height="40" class="pr-1"/> 
+            <img class="d-none d-sm-inline" src="{{ asset('docs/assets/adopte.png') }}" width="40" height="40" class="pr-1"/> 
             Adopte un alternant
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,18 +47,28 @@
 
             <ul class="navbar-nav justify-content-end">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <li class="nav-item active">
+            <ul class="nav justify-content-end connected-ul">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Mon profil</a>
+                                <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{path('logout')}}">Se déconnecter</a>
+                        </div>
+                </li>
+            </ul>
+                {# <li class="nav-item active">
                     <a class="nav-link" href="#"> 
                         <i class="fas fa-user"></i> 
                         Mon Profil
                     </a>
-                </li>
-                <li class="nav-item active">
+                </li> #}
+                {# <li class="nav-item active">
                     <a class="nav-link" href="{{ path('logout')}}"> 
                         <i class="fas fa-sign-in-alt"></i> 
                         Deconnexion
                     </a>
-                </li>
+                </li> #}
                 {% else %}
                     <li class="nav-item active">
                         <a class="nav-link" href="{{ path('login')}}">
