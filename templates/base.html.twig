@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>
 
-            {% block title %}{% endblock %}
+        {% block title %}{% endblock %}
 
         </title>
         <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" rel="stylesheet">
@@ -31,21 +31,49 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Infos</a>
+                    <a class="nav-link" href="#">
+                        Infos
+                    </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Le témoignage de la semaine</a>
+                    <a class="nav-link" href="#">
+                        Le témoignage de la semaine
+                    </a>
                 </li>
             </ul>
+
             <ul class="navbar-nav mr-auto">
             </ul>
+
             <ul class="navbar-nav justify-content-end">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+                    <a class="nav-link" href="#"> 
+                        <i class="fas fa-user"></i> 
+                        Mon Profil
+                    </a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Inscription</a>
+                    <a class="nav-link" href="{{ path('logout')}}"> 
+                        <i class="fas fa-sign-in-alt"></i> 
+                        Deconnexion
+                    </a>
                 </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ path('login')}}">
+                            <i class="fas fa-sign-in-alt"></i> 
+                            Connexion
+                        </a>
+                    </li>
+
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-plus"></i> 
+                            Inscription
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
