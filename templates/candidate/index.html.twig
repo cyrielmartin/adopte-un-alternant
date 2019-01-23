@@ -3,12 +3,13 @@
 {% block title %}Je suis une entreprise{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container ">
+    <div class="row justify-content home-choice mt-3">
 
 	
 {#Essai 2 truc déroulant#}
     
-        <div class="col-md-12">
+        <div class=" col-md-12 ">
     
 			<button class=" btn btn-light col-md-12 shadow mt-3 " data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseList"> Ils recherchent une alternance
                         
@@ -80,32 +81,43 @@
             </button>
 	    </div>
     
-
-
-
 		<div class="col-md-12">
 			
                 
-                    <button class="btn btn-light  col-md-12 shadow  mt-3" data-toggle="collapse" href="#collapseAlternance" role="button" aria-expanded="false" aria-controls="collapseAlternance">
+            <button class="btn btn-light  col-md-12 shadow  mt-3" data-toggle="collapse" href="#collapseAlternance" role="button" aria-expanded="false" aria-controls="collapseAlternance">
                             En savoir plus sur l'alternance
                     
              
-                        <div class="collapse" id="collapseAlternance">
+                <div class="collapse" id="collapseAlternance">
                            
             
-                                <div class="card text-center mt-3">
-                                    <div class="card-body">boubloublou
-                                    </div>
-		                        </div>
+                    <div class="card text-center mt-3">
+                        <div class="card-body">
                             
+                                    
+                            {% for article in articles %}
+                                {#{% if article.isStory == 0 %}#}
+                            {#à modifier=> id par le slug quand on aura le slug#}
+                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                    
+                                    {{article.title}}
+                                    
+                                </a>
+                                {#{% else %}
+                                {% endif %}#}
+
+
+
+                            {% endfor %}
+                            
+
                         </div>
-                    </button>
+		            </div>
+                            
+                </div>
+            </button>
 		
 		</div>
-
-
-
-
 
 	
 
@@ -120,7 +132,21 @@
                            
             
                                 <div class="card text-center mt-3">
-                                    <div class="card-body">coucoulou cou bululu
+                                    <div class="card-body">
+                                   {% for article in articles %}
+                                {#{% if article.isStory == 1 %}#}
+                            {#à modifier=> id par le slug quand on aura le slug#}
+                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                    
+                                    {{article.title}}
+                                    
+                                </a>
+                                {#{% else %}
+                                {% endif %}#}
+
+
+
+                            {% endfor %}
                                     </div>
 		                        </div>
                             
@@ -131,18 +157,18 @@
 
 
 
-		<div class="col-md-12">
+		<div class="col-md-12 ">
 			
                 
-                    <button href="#" class="btn btn-light  col-md-12 shadow  mt-3 mb-3">
+                    <a href="#" class="btn btn-light  col-md-12 shadow  mt-3 mb-3">
                             Inscrivez-vous
                     
-                    </button>
+                    </a>
 		
 		</div>
 
    
-
+    </div>
 </div>
 
 {% endblock %}
