@@ -1,20 +1,174 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CandidateController!{% endblock %}
+{% block title %}Je suis une entreprise{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container ">
+    <div class="row justify-content home-choice mt-3">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	
+{#Essai 2 truc déroulant#}
+    
+        <div class=" col-md-12 ">
+    
+			<button class=" btn btn-light col-md-12 shadow mt-3 " data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseList"> Ils recherchent une alternance
+                        
+                            <div class="collapse" id="collapseList">
+                               
+                            
+                            <ul>
+                                <select class="custom-select  mt-3" >
+                                    <option selected>Trier les candidats selon:</option>
+                                    <option value="1">Compétences</option>
+                                    <option value="2">Diplôme</option>
+                                    <option value="3">Ville</option>
+                                </select>
+                            {% for visitCard in visitCards %}
+                                {% if visitCard.adopted == 0 %}
+                                    {% if visitCard.visibilityChoice == 1 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}} 
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% elseif visitCard.visibilityChoice == 2 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.picture}}
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/src/Controller/CandidateController.php'|file_link(0) }}">src/Controller/CandidateController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/projet/Candidats-alternance-O-clock/templates/candidate/index.html.twig'|file_link(0) }}">templates/candidate/index.html.twig</a></code></li>
-    </ul>
+                                    {% else %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} {{visitCard.isCandidate.picture}}
+                                            <p><img src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% endif %}
+
+                                {% elseif visitCard.adopted == 1 %}
+                                    
+                                    {% if visitCard.visibilityChoice == 1 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light">{{visitCard.about}}</p>
+                                        </li>
+                                    {% elseif visitCard.visibilityChoice == 2 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light">{{visitCard.about}}</p>
+                                        </li>
+
+                                    {% else %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% endif %}
+
+                                {% endif %}
+
+
+                            {% endfor %}
+                            
+                            </ul>   
+                                
+                            </div>
+                
+            </button>
+	    </div>
+    
+		<div class="col-md-12">
+			
+                
+            <button class="btn btn-light  col-md-12 shadow  mt-3" data-toggle="collapse" href="#collapseAlternance" role="button" aria-expanded="false" aria-controls="collapseAlternance">
+                            En savoir plus sur l'alternance
+                    
+             
+                <div class="collapse" id="collapseAlternance">
+                           
+            
+                    <div class="card text-center mt-3">
+                        <div class="card-body">
+                            
+                                    
+                            {% for article in articles %}
+                                {#{% if article.isStory == 0 %}#}
+                            {#à modifier=> id par le slug quand on aura le slug#}
+                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                    
+                                    {{article.title}}
+                                    
+                                </a>
+                                {#{% else %}
+                                {% endif %}#}
+
+
+
+                            {% endfor %}
+                            
+
+                        </div>
+		            </div>
+                            
+                </div>
+            </button>
+		
+		</div>
+
+	
+
+		<div class="col-md-12">
+			
+                
+                    <button class="btn btn-light  col-md-12 shadow  mt-3" data-toggle="collapse" href="#collapseTemoigne" role="button" aria-expanded="false" aria-controls="collapseTemoigne">
+                            Ils témoignent...
+                    
+             
+                        <div class="collapse" id="collapseTemoigne">
+                           
+            
+                                <div class="card text-center mt-3">
+                                    <div class="card-body">
+                                   {% for article in articles %}
+                                {#{% if article.isStory == 1 %}#}
+                            {#à modifier=> id par le slug quand on aura le slug#}
+                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                    
+                                    {{article.title}}
+                                    
+                                </a>
+                                {#{% else %}
+                                {% endif %}#}
+
+
+
+                            {% endfor %}
+                                    </div>
+		                        </div>
+                            
+                        </div>
+                    </button>
+		
+		</div>
+
+
+
+		<div class="col-md-12 ">
+			
+                
+                    <a href="#" class="btn btn-light  col-md-12 shadow  mt-3 mb-3">
+                            Inscrivez-vous
+                    
+                    </a>
+		
+		</div>
+
+   
+    </div>
 </div>
+
 {% endblock %}

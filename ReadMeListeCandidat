@@ -1,0 +1,3 @@
+-Création de la page espace entreprise avec profils partiels (nom ou prénom selon le choix avec lien vers la liste complete des candidats et liens vers le Blog
+-Création d'une page show avec tous les candidats, le statu adopté ou orphelin, le "about" et la mention anonyme pour les candidats anonymes (on voit donc leur about)
+-mise en place d'une barre déroulante de tri selon des critère :attention elle n'est là que pour le visuelle" elle ne fonctionne pas du tout"
