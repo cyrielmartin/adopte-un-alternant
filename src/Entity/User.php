@@ -72,6 +72,8 @@ class User implements UserInterface
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -128,7 +130,11 @@ class User implements UserInterface
 
     public function setPassword(string $password): self
     {
-        $this->password = $password;
+        if(is_null($password)){
+            $this->password = '';
+        }else {
+            $this->password = $password;
+        }     
 
         return $this;
     }
