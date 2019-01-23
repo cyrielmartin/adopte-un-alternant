@@ -5,56 +5,146 @@
 {% block body %}
 <div class="container">
 
-	{#bloc synthèse du profil et boc ils ont vu votre profil#}
 	
+{#Essai 2 truc déroulant#}
+        <div class="col-md-12">
+			<div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                        <p class="card">
+                            <a class="btn btn-dark" data-toggle="collapse" href="#collapseList" role="button" aria-expanded="false" aria-controls="collapseList">
+                            Ils recherchent une alternance
+                            </a>
+                        </p>
+                            <div class="collapse" id="collapseList">
+                                <div class="card card-body">
+            
+                    <div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                        <div class="card-body">
+                            
+                            <ul>
+                                <select class="custom-select  mt-3" >
+                                    <option selected>Trier les candidats selon:</option>
+                                    <option value="1">Compétences</option>
+                                    <option value="2">Diplôme</option>
+                                    <option value="3">Ville</option>
+                                </select>
+                            {% for visitCard in visitCards %}
+                                {% if visitCard.adopted == 0 %}
+                                    {% if visitCard.visibilityChoice == 1 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}} 
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% elseif visitCard.visibilityChoice == 2 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.picture}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+
+                                    {% else %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} {{visitCard.isCandidate.picture}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-danger">En recherche</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% endif %}
+
+                                {% elseif visitCard.adopted == 1 %}
+                                    
+                                    {% if visitCard.visibilityChoice == 1 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.lastname}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light">{{visitCard.about}}</p>
+                                        </li>
+                                    {% elseif visitCard.visibilityChoice == 2 %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}}
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light">{{visitCard.about}}</p>
+                                        </li>
+
+                                    {% else %}
+                                        <li class="card text-center font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}} 
+                                            <p><img src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" style="width: 80px;height:80px;"/></p>
+                                            <span class="text-success">Déjà adopté</span>
+                                            <p class ="font-weight-light text-left">{{visitCard.about}}</p>
+                                        </li>
+                                    {% endif %}
+
+                                {% endif %}
+
+
+                            {% endfor %}
+                            
+                            </ul>
+                                <a href="{{ path('entreprise_index') }}" class="btn btn-light">Retour</a>
+                        </div>
+                    </div>
+                
+                        </div>
+                    </div>
+
+
+            </div>
+	    </div>
+
+
+
+{#Fin Essai 2 truc déroulant#}
+
+
+
 		<div class="col-md-12">
-			<div class="card text-center shadow home-choice mt-3">
-				<div class="card-body">
-					<h5 class="card-title">Ils recherchent:</h5>
-                    <ul>
-                    {% for visitCard in visitCards %}
-
-                        {% if visitCard.visibilityChoice == 0 %}
-
-                        {% elseif visitCard.visibilityChoice == 1 %}
-                        <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}}</li>
-
-                        {% else %}
-                        <li class="card text-left font-weight-bold">{{visitCard.isCandidate.user.firstname}} {{visitCard.isCandidate.user.lastname}}</li>
-
-                        {% endif %}
-
-
-                    {% endfor %}
-                    
-                    </ul>
-						<a href="{{ path('candidates_list') }}" class="btn btn-light">Voir plus</a>
-				</div>
+			<div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                <p class="card">
+                    <a class="btn btn-dark" data-toggle="collapse" href="#collapseAlternance" role="button" aria-expanded="false" aria-controls="collapseAlternance">
+                            En savoir plus sur l'alternance
+                    </a>
+                </p>
+                        <div class="collapse" id="collapseAlternance">
+                            <div class="card card-body">
+            
+                                <div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                                    <div class="card-body">boubloublou
+                                    </div>
+		                        </div>
+                            </div>
+                        </div>
 			</div>
 		</div>
-		<div class="col-md-12">
-			<div class="card text-center shadow home-choice mt-3">
-				<a href="#" class="btn btn-light">
-                    <div class="card-body">
-					    <h5 class="card-title">En savoir plus sur l'alternance</h5>
-				    </div>
-                </a>
-			</div>
-		</div>
+
+
+
+
+
 	
 
 		<div class="col-md-12">
-			<div class="card text-center shadow home-choice mt-3">
-				<a href="#" class="btn btn-light">
-                    <div class="card-body">
-					    <h5 class="card-title">Ils témoignent</h5>
-				    </div>
-                </a>
+			<div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                <p class="card">
+                    <a class="btn btn-dark" data-toggle="collapse" href="#collapseTemoigne" role="button" aria-expanded="false" aria-controls="collapseTemoigne">
+                            Ils témoignent
+                    </a>
+                </p>
+                        <div class="collapse" id="collapseTemoigne">
+                            <div class="card card-body">
+            
+                                <div class="card text-center shadow home-choice mt-3 jumbotron jumbotron-fluid">
+                                    <div class="card-body">couloucoucou bulubu
+                                    </div>
+		                        </div>
+                            </div>
+                        </div>
 			</div>
 		</div>
+
+
+
 		<div class="col-md-12 ">
 			<div class="card text-center shadow home-choice mt-3 mb-3">
-				<a href="#" class="btn btn-light">
+				<a href="#" class="btn btn-dark">
                     <div class="card-body">
 					    <h5 class="card-title">Inscrivez-vous</h5>
 				    </div>

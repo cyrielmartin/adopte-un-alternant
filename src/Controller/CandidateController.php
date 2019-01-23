@@ -10,7 +10,7 @@ use App\Repository\VisitCardRepository;
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/entreprise", name="entreprise_index")
+     * @Route("/candidates", name="candidates_index")
      */
     public function index(VisitCardRepository $visitCardRepo)
     {
@@ -25,19 +25,4 @@ class CandidateController extends AbstractController
         ]);
     }
 
-     /**
-     * @Route("/entreprise/candidates", name="candidates_list")
-     */
-    public function showCandidate (VisitCardRepository $visitCardRepo)
-    {
-        
-        //$candidates= $isCandidateRepo->findAll();
-        $visitCards = $visitCardRepo->findAll();
-        //dd($visitCard);
-        
-        return $this->render('candidate/show.html.twig', [
-            //'candidates'=>$candidates,
-            'visitCards'=>$visitCards
-        ]);
-    }
 }
