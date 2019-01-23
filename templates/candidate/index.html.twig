@@ -96,15 +96,15 @@
                             
                                     
                             {% for article in articles %}
-                                {#{% if article.isStory == 0 %}#}
-                            {#à modifier=> id par le slug quand on aura le slug#}
+                                {% if article.isStory == 0 %}
+                            
                                 <a href="{{path('editorial')}}#{{article.slug}}" class="btn btn-light  col-md-12  mt-3 mb-3">
                                     
                                     {{article.title}}
                                     
                                 </a>
-                                {#{% else %}
-                                {% endif %}#}
+                                {% else %}
+                                {% endif %}
 
 
 
@@ -134,15 +134,15 @@
                                 <div class="card text-center mt-3">
                                     <div class="card-body">
                                    {% for article in articles %}
-                                {#{% if article.isStory == 1 %}#}
-                            {#à modifier=> id par le slug quand on aura le slug#}
-                                <a href="{#{{path('app_controller_index')}}#}#{{article.id}}" class="btn btn-light  col-md-12  mt-3 mb-3">
+                                        {% if article.isStory == 1 %}
+                            
+                                <a href="{{path('editorial')}}#{{article.slug}}" class="btn btn-light  col-md-12  mt-3 mb-3">
                                     
                                     {{article.title}}
                                     
                                 </a>
-                                {#{% else %}
-                                {% endif %}#}
+                                        {% else %}
+                                        {% endif %}
 
 
 
