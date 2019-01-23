@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -78,6 +79,12 @@ class User
         return $this->id;
     }
 
+    public function getUsername()
+    {
+        // pour faire plaisir à l'interface
+        return $this-> getFirstname();
+    }
+
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -126,6 +133,10 @@ class User
         return $this;
     }
 
+    public function getSalt()
+    {
+        // pour faire plaisir à l'interface
+    }
     public function getToken(): ?string
     {
         return $this->token;
@@ -174,6 +185,12 @@ class User
         return $this;
     }
 
+    public function getRoles()
+    {
+        // pour faire plaisir à l'interface
+        return [$this->getRole()->getCode()];
+    }
+
     public function getRole(): ?Role
     {
         return $this->role;
@@ -215,5 +232,10 @@ class User
         }
 
         return $this;
+    }
+
+    public function eraseCredentials()
+    {
+        // pour faire plaisir à l'interface
     }
 }
