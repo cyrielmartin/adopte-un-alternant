@@ -31,8 +31,8 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav justify-content-end">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">
-                        Infos
+                    <a class="nav-link" href="{{path('editorial')}}">
+                        Pourquoi l'alternance
                     </a>
                 </li>
                 <li class="nav-item active">
@@ -82,10 +82,10 @@
         {% block body %}{% endblock %}
     {# Footer #}
     <footer>
-        <nav class="navbar navbar-light bg-light justify-content-center">
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
             <form class="form-inline">
-                <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button>
-                <button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button>
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
             </form>
         </nav>
     </footer>
