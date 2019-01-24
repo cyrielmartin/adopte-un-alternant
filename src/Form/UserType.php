@@ -2,16 +2,20 @@
 
 namespace App\Form;
 
+use App\Entity\Role;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use App\Repository\RoleRepository;
 
 class UserType extends AbstractType
 {
@@ -55,6 +59,17 @@ class UserType extends AbstractType
                 ]))
             ]
         ])
+        ->add('role', EntityType::class, [
+            'class' => Role::class,
+            'label' => 'Vous êtes :',
+            'query_builder' => function (RoleRepository $rr) {
+                return $rr->createQueryBuilder('u')
+                ->select('u')
+                ->where('u.id >= 2');
+            },
+            'expanded' => true,
+            'multiple' => false,             
+        ])
         ->add('password', RepeatedType::class, [
             'empty_data' => '',
             'required' => false,
@@ -71,7 +86,6 @@ class UserType extends AbstractType
             // ->add('status')
             // ->add('createdAt')
             // ->add('updatedAt')
-            // ->add('role')
         ;
     }
 
