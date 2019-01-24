@@ -11,6 +11,7 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Repository\RoleRepository;
 
 class UserController extends AbstractController
 {
@@ -33,10 +34,11 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET","POST"})
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, GuardAuthenticatorHandler $guardHandler)
+    public function signup(Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, GuardAuthenticatorHandler $guardHandler)
     {
         $user = new User();
-      
+        $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
+        $user->setRole($role);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -56,12 +58,7 @@ class UserController extends AbstractController
                 'notice',
                 'Inscription réussie !'
             );
-            
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                'main'
-            );
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('user/signup.html.twig', [
