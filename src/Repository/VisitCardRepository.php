@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+
 use App\Entity\VisitCard;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\SearchCandidate;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method VisitCard|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +20,20 @@ class VisitCardRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, VisitCard::class);
     }
+
+    /**
+     * @return Query
+     */
+
+     public function findAllSearchCandidateQuery()
+     {
+        return $this->findAll();
+     
+            
+            
+
+
+     }
 
     // /**
     //  * @return VisitCard[] Returns an array of VisitCard objects
