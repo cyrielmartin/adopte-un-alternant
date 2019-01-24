@@ -30,7 +30,7 @@
                                 {% endif %}
                             </p>
                             <img 
-                                src="{{ asset( (visitCard.isCandidate.picture ?: 'uploads/images/default-candidate.png')) }}" 
+                                src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" 
                                 style="width: 80px;height:80px;"
                                 class="mb-2"
                             />
@@ -66,7 +66,7 @@
 
                         {% if article.isStory == 0 %}
                             <li class="text-center my-3 border-bottom pb-2">
-                                <a href="{#{{path('app_controller_index')}}{{article.slug}}#}" class="text-dark">
+                                <a href="{{path('editorial')}}#{{article.slug}}" class="text-dark">
                                     {{article.title}}
                                 </a>
                             </li>
@@ -93,7 +93,7 @@
         
                             {% if article.isStory == 1 %}
                                 <li class="text-center my-3  border-bottom pb-2" >
-                                    <a href="{#{{path('app_controller_index')}}{{article.slug}}#}" class="text-dark">
+                                    <a href="{{path('editorial')}}#{{article.slug}}" class="text-dark">
                                         {{article.title}}
                                     </a>
                                 </li>
