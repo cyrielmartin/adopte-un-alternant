@@ -11,22 +11,17 @@ use App\Repository\ArticleRepository;
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/candidates", name="candidates_index")
+     * @Route("/candidates", name="candidates_list")
      */
-    public function index(VisitCardRepository $visitCardRepo, ArticleRepository $articleRepo)
+    public function showList(VisitCardRepository $visitCardRepo, ArticleRepository $articleRepo)
     {
-        
-        
+
         $visitCards = $visitCardRepo->findAll();
         $articles = $articleRepo->findAll();
-        //dd($visitCard);
-        //dd($articles);
         
-        return $this->render('candidate/index.html.twig', [
-            //'candidates'=>$candidates,
+        return $this->render('candidate/list.html.twig', [
             'visitCards'=>$visitCards,
             'articles'=>$articles
-
         ]);
     }
 
