@@ -2,120 +2,120 @@
 
 {% block title %}Page éditoriale{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/edito.css') }}">
+{% endblock %}
+
 {% block body %}
 
-<div class="row mx-0"> {# Liste article + aside #}
+<div class="col-12 mx-1 col-lg-8 ml-lg-5 my-3"> {# Liste articles #}
 
-    <div class="col-12 mx-1 col-lg-8 ml-lg-5 my-3"> {# Liste articles #}
+    {# Lien retour #}
+    <p>
+        <a href="{{path('home')}}" class="btn btn-dark">
+            <i class="fas fa-arrow-circle-left"></i> 
+            Retour
+        </a>
+    </p>
 
-        {# Lien retour #}
-        <p>
-            <a href="{{path('home')}}" class="btn btn-dark">
-                <i class="fas fa-arrow-circle-left"></i> 
-                Retour
-            </a>
-        </p>
-
-        <div class="card"> {#  Carte 1 #}
-            <div class="card-header">
-                <h2 class="h5 mb-0 text-center text-secondary">
-                    Tous nos articles
-                </h2>
-            </div>
-            {% for article in articles %}
-                <div class="card-body border-bottom" id="{{ article.slug }}">
-                    <h3 class="h6 font-weight-bold text-center mb-4"> 
-                        {{ article.title }} 
-                    </h3>
-
-                    <p>
-                        {{ article.content }}
-                    </p>
-
-                    <div class="text-secondary font-italic">
-                        Ecrit par {{ article.user.firstname }} {{ article.user.lastname }} 
-                        le {{ article.publishedAt|date('m/d/y') }} 
-                        à {{ article.publishedAt|date('H:m') }}.
-                    </div>
-                </div>
-            {% endfor %}
-            
-        </div> {#  Fin carte 1 #}
-
-        <div class="card"> {#  Carte 2 #}
-            <div class="card-header">
-                <h3 class="h5 mb-0 text-center text-secondary">
-                    Tous les témoignages de nos utilisateurs
-                </h3>
-            </div>
-            {% for story in stories %}
-            <div class="card-body border-bottom" id="{{ story.article.slug }}">
+    <div class="card"> {#  Carte 1 #}
+        <div class="card-header">
+            <h2 class="h5 mb-0 text-center text-secondary">
+                Tous nos articles
+            </h2>
+        </div>
+        {% for article in articles %}
+            <div class="card-body border-bottom" id="{{ article.slug }}">
                 <h3 class="h6 font-weight-bold text-center mb-4"> 
-                    {{ story.article.title }} 
+                    {{ article.title }} 
                 </h3>
 
                 <p>
-                    {{ story.article.content }}
+                    {{ article.content }}
                 </p>
 
                 <div class="text-secondary font-italic">
-                    Témoignage de {{ story.witnessName }}. <br>
-                    Ecrit le {{ story.article.publishedAt|date('m/d/y') }} 
-                    à {{ story.article.publishedAt|date('H:m') }}.
+                    Ecrit par {{ article.user.firstname }} {{ article.user.lastname }} 
+                    le {{ article.publishedAt|date('m/d/y') }} 
+                    à {{ article.publishedAt|date('H:m') }}.
                 </div>
             </div>
         {% endfor %}
-        </div> {#  Fin carte 2 #}
-
-        {# Inscription #}
-        <a href="{{path('signup')}}"  class="btn btn-light col-3 mx-auto mt-3 d-block " role="button" aria-disabled="true">
-            Inscrivez-vous
-        </a>
-
-        {# Lien retour #}
-        <p>
-            <a href="{{path('home')}}" class="btn btn-dark">
-                <i class="fas fa-arrow-circle-left"></i>
-                    Retour
-            </a>
-        </p>
-
-    </div> {# Fin des articles #}
-    
-
-    <aside class="d-none d-lg-block col-3 aside-absolute"> {# Aside #}
         
-        <div class="list-group"> 
+    </div> {#  Fin carte 1 #}
 
-            {# Liste des articles #}
-            <span class="list-group-item bg-light font-weight-bold">
-                Articles
-            </span>
-            <div class="aside-size">
-                {% for article in articles %}
-                    <a href="#{{article.slug}}" class="list-group-item list-group-item-action">
-                        {{ article.title }}
-                    </a>
-                {% endfor %}
+    <div class="card"> {#  Carte 2 #}
+        <div class="card-header">
+            <h3 class="h5 mb-0 text-center text-secondary">
+                Tous les témoignages de nos utilisateurs
+            </h3>
+        </div>
+        {% for story in stories %}
+        <div class="card-body border-bottom" id="{{ story.article.slug }}">
+            <h3 class="h6 font-weight-bold text-center mb-4"> 
+                {{ story.article.title }} 
+            </h3>
+
+            <p>
+                {{ story.article.content }}
+            </p>
+
+            <div class="text-secondary font-italic">
+                Témoignage de {{ story.witnessName }}. <br>
+                Ecrit le {{ story.article.publishedAt|date('m/d/y') }} 
+                à {{ story.article.publishedAt|date('H:m') }}.
             </div>
+        </div>
+    {% endfor %}
+    </div> {#  Fin carte 2 #}
 
-            {# Liste des témoignages #}
-            <span class="list-group-item bg-light mt-4 font-weight-bold">
-                Témoignages
-            </span>
-            <div class="aside-size">
-                {% for story in stories %}
-                    <a href="#{{story.article.slug}}" class="list-group-item list-group-item-action">
-                        {{ story.article.title }}
-                    </a>
+    {# Inscription #}
+    <a href="{{path('signup')}}"  class="btn btn-light col-3 mx-auto mt-3 d-block " role="button" aria-disabled="true">
+        Inscrivez-vous
+    </a>
+
+    {# Lien retour #}
+    <p>
+        <a href="{{path('home')}}" class="btn btn-dark">
+            <i class="fas fa-arrow-circle-left"></i>
+                Retour
+        </a>
+    </p>
+
+</div> {# Fin des articles #}
+
+
+<aside class="d-none d-lg-block col-3 aside-absolute"> {# Aside #}
+    
+    <div class="list-group"> 
+
+        {# Liste des articles #}
+        <span class="list-group-item bg-light font-weight-bold">
+            Articles
+        </span>
+        <div class="aside-size">
+            {% for article in articles %}
+                <a href="#{{article.slug}}" class="list-group-item list-group-item-action">
+                    {{ article.title }}
+                </a>
             {% endfor %}
-            </div>
-
         </div>
 
-    </aside>
+        {# Liste des témoignages #}
+        <span class="list-group-item bg-light mt-4 font-weight-bold">
+            Témoignages
+        </span>
+        <div class="aside-size">
+            {% for story in stories %}
+                <a href="#{{story.article.slug}}" class="list-group-item list-group-item-action">
+                    {{ story.article.title }}
+                </a>
+        {% endfor %}
+        </div>
 
-</div>
+    </div>
+
+</aside>
     
 {% endblock %}
 

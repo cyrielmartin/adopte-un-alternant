@@ -1,0 +1,18 @@
+/****** Aside de la page éditoriale *********/
+
+.aside-absolute {
+    position: absolute;
+    top: 143px; 
+    right:0;
+}
+
+.aside-fixed {
+    position: fixed;
+    top: 2px;
+    right: 0;
+}
+
+.aside-size {
+    height: 250px;
+    overflow-y: scroll;
+}
