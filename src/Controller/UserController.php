@@ -7,7 +7,6 @@ use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -34,7 +33,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET","POST"})
      */
-    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, GuardAuthenticatorHandler $guardHandler)
+    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
     {
         $user = new User();
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
@@ -53,7 +52,17 @@ class UserController extends AbstractController
 
             $em->persist($user);
             $em->flush();
-
+            $message = (new \Swift_Message('Inscription'))
+            ->setFrom('adoptealternant@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'emails/registration.html.twig',
+                    ['user'=>$user]
+                ),
+                'text/html'
+            );
+            $mailer->send($message); 
             $this->addFlash(
                 'notice',
                 'Inscription réussie !'
