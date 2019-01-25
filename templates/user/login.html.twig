@@ -34,6 +34,20 @@
         {% endif %}
         <button type="submit" class="btn btn-secondary">Se connecter</button>
     </form>
-    
+     <p><a href="{{path('home')}}" class="btn btn-dark mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
+
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
+
 {% endblock %}

@@ -91,14 +91,18 @@
   
         {% block body %}{% endblock %}
     {# Footer #}
+
+        {% block footer %}
     <footer>
-        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+        <nav class="navbar navbar-light bg-light justify-content-center">
             <form class="form-inline">
                 <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
                 <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
             </form>
         </nav>
     </footer>
+        
+        {% endblock %}
         {% block javascripts %}{% endblock %}
 
         <script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" src="https://code.jquery.com/jquery-3.3.1.slim.min.js">
