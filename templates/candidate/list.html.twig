@@ -2,9 +2,16 @@
 
 {% block title %}Je suis une entreprise{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/candidateList.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="col-md-10 col-sm-12 mx-auto mt-3">
  <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+
+<div class="col-12 col-lg-9 mx-auto ml-lg-5 mt-3">
+            
     <div class="accordion" id="accordionExample"> {# Accordéon #}
         
         <div class="card mb-4"> {# Carte 1 #}
@@ -14,7 +21,7 @@
                     Ils recherchent une alternance
                 </button>
             </div>
-
+                
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                 {% for visitCard in visitCards %}
@@ -109,7 +116,21 @@
         <a href="{{path('signup')}}"  class="btn btn-secondary col-3 mx-auto d-block " role="button" aria-disabled="true">
             Inscrivez-vous
         </a>
+
     </div> {# Fin Accordéon #}
 
-    </div>
+</div>
+
+<aside class="d-none d-lg-block col-2 aside-absolute"> {# Aside #}
+    <p class="h6 bg-light rounded p-2 border-bottom text-center">
+        Filtrer les recherches
+    </p>
+    {{ include('candidate/_searchform.html.twig') }}
+</aside>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/candidateList.js') }}"></script>
 {% endblock %}

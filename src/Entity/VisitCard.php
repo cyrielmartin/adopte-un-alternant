@@ -310,4 +310,5 @@ class VisitCard
 
         return $this;
     }
+    
 }
