@@ -34,7 +34,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET","POST"})
      */
-    public function signup(Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, GuardAuthenticatorHandler $guardHandler)
+    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, GuardAuthenticatorHandler $guardHandler)
     {
         $user = new User();
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
@@ -46,7 +46,6 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user = $form->getData();
-
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
                 $user->getPassword()
@@ -54,10 +53,12 @@ class UserController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
             $this->addFlash(
                 'notice',
                 'Inscription réussie !'
             );
+
             return $this->redirectToRoute('home');
         }
 

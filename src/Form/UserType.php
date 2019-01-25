@@ -64,8 +64,10 @@ class UserType extends AbstractType
             'label' => 'Vous êtes :',
             'query_builder' => function (RoleRepository $rr) {
                 return $rr->createQueryBuilder('u')
-                ->select('u')
-                ->where('u.id >= 2');
+                ->where('u.code = :candidate')
+                ->orWhere('u.code = :recruiter')
+                ->setParameter('candidate' , 'ROLE_CANDIDATE')
+                ->setParameter('recruiter' , 'ROLE_RECRUITER');
             },
             'expanded' => true,
             'multiple' => false,             
