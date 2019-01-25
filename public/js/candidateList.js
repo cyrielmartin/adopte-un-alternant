@@ -6,7 +6,7 @@ var aside = {
     },
   
     scrolled: function(){
-      var heightHeader = 90;
+      var heightHeader = 143;
       var currentScroll = $('html, body').scrollTop();
   
       if(currentScroll >= heightHeader)

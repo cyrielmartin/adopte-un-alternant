@@ -7,11 +7,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="col-md-10 col-sm-12 mx-auto mt-3">
- <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-<div class="col-12 col-lg-9 mx-auto ml-lg-5 mt-3">
-            
+<div class="col-12 mx-1 col-lg-9 ml-lg-5 my-3">
+    
+    <p>
+        <a href="{{path('home')}}" class="btn btn-dark">
+            <i class="fas fa-arrow-circle-left"></i> 
+            Retour
+        </a>
+    </p>
+
     <div class="accordion" id="accordionExample"> {# Accordéon #}
         
         <div class="card mb-4"> {# Carte 1 #}
@@ -118,7 +123,6 @@
         </a>
 
     </div> {# Fin Accordéon #}
-
 </div>
 
 <aside class="d-none d-lg-block col-2 aside-absolute"> {# Aside #}
@@ -133,4 +137,17 @@
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{ asset('js/candidateList.js') }}"></script>
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
+
 {% endblock %}
