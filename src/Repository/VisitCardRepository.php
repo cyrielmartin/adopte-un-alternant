@@ -25,15 +25,73 @@ class VisitCardRepository extends ServiceEntityRepository
      * @return Query
      */
 
-     public function findAllSearchCandidateQuery()
+     public function findBySkill($skills)
      {
-        return $this->findAll();
-     
-            
-            
+        $qb = $this
+            ->createQueryBuilder('visitCard')
+            ->join('visitCard.skills', 'skill')
+            ->addSelect('skill')
+        ;
 
+        if(count($skills) === 1)
+        {
+            $qb
+            ->where('skill.id = :skillId')
+            ->setParameter('skillId', $skills[0]);
+        }
+        else 
+        {
+            $qb->add('where', $qb->expr()->in('skill.id', $skills));
+        }
 
+        return $qb->getQuery()->getResult();
      }
+
+     public function findByMobility($mobilities)
+    {
+        $qb = $this
+            ->createQueryBuilder('visitCard')
+            ->join('visitCard.mobilities', 'mobilities')
+            ->addSelect('mobilities')
+        ;
+
+        if(count($mobilities) === 1)
+        {
+            $qb
+            ->where('mobilities.id = :mobId')
+            ->setParameter('mobId', $mobilities[0]);
+        }
+        else 
+        {
+            $qb->add('where', $qb->expr()->in('mobilities.id', $mobilities));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByAward($awards)
+    {
+        $qb = $this
+            ->createQueryBuilder('visitCard')
+            ->join('visitCard.formations', 'formations')
+            ->leftJoin('formations.awardLevel', 'award')
+            ->addSelect('formations')
+            ->addSelect('award')
+        ;
+
+        if(count($awards) === 1)
+        {
+            $qb
+            ->where('award.id = :awardId')
+            ->setParameter('awardId', $awards[0]);
+        }
+        else 
+        {
+            $qb->add('where', $qb->expr()->in('award.id', $awards));
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 
     // /**
     //  * @return VisitCard[] Returns an array of VisitCard objects
