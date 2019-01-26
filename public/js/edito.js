@@ -12,11 +12,11 @@ var aside = {
       if(currentScroll >= heightHeader)
       {
         $('aside').removeClass('aside-absolute');
-        $('aside').addClass('aside-fixed');
+        $('aside').addClass('aside-fixed col-3 pl-0 pr-4');
       }
       else
       {
-        $('aside').removeClass('aside-fixed');
+        $('aside').removeClass('aside-fixed col-3 pl-0 pr-4');
         $('aside').addClass('aside-absolute');
       }       
     },
