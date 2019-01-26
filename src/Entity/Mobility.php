@@ -24,14 +24,14 @@ class Mobility
     private $townName;
 
     /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private $departmentCode;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", inversedBy="mobilities")
      */
     private $visitCards;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="mobilities")
+     */
+    private $department;
 
     public function __construct()
     {
@@ -51,18 +51,6 @@ class Mobility
     public function setTownName(string $townName): self
     {
         $this->townName = $townName;
-
-        return $this;
-    }
-
-    public function getDepartmentCode(): ?string
-    {
-        return $this->departmentCode;
-    }
-
-    public function setDepartmentCode(string $departmentCode): self
-    {
-        $this->departmentCode = $departmentCode;
 
         return $this;
     }
@@ -89,6 +77,18 @@ class Mobility
         if ($this->visitCards->contains($visitCard)) {
             $this->visitCards->removeElement($visitCard);
         }
+
+        return $this;
+    }
+
+    public function getDepartment(): ?Department
+    {
+        return $this->department;
+    }
+
+    public function setDepartment(?Department $department): self
+    {
+        $this->department = $department;
 
         return $this;
     }
