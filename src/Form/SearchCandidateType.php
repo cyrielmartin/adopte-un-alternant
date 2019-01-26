@@ -2,10 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Skill;
-use App\Entity\Mobility;
-use App\Entity\VisitCard;
+use App\Entity\Skill;;
 use App\Entity\AwardLevel;
+use App\Entity\Department;
 use App\Entity\SearchCandidate;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,11 +25,11 @@ class SearchCandidateType extends AbstractType
                 'multiple'=>true,
                 'expanded'=>true,
             ])
-            ->add('mobilities', EntityType::class,[
+            ->add('departments', EntityType::class,[
                 'required'=>false,
-                'label'=>'Par ville :',
-                'class'=> Mobility::class,
-                'choice_label'=>'townName',
+                'label'=>'Par département :',
+                'class'=> Department::class,
+                'choice_label'=>'name',
                 'multiple'=>true,
                 'expanded'=>true,
             ])

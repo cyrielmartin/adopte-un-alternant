@@ -14,7 +14,7 @@ class SearchCandidate{
     /**
      * @var ArrayCollection
      */ 
-    private $mobilities;
+    private $departments;
 
     /**
      * @var ArrayCollection
@@ -26,10 +26,9 @@ class SearchCandidate{
 
     public function __construct(){
         $this->skills = New ArrayCollection();
-        $this->mobilities = New ArrayCollection();
+        $this->departments = New ArrayCollection();
         $this->awards = New ArrayCollection();
     }
-
 
     /**
      * @return ArrayCollection
@@ -39,29 +38,22 @@ class SearchCandidate{
         return $this->skills;
     }
 
-    /**
-     * @param ArrayCollection $skills
-     */ 
-    public function setSkills(ArrayCollection $skills): void
+    public function setSkills($skill): void
     {
-        $this->skills = $skills;
-
+        $this->skills[] = $skill;
     }
 
     /**
      * @return ArrayCollection
      */ 
-    public function getMobilities(): ArrayCollection
+    public function getDepartments(): ArrayCollection
     {
-        return $this->mobilities;
+        return $this->departments;
     }
 
-    /**
-     * @param ArrayCollection $mobilities
-     */ 
-    public function setMobilities(ArrayCollection $mobilities): void
+    public function setDepartment($department): void
     {
-        $this->mobilities = $mobilities;
+        $this->departments[] = $department;
     }
 
     /**

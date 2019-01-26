@@ -47,23 +47,25 @@ class VisitCardRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
      }
 
-     public function findByMobility($mobilities)
+     public function findByDepartment($departments)
     {
         $qb = $this
             ->createQueryBuilder('visitCard')
             ->join('visitCard.mobilities', 'mobilities')
+            ->leftJoin('mobilities.department', 'department')
             ->addSelect('mobilities')
+            ->addSelect('department')
         ;
 
-        if(count($mobilities) === 1)
+        if(count($departments) === 1)
         {
             $qb
-            ->where('mobilities.id = :mobId')
-            ->setParameter('mobId', $mobilities[0]);
+            ->where('department.id = :dptId')
+            ->setParameter('dptId', $departments[0]);
         }
         else 
         {
-            $qb->add('where', $qb->expr()->in('mobilities.id', $mobilities));
+            $qb->add('where', $qb->expr()->in('department.id', $departments));
         }
 
         return $qb->getQuery()->getResult();
@@ -83,6 +85,7 @@ class VisitCardRepository extends ServiceEntityRepository
         {
             $qb
             ->where('award.id = :awardId')
+            ->andWhere('formations.isApprenticeship = 0')
             ->setParameter('awardId', $awards[0]);
         }
         else 
@@ -92,33 +95,4 @@ class VisitCardRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
-
-    // /**
-    //  * @return VisitCard[] Returns an array of VisitCard objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('v.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?VisitCard
-    {
-        return $this->createQueryBuilder('v')
-            ->andWhere('v.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

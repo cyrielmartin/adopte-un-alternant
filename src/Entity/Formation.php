@@ -56,6 +56,11 @@ class Formation
      */
     private $school;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isApprenticeship;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -153,6 +158,18 @@ class Formation
     public function setSchool(?School $school): self
     {
         $this->school = $school;
+
+        return $this;
+    }
+
+    public function getIsApprenticeship(): ?bool
+    {
+        return $this->isApprenticeship;
+    }
+
+    public function setIsApprenticeship(bool $isApprenticeship): self
+    {
+        $this->isApprenticeship = $isApprenticeship;
 
         return $this;
     }

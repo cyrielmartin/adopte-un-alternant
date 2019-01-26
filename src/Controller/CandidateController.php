@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Skill;
 use App\Entity\Article;
 use App\Entity\VisitCard;
 use App\Entity\SearchCandidate;
@@ -76,7 +74,7 @@ class CandidateController extends AbstractController
     }
 
     /** 
-     * Fonction récupérant UN type de filtre ( skills ou mobilities ou awards )
+     * Fonction récupérant UN type de filtre ( skills ou departments ou awards )
      * et renvoyant un tableau contenant les cartes de visites répondant au filtre donné
     */
     private function oneFilter($filter, $visitCardRepo)
@@ -85,9 +83,9 @@ class CandidateController extends AbstractController
         {
             $results = $visitCardRepo->findBySkill($filter['skills']);
         }
-        elseif (key($filter) === "mobilities")
+        elseif (key($filter) === "departments")
         {
-            $results = $visitCardRepo->findByMobility($filter['mobilities']);
+            $results = $visitCardRepo->findByDepartment($filter['departments']);
         }
         elseif (key($filter) === "awards")
         {
@@ -102,7 +100,7 @@ class CandidateController extends AbstractController
     }
 
     /** 
-     * Fonction récupérant DEUX types de filtre parmis skills, mobilities et awards 
+     * Fonction récupérant DEUX types de filtre parmis skills, departments et awards 
      * et renvoyant un tableau contenant les cartes de visites répondant aux filtre donné
     */
     private function twoFilter($filters, $visitCardRepo)
@@ -116,7 +114,7 @@ class CandidateController extends AbstractController
          * Peut importe le nombre de filtre coché, les résultats sont toujours
          * récupéré d'après l'ordre d'affichage du form soit:
          * [0]skills
-         * [1]mobilities ou [1]awards 
+         * [1]departments ou [1]awards 
          * 
          * J'effectue donc mes tests en respectant cet ordre
          */
@@ -126,10 +124,10 @@ class CandidateController extends AbstractController
         {
             $resultFilters[] = $visitCardRepo->findBySkill($filters['skills']);
 
-            // ET si on a mobilities
-            if ($filterNames[1] === 'mobilities')
+            // ET si on a departments
+            if ($filterNames[1] === 'departments')
             {
-                $resultFilters[] = $visitCardRepo->findByMobility($filters['mobilities']);
+                $resultFilters[] = $visitCardRepo->findByDepartment($filters['departments']);
             }
             // OU ET si on a awards
             elseif ($filterNames[1] === 'awards')
@@ -141,11 +139,11 @@ class CandidateController extends AbstractController
         /** 
          * Si on a pas skills parmis les choix , comme il n'y a que 3 choix 
          * possible on peu donc en déduire sans trop de risque qu'on aura
-         * mobilities et awards
+         * departments et awards
          * */ 
-        elseif ($filterNames[0] === 'mobilities' )
+        elseif ($filterNames[0] === 'departments' )
         {
-            $resultFilters[] = $visitCardRepo->findByMobility($filters['mobilities']);
+            $resultFilters[] = $visitCardRepo->findByDepartment($filters['departments']);
 
             $resultFilters[] = $visitCardRepo->findByAward($filters['awards']);
         }
@@ -172,13 +170,13 @@ class CandidateController extends AbstractController
     }
 
     /** 
-     * Fonction récupérant TOUT les types de filtre, soit : skills, mobilities et awards 
+     * Fonction récupérant TOUT les types de filtre, soit : skills, departments et awards 
      * et renvoyant un tableau contenant les cartes de visites répondant aux 3 filtres
     */
     private function allFilter($filters, $visitCardRepo)
     {
         $resultFilters[] = $visitCardRepo->findBySkill($filters['skills']);
-        $resultFilters[] = $visitCardRepo->findByMobility($filters['mobilities']);
+        $resultFilters[] = $visitCardRepo->findByDepartment($filters['departments']);
         $resultFilters[] = $visitCardRepo->findByAward($filters['awards']);
 
         // On déclare le tableau de résultat
