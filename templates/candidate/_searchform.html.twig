@@ -1,9 +1,9 @@
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form) }}
-    <button type="submit" class="btn btn-secondary mb-2 p-2">
+    <button type="submit" class="btn btn-secondary mb-2 p-2 col-12">
         Valider
     </button>
-    <a href="{{ path('candidates_list') }}" class="btn btn-warning p-2 mb-2">
+    <a href="{{ path('candidates_list') }}" class="btn btn-warning p-2 mb-2 col-12">
          Supprimer les filtres
     </a>
 {{ form_end(form) }}

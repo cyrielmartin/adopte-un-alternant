@@ -8,103 +8,82 @@
 
 {% block body %}
 
-<div class="col-12 mx-1 col-lg-9 ml-lg-5 my-3">
+<div class="col-12 p-0 my-3">
     
-    <p>
-        <a href="{{path('home')}}" class="btn btn-dark">
+    <p class="ml-3 ml-md-5">
+        <a href="{{path('home')}}" class="btn btn-dark ml-lg-4">
             <i class="fas fa-arrow-circle-left"></i> 
             Retour
         </a>
     </p>
 
-    <div class="accordion" id="accordionExample"> {# Accordéon #}
-        
-        <div class="card mb-4"> {# Carte 1 #}
+    <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between "> {# Accordéon + aside #}
+        <div class="accordion col-12 col-lg-8 p-0" id="accordionExample"> {# Accordéon #}
             
-            <div>
-                <button class="btn btn-light card-header col-12" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    Ils recherchent une alternance
-                </button>
-            </div>
+            <div class="card mb-4"> {# Carte 1 #}
                 
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                <div class="card-body">
-                {% for visitCard in visitCards %}
-                    <div>
-                        <div class=" text-center">
-                            <p> 
-                                {% if visitCard.visibilityChoice == 1 %}
-                                    {{ visitCard.isCandidate.user.firstname }} {{ visitCard.isCandidate.user.lastname }}
-                                {% elseif visitCard.visibilityChoice == 2 %}
-                                    {{ visitCard.isCandidate.user.firstname }}
-                                {% else %}
-                                    {{ visitCard.isCandidate.user.lastname }}
-                                {% endif %}
-                            </p>
-                            <img 
-                                src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" 
-                                style="width: 80px;height:80px;"
-                                class="mb-2"
-                            />
-                            
-                            {% if visitCard.adopted == 1 %}
-                                <div class="text-success"> Adopté </div>
-                            {% else %}
-                                <div class="text-danger"> En recherche </div>
-                            {% endif %}
-                        </div>
-                        <p>
-                            {{ visitCard.about }}
-                        </p>
-                        
-                    </div>
-                {% endfor %}
+                <div>
+                    <button class="btn btn-light card-header col-12" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Ils recherchent une alternance
+                    </button>
                 </div>
-            </div>
-        </div> {# Fin carte 1 #}
-
-        <div class="card mb-4"> {# Carte 2 #}
-            
-            <div>
-                <button class="btn btn-light collapsed card-header col-12" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    En savoir plus sur l'alternance
-                </button>
-            </div>
-
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                <div class="card-body">
-                    <ul style="list-style-type: none;" class="col-12">
-                    {% for article in articles %}
-
-                        {% if article.isStory == 0 %}
-                            <li class="text-center my-3 border-bottom pb-2">
-                                <a href="{{path('editorial')}}#{{article.slug}}" class="text-dark">
-                                    {{article.title}}
-                                </a>
-                            </li>
-                        {% endif %}
                     
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+
+                    {% if visitCards is empty %}
+                        <p class="text-center"> Aucun candidat ne correspond à votre recherche </p>
+                    {% endif %}
+
+                    {% for visitCard in visitCards %}
+                        <div>
+                            <div class=" text-center">
+                                <p> 
+                                    {% if visitCard.visibilityChoice == 1 %}
+                                        {{ visitCard.isCandidate.user.firstname }} {{ visitCard.isCandidate.user.lastname }}
+                                    {% elseif visitCard.visibilityChoice == 2 %}
+                                        {{ visitCard.isCandidate.user.firstname }}
+                                    {% else %}
+                                        {{ visitCard.isCandidate.user.lastname }}
+                                    {% endif %}
+                                </p>
+                                <img 
+                                    src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" 
+                                    style="width: 80px;height:80px;"
+                                    class="mb-2"
+                                />
+                                
+                                {% if visitCard.adopted == 1 %}
+                                    <div class="text-success"> Adopté </div>
+                                {% else %}
+                                    <div class="text-danger"> En recherche </div>
+                                {% endif %}
+                            </div>
+                            <p>
+                                {{ visitCard.about }}
+                            </p>
+                            
+                        </div>
                     {% endfor %}
-                    </ul>
+                    </div>
                 </div>
-            </div>
-        </div> {# Fin carte 2 #}
+            </div> {# Fin carte 1 #}
 
-        <div class="card mb-4"> {# Carte 3 #}
-            
-            <div>
-                <button class="btn btn-light card-header col-12 collapsed" id="headingThree" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                    Ils témoignent...
-                </button>
-            </div>
+            <div class="card mb-4"> {# Carte 2 #}
+                
+                <div>
+                    <button class="btn btn-light collapsed card-header col-12" id="headingTwo" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        En savoir plus sur l'alternance
+                    </button>
+                </div>
 
-            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                <div class="card-body">
-                    <ul style="list-style-type: none;" class="col-12">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul style="list-style-type: none;" class="col-12">
                         {% for article in articles %}
-        
-                            {% if article.isStory == 1 %}
-                                <li class="text-center my-3  border-bottom pb-2" >
+
+                            {% if article.isStory == 0 %}
+                                <li class="text-center my-3 border-bottom pb-2">
                                     <a href="{{path('editorial')}}#{{article.slug}}" class="text-dark">
                                         {{article.title}}
                                     </a>
@@ -112,42 +91,64 @@
                             {% endif %}
                         
                         {% endfor %}
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </div> {# Fin carte 3 #}
+            </div> {# Fin carte 2 #}
+
+            <div class="card mb-4"> {# Carte 3 #}
+                
+                <div>
+                    <button class="btn btn-light card-header col-12 collapsed" id="headingThree" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Ils témoignent...
+                    </button>
+                </div>
+
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <ul style="list-style-type: none;" class="col-12">
+                            {% for article in articles %}
+            
+                                {% if article.isStory == 1 %}
+                                    <li class="text-center my-3  border-bottom pb-2" >
+                                        <a href="{{path('editorial')}}#{{article.slug}}" class="text-dark">
+                                            {{article.title}}
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div> {# Fin carte 3 #}
 
 
-        <a href="{{path('signup')}}"  class="btn btn-secondary col-3 mx-auto d-block " role="button" aria-disabled="true">
-            Inscrivez-vous
-        </a>
+            <a href="{{path('signup')}}"  class="btn btn-secondary col-9 col-lg-3 mx-auto d-block " role="button" aria-disabled="true">
+                Inscrivez-vous
+            </a>
 
-    </div> {# Fin Accordéon #}
+        </div> {# Fin Accordéon #}
+    
+        <div class="col-3 d-none d-lg-block p-0 aside"> {# Aside #}
+            <aside class="aside-absolute"> {# Aside #}
+                <p class="h6 bg-light rounded p-2 border-bottom text-center">
+                    Filtrer les recherches
+                </p>
+                {{ include('candidate/_searchform.html.twig') }}
+            </aside>
+        </div>
+
+    </div>{# Fin accordéon + aside #}
+    
 </div>
 
-<aside class="d-none d-lg-block col-2 aside-absolute"> {# Aside #}
-    <p class="h6 bg-light rounded p-2 border-bottom text-center">
-        Filtrer les recherches
-    </p>
-    {{ include('candidate/_searchform.html.twig') }}
-</aside>
+
 
 {% endblock %}
 
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{ asset('js/candidateList.js') }}"></script>
-{% endblock %}
-
-{% block footer %}
-
-    <footer>
-        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
-            <form class="form-inline">
-                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
-                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
-            </form>
-        </nav>
-    </footer>
-
+    
 {% endblock %}

@@ -27,7 +27,7 @@ class Formation
     private $startedAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="smallint")
      */
     private $status;
 
@@ -56,16 +56,6 @@ class Formation
      */
     private $school;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isApprenticeship;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getAwardName(): ?string
     {
         return $this->awardName;
@@ -90,18 +80,18 @@ class Formation
         return $this;
     }
 
-    public function getStatus(): ?bool
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    public function setStatus(bool $status): self
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
         return $this;
     }
-
+    
     public function getObtainedAt(): ?\DateTimeInterface
     {
         return $this->obtainedAt;
@@ -158,18 +148,6 @@ class Formation
     public function setSchool(?School $school): self
     {
         $this->school = $school;
-
-        return $this;
-    }
-
-    public function getIsApprenticeship(): ?bool
-    {
-        return $this->isApprenticeship;
-    }
-
-    public function setIsApprenticeship(bool $isApprenticeship): self
-    {
-        $this->isApprenticeship = $isApprenticeship;
 
         return $this;
     }

@@ -85,7 +85,7 @@ class VisitCardRepository extends ServiceEntityRepository
         {
             $qb
             ->where('award.id = :awardId')
-            ->andWhere('formations.isApprenticeship = 0')
+            ->andWhere('formations.obtainedAt IS NOT NULL')
             ->setParameter('awardId', $awards[0]);
         }
         else 
