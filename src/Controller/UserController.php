@@ -54,7 +54,7 @@ class UserController extends AbstractController
 
             $em->persist($user);
             $em->flush();
-            $message = (new \Swift_Message('Inscription'))
+            $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('adoptealternant@gmail.com')
             ->setTo($user->getEmail())
             ->setBody(
@@ -112,10 +112,14 @@ class UserController extends AbstractController
                 ->setFrom('adoptealternant@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
-                    "Voici le token pour vous créer un nouveau mot de passe : " . $url,
+                    $this->renderView(
+                        'emails/passRecover.html.twig',
+                        ['user'=>$user,
+                        'url' => $url,
+                        ]
+                    ),
                     'text/html'
                 );
- 
             $mailer->send($message);
  
             $this->addFlash('notice', 'Un email vient de vous être envoyé. Veuillez cliquer sur le lien qu\'il contient pour regénérer votre mot de passe.');
@@ -126,7 +130,7 @@ class UserController extends AbstractController
     }  
 
     /**
-     * @Route("/pass-recover", name="pass_recover", methods={"GET","POST"})
+     * @Route("/pass-recover{token}", name="pass_recover", methods={"GET","POST"})
      */
 
     public function passRecover(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
@@ -134,10 +138,10 @@ class UserController extends AbstractController
         if ($request->isMethod('POST')) {
             $entityManager = $this->getDoctrine()->getManager();
  
-            $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
+            $user = $entityManager->getRepository(User::class)->findOneByToken($token);
  
             if ($user === null) {
-                $this->addFlash('danger', 'Token Inconnu');
+                $this->addFlash('danger', 'Le mot de passe associé à cet email a déjà été modifié. Veuillez vous connecter.');
                 return $this->redirectToRoute('login');
             }
  
@@ -147,7 +151,7 @@ class UserController extends AbstractController
  
             $this->addFlash('notice', 'Mot de passe mis à jour');
  
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('login');
         } else {
             return $this->render('user/passRecover.html.twig');
         }
