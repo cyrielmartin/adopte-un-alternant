@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\RoleRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class UserController extends AbstractController
 {
@@ -35,7 +37,7 @@ class UserController extends AbstractController
     /**
      * @Route("/signup", name="signup", methods={"GET","POST"})
      */
-    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
     {
         $user = new User();
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
@@ -45,32 +47,40 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $user = $form->getData();
-            $user->setPassword($passwordEncoder->encodePassword(
+                $user = $form->getData();
+                $user->setPassword($passwordEncoder->encodePassword(
                 $user,
                 $user->getPassword()
             ));
+                $token = $tokenGenerator->generateToken();
+                $user->setToken($token);
+                $user->setStatus(0);
 
-            $em->persist($user);
-            $em->flush();
-            $message = (new \Swift_Message('Validez votre inscription'))
+                $em->persist($user);
+                $em->flush();
+
+                $url = $this->generateUrl('login', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+
+                $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('adoptealternant@gmail.com')
             ->setTo($user->getEmail())
             ->setBody(
                 $this->renderView(
                     'emails/registration.html.twig',
-                    ['user'=>$user]
+                    ['user'=>$user,
+                    'url'=>$url
+                    ]
                 ),
                 'text/html'
             );
-            $mailer->send($message); 
-            $this->addFlash(
+                $mailer->send($message);
+                $this->addFlash(
                 'notice',
                 'Un email vient de vous être envoyé. Veuillez cliquer sur le lien qu\'il contient pour finaliser votre inscription.'
             );
 
-            return $this->redirectToRoute('login');
+                return $this->redirectToRoute('login');
+
         }
 
         return $this->render('user/signup.html.twig', [
@@ -149,7 +159,7 @@ class UserController extends AbstractController
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $entityManager->flush();
  
-            $this->addFlash('notice', 'Mot de passe mis à jour');
+            $this->addFlash('notice', 'Le mot de passe a bien été modifié');
  
             return $this->redirectToRoute('login');
         } else {
