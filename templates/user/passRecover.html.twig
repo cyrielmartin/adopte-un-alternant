@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau mot de passe{% endblock %}
+
+{% block body %}
+<div class="col-5 mx-auto my-4">
+    <form method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Nouveau mot de passe</h1>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Veuillez saisir votre nouveau mot de passe" required>
+        <input type="hidden" name="token" value="{token}">
+        <button type="submit" class="btn btn-secondary mt-2">Valider</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
+
+{% endblock %}

@@ -4,13 +4,15 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Repository\RoleRepository;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class UserController extends AbstractController
 {
@@ -65,16 +67,90 @@ class UserController extends AbstractController
             $mailer->send($message); 
             $this->addFlash(
                 'notice',
-                'Inscription réussie !'
+                'Un email vient de vous être envoyé. Veuillez cliquer sur le lien qu\'il contient pour finaliser votre inscription.'
             );
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/signup.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);        
+    }
+
+    /**
+     * @Route("/pass-forgotten", name="pass_forgotten", methods={"GET","POST"})
+     */
+
+    public function passForgotten(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
+    {
+        if ($request->isMethod('POST')) {
+ 
+            $email = $request->request->get('email');
+ 
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $entityManager->getRepository(User::class)->findOneByEmail($email);
+
+            if ($user === null) {
+                $this->addFlash('danger', 'Email Inconnu');
+                return $this->redirectToRoute('pass_forgotten');
+            }
+            $token = $tokenGenerator->generateToken();
+ 
+            try{
+                $user->setToken($token);
+                $entityManager->flush();
+            } catch (\Exception $e) {
+                $this->addFlash('warning', $e->getMessage());
+                return $this->redirectToRoute('homepage');
+            }
+ 
+            $url = $this->generateUrl('pass_recover', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+ 
+            $message = (new \Swift_Message('Mot de passe oublié'))
+                ->setFrom('adoptealternant@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    "Voici le token pour vous créer un nouveau mot de passe : " . $url,
+                    'text/html'
+                );
+ 
+            $mailer->send($message);
+ 
+            $this->addFlash('notice', 'Un email vient de vous être envoyé. Veuillez cliquer sur le lien qu\'il contient pour regénérer votre mot de passe.');
+ 
+            return $this->redirectToRoute('login');
+        }
+        return $this->render('user/passForgotten.html.twig');
+    }  
+
+    /**
+     * @Route("/pass-recover", name="pass_recover", methods={"GET","POST"})
+     */
+
+    public function passRecover(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        if ($request->isMethod('POST')) {
+            $entityManager = $this->getDoctrine()->getManager();
+ 
+            $user = $entityManager->getRepository(User::class)->findOneByResetToken($token);
+ 
+            if ($user === null) {
+                $this->addFlash('danger', 'Token Inconnu');
+                return $this->redirectToRoute('login');
+            }
+ 
+            $user->setToken(null);
+            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+            $entityManager->flush();
+ 
+            $this->addFlash('notice', 'Mot de passe mis à jour');
+ 
+            return $this->redirectToRoute('home');
+        } else {
+            return $this->render('user/passRecover.html.twig');
+        }
     }
 
 }
