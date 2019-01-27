@@ -96,7 +96,8 @@
                 </span>
                 <div class="aside-size">
                     {% for article in articles %}
-                        <a href="#{{article.slug}}" class="list-group-item list-group-item-action">
+                        <a  href="#{{article.slug}}" 
+                            class="list-group-item list-group-item-action">
                             {{ article.title }}
                         </a>
                     {% endfor %}
@@ -108,7 +109,8 @@
                 </span>
                 <div class="aside-size">
                     {% for story in stories %}
-                        <a href="#{{story.article.slug}}" class="list-group-item list-group-item-action">
+                        <a  href="#{{story.article.slug}}" 
+                            class="list-group-item list-group-item-action">
                             {{ story.article.title }}
                         </a>
                     {% endfor %}

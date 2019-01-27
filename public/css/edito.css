@@ -4,6 +4,7 @@
 permet d'éviter que le footer passe au dessus */
 .aside {
     height: 675px;
+    font-size: 0.8rem;
 }
 
 .aside-absolute {
@@ -17,6 +18,6 @@ permet d'éviter que le footer passe au dessus */
 }
 
 .aside-size {
-    height: 250px;
+    height: 150px;
     overflow-y: scroll;
 }

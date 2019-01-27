@@ -1,7 +1,7 @@
 #skills,
 #departments,
 #awards {
-    height: 120px;
+    height: 100px;
     overflow-y: scroll;
 }
 
@@ -11,6 +11,7 @@
 permet d'éviter que le footer passe au dessus */
 .aside {
     height: 675px;
+    font-size: 0.8rem;
 }
 
 /* Position lorsque la page n'a pas été scroll */
