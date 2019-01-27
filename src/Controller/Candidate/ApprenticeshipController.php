@@ -6,17 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/candidat/information-complementaire", name="additional_")
+ * @Route("/candidat/alternance", name="apprenticeship_")
  */
-class AdditionalController extends AbstractController
+class ApprenticeshipController extends AbstractController
 {
     /**
      * @Route("/ajouter", name="add")
      */
     public function add()
     {
-        return $this->render('candidate/profil/additional.html.twig', [
-            'controller_name' => 'AdditionalController',
+        return $this->render('candidate/profil/apprenticeship.html.twig', [
+            'controller_name' => 'ApprenticeshipController',
         ]);
     }
 
@@ -25,8 +25,8 @@ class AdditionalController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/additional.html.twig', [
-            'controller_name' => 'AdditionalController',
+        return $this->render('candidate/profil/apprenticeship.html.twig', [
+            'controller_name' => 'ApprenticeshipController',
         ]);
     }
 
