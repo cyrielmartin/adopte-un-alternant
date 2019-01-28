@@ -24,9 +24,10 @@ class ProfilController extends AbstractController
         dump($candidateDatas);
 
         $candidateId=$candidateDatas->getId();
-        dump($candidateId);
+        //sdd($candidateId);
 
-        $candidateInformation = $visitCardRepo->findBy($candidateId);
+        $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
+        dd ($candidateInformation);
 
      
         // Affiche le profil du user 
