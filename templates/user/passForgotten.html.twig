@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot de passe oublié{% endblock %}
+
+{% block body %}
+<div class="col-5 mx-auto my-4">
+    <form method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Mot de passe oublié</h1>
+
+        {# Messages flash #}
+        {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger flash-message mb-2">
+        {{ message }}
+        </div>
+        {% endfor %}
+        
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Veuillez saisir votre adresse email" required autofocus>
+        <button type="submit" class="btn btn-secondary mt-2">Valider</button>
+    </form>
+    <p><a href="{{path('login')}}" class="btn btn-dark mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+</div>
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
+
+{% endblock %}

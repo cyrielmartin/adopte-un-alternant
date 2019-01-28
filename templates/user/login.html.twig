@@ -5,6 +5,24 @@
 {% block body %}
 <div class="col-5 mx-auto my-4">
 <h1>Connectez-vous</h1>
+
+    {# Messages flash #}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% if error %}
+    <div class="alert alert-danger flash-message mb-2">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+    </div>
+    {% endif %}
+
     <form action="{{ path('login') }}" method="post">
         <div class="form-group">
             <label for="email">Email</label>
@@ -27,14 +45,10 @@
                 name="_password" 
             >
         </div>
-        {% if error %}
-            <div class="bg-danger rounded p-2 mb-2 text-center text-light">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
         <button type="submit" class="btn btn-secondary">Se connecter</button>
+        <p class="mt-2"><small><a href="{{path('pass_forgotten')}}">Mot de passe oublié ?</a></small></p>
     </form>
-     <p><a href="{{path('home')}}" class="btn btn-dark mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+     <p><a href="{{path('login')}}" class="btn btn-dark mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
 
 {% endblock %}
