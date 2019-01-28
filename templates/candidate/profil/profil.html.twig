@@ -19,101 +19,139 @@
         <div class="col-12 col-lg-8 p-0"> {# Carte de visite #}
 
             <div class="card">
-                <div class="card-body">
 
+                <div class="d-md-flex flex-row">
 
-                    <div class="row justify-content-start">
-                        <div class="col-4">
+                    <div class="d-flex flex-column">
+                        <div class="p-2">
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
-                                style="width: 80px;height:80px;" class="mb-2" />
-                            <div>
-                                <button class="btn btn-light " id="" type="button"> Modifier</button>
-                            </div>
+                                style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
 
-                        <div class="col-4">
-                            <p class=" text-secondary">
-                                {{ app.user.lastname }} {{ app.user.firstname }}
-                            </p>
-                            <p class="text-secondary">
-                                {{ app.user.email }}
-                            </p>
+                        <div class="p-2">
 
-                            <p class="text-secondary">
-                                {{ candidateDatas.phoneNumber }}
-                            </p>
-                            <div>
-                                <button class="btn btn-light " id="" type="button"> Modifier</button>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <p class=" text-secondary">
-                                
-                            </p>
-                            
-                            <div>
-                                <button class="btn btn-light " id="" type="button"> Modifier</button>
-                            </div>
+
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+
                         </div>
                     </div>
 
-                </div>
+
+
+
+
+                    <div class="d-flex flex-column">
+
+                        <div class="p-2">
+                            {{ app.user.lastname }} {{ app.user.firstname }}
+
+
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+
+
+                        </div>
+
+                        <div class="p-2">
+                            {{ app.user.email }}
+
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+
+                        </div>
+
+                        <div class="p-2">
+                            {{ candidateDatas.phoneNumber }}
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                    <div class="p-2">
+
+                        <div class="d-flex flex-column">
+
+                            <div class="p-2">
+
+                                Site :
+                                <a href="{{webSite.link}}"> {{webSite.name}}</a>
+
+
+                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+
+                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div> {# Fin carte visite #}
+
+                <div class="card"> {# Carte Alternace recherchée #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Alternance recherchée
+                        </h2>
+                    </div>
+                </div> {# Fin carte Alternance recherchée #}
+
+                <div class="card"> {# Carte About #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            A propos de moi
+                        </h2>
+                    </div>
+                </div> {# Fin carte About #}
+
+
+
+                <div class="card"> {# Carte experience #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Formations
+                        </h2>
+                    </div>
+
+                </div> {# Fin carte experience #}
+
+                <div class="card"> {# Carte formation #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Expériences
+                        </h2>
+                    </div>
+
+                </div> {# Fin carte Formation #}
+
+                <div class="card"> {# Carte compétences #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Compétences
+                        </h2>
+                    </div>
+
+                </div> {# Fin carte compétences #}
+
+                <div class="card"> {# Carte compétences #}
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Savoirs-faire et centres d'intéres
+                        </h2>
+                    </div>
+
+                </div> {# Fin carte compétences #}
+
             </div>
-
-            <div class="card"> {# Carte Alternace recherchée #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Alternance recherchée
-                    </h2>
-                </div>
-            </div> {# Fin carte Alternance recherchée #}
-
-            <div class="card"> {# Carte About #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        A propos de moi
-                    </h2>
-                </div>
-            </div> {# Fin carte About #}
-
-
-
-            <div class="card"> {# Carte experience #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Formations
-                    </h2>
-                </div>
-
-            </div> {# Fin carte experience #}
-
-            <div class="card"> {# Carte formation #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Expériences
-                    </h2>
-                </div>
-
-            </div> {# Fin carte Formation #}
-
-            <div class="card"> {# Carte compétences #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Compétences
-                    </h2>
-                </div>
-
-            </div> {# Fin carte compétences #}
-
-            <div class="card"> {# Carte compétences #}
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Savoirs-faire et centres d'intéres
-                    </h2>
-                </div>
-
-            </div> {# Fin carte compétences #}
-
 
 
             {# Lien retour #}
@@ -123,8 +161,8 @@
                     Retour
                 </a>
             </p>
+        </div>
 
-        </div> {# Fin des articles #}
 
         <div class="col-3 d-none d-lg-block p-0 aside"> {# ils m'ont vu #}
             <aside class="aside-absolute">
@@ -149,8 +187,8 @@
             </aside>
         </div> {# Fin #}
     </div>
-</div>
 
+</div>
 
 
 {% endblock %}
