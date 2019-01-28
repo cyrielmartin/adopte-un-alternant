@@ -90,7 +90,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/pass-forgotten", name="pass_forgotten", methods={"GET","POST"})
+     * @Route("/mot-de-passe-oublie", name="pass_forgotten", methods={"GET","POST"})
      */
 
     public function passForgotten(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator)
@@ -140,7 +140,7 @@ class UserController extends AbstractController
     }  
 
     /**
-     * @Route("/pass-recover{token}", name="pass_recover", methods={"GET","POST"})
+     * @Route("/nouveau-mot-de-passe{token}", name="pass_recover", methods={"GET","POST"})
      */
 
     public function passRecover(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
