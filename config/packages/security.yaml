@@ -15,6 +15,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            user_checker: App\Security\UserChecker 
             provider: db_adopte_un_alternant
             anonymous: true
             form_login: 

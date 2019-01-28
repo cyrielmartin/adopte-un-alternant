@@ -35,6 +35,29 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/confirmation-compte{token}", name="account_confirm")
+     */
+    public function accountConfirm(string $token)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $user = $entityManager->getRepository(User::class)->findOneByToken($token); 
+
+        if($user != null) 
+        {
+            $user->setToken(null);
+            $user->setStatus(1);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Votre compte a été activé !');
+        } 
+        else 
+        {
+            $this->addFlash('danger', 'Le compte a déjà été validé. Veuillez vous connecter.');
+        }
+        return $this->redirectToRoute('login');
+    }
+
+    /**
      * @Route("/signup", name="signup", methods={"GET","POST"})
      */
     public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
@@ -42,6 +65,7 @@ class UserController extends AbstractController
         $user = new User();
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
         $user->setRole($role);
+        $user->setStatus(0);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -54,12 +78,11 @@ class UserController extends AbstractController
             ));
                 $token = $tokenGenerator->generateToken();
                 $user->setToken($token);
-                $user->setStatus(0);
 
                 $em->persist($user);
                 $em->flush();
 
-                $url = $this->generateUrl('login', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+                $url = $this->generateUrl('account_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
                 $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('adoptealternant@gmail.com')
@@ -113,7 +136,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('home');
             }
  
             $url = $this->generateUrl('pass_recover', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
