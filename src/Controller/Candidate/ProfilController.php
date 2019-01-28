@@ -2,8 +2,10 @@
 
 namespace App\Controller\Candidate;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\IsCandidateRepository;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -11,15 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("/profil", name="profil")
+     * @Route("/profil/{id}", name="profil")
      */
-    public function show()
+    public function show(User $user, IsCandidateRepository $isCandidateRepo)
     {
+        $userId= $user->getId();
+        
+        $candidateDatas= $isCandidateRepo->findOneByuser($userId);
+        //dd($candidateDatas);
+
+     
         // Affiche le profil du user 
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
 
         return $this->render('candidate/profil/profil.html.twig', [
-            'controller_name' => 'ProfilController',
+            'candidateDatas' =>  $candidateDatas,
         ]);
     }
 
