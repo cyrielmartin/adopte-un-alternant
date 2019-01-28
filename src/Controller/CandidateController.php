@@ -111,8 +111,8 @@ class CandidateController extends AbstractController
             $filterNames[] = $key;
         }
         /**
-         * Peut importe le nombre de filtre coché, les résultats sont toujours
-         * récupéré d'après l'ordre d'affichage du form soit:
+         * Peu importe le nombre de filtre coché, les résultats sont toujours
+         * récupérés d'après l'ordre d'affichage du form soit:
          * [0]skills
          * [1]departments ou [1]awards 
          * 
