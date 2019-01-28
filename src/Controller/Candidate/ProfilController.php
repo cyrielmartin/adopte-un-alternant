@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\IsCandidateRepository;
+use App\Repository\VisitCardRepository;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -15,12 +16,17 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil")
      */
-    public function show(User $user, IsCandidateRepository $isCandidateRepo)
+    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo)
     {
         $userId= $user->getId();
         
         $candidateDatas= $isCandidateRepo->findOneByuser($userId);
-        //dd($candidateDatas);
+        dump($candidateDatas);
+
+        $candidateId=$candidateDatas->getId();
+        dump($candidateId);
+
+        $candidateInformation = $visitCardRepo->findBy($candidateId);
 
      
         // Affiche le profil du user 
