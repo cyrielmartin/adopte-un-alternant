@@ -146,7 +146,7 @@ class UserController extends AbstractController
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'emails/passRecover.html.twig',
+                        'emails/pass_recover.html.twig',
                         ['user'=>$user,
                         'url' => $url,
                         ]
@@ -159,7 +159,7 @@ class UserController extends AbstractController
  
             return $this->redirectToRoute('login');
         }
-        return $this->render('user/passForgotten.html.twig');
+        return $this->render('user/pass_forgotten.html.twig');
     }  
 
     /**
@@ -181,7 +181,7 @@ class UserController extends AbstractController
 
                 if($user === null) 
                 {
-                    $this->addFlash('danger', 'Le mot de passe associé à cet email a déjà été modifié. Veuillez vous connecter.');
+                    $this->addFlash('danger', 'Le lien servant à modifier ce mot de passe a déjà été utilisé. Veuillez cliquer à nouveau sur "mot de passe oublié.');
                     return $this->redirectToRoute('login');
                 }
 
@@ -196,12 +196,12 @@ class UserController extends AbstractController
             else
             {
                 $this->addFlash('danger', 'Les mots de passe saisis ne correspondent pas.');
-                return $this->render('user/passRecover.html.twig');
+                return $this->render('user/pass_recover.html.twig');
             }   
         } 
         else 
         {
-            return $this->render('user/passRecover.html.twig');
+            return $this->render('user/pass_recover.html.twig');
         }
     }
 }
