@@ -145,26 +145,40 @@ class UserController extends AbstractController
 
     public function passRecover(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
-        if ($request->isMethod('POST')) {
-            $entityManager = $this->getDoctrine()->getManager();
- 
-            $user = $entityManager->getRepository(User::class)->findOneByToken($token);
- 
-            if ($user === null) {
-                $this->addFlash('danger', 'Le mot de passe associé à cet email a déjà été modifié. Veuillez vous connecter.');
+        $pass = $request->get('password');
+        $passConfirm = $request->get('password_confirm');
+        
+        if( !empty($pass) && !empty($passConfirm))
+        {
+            if($pass === $passConfirm)
+            {
+                $entityManager = $this->getDoctrine()->getManager();
+        
+                $user = $entityManager->getRepository(User::class)->findOneByToken($token);
+
+                if($user === null) 
+                {
+                    $this->addFlash('danger', 'Le mot de passe associé à cet email a déjà été modifié. Veuillez vous connecter.');
+                    return $this->redirectToRoute('login');
+                }
+
+                $user->setToken(null);
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+                $entityManager->flush();
+
+                $this->addFlash('notice', 'Le mot de passe a bien été modifié');
+
                 return $this->redirectToRoute('login');
             }
- 
-            $user->setToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
-            $entityManager->flush();
- 
-            $this->addFlash('notice', 'Le mot de passe a bien été modifié');
- 
-            return $this->redirectToRoute('login');
-        } else {
+            else
+            {
+                $this->addFlash('danger', 'Les mots de passe saisis ne correspondent pas.');
+                return $this->render('user/passRecover.html.twig');
+            }   
+        } 
+        else 
+        {
             return $this->render('user/passRecover.html.twig');
         }
     }
-
 }
