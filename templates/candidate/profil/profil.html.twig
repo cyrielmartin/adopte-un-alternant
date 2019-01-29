@@ -109,9 +109,7 @@
                                 Alternance recherchée
                             </h2>
                             {#
-                            Nom de l'école
-                            Intitulé du diplôme à obtenir
-                            Niveau scolaire du diplôme à obtenir
+                            
                             Date début
                             Date fin
                             Localisation ( l'utilisateur peut entrer jusqu'à 3 villes pour définir son périmètre de
@@ -119,6 +117,73 @@
                             #}
 
                         </div>
+                        <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                             
+                                            {% for formationInfo in formationsInfo %}
+                                                {% if formationInfo.status == 2 %}
+                                                    <tr>
+                                                        <th scope="row">A partir de </th> 
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        
+                                                        <td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Pour une durée de </th> 
+                                                        <td></td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        
+                                                        <td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Aux alentours de </th> 
+                                                        <td> </td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        
+                                                        <td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Avec l'école</th> 
+                                                        <td>{{ formationInfo.school.name}}</td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        <td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Pour obtenir le diplôme</th> 
+                                                        <td>{{ formationInfo.awardName}}</td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        
+                                                        <td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">De niveau</th> 
+                                                        <td>{{ formationInfo.awardLevel.name}}</td>
+                                                        <td>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        
+                                                        <td>
+                                                    </tr>
+                                                    {% endif %}
+                                                
+                                                {% endfor %}
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
                     </div> {# Fin carte Alternance recherchée #}
 
                     <div class="card"> {# Carte About #}
