@@ -43,6 +43,7 @@ class VisitCardType extends AbstractType
             ] )
             ->add('visibilityChoice', ChoiceType::class, [
                 'label' => 'Sur votre profil public, que souhaitez-vous afficher ?',
+                'help' => 'Les entreprises identifiées ont accès à l\'ensemble de vos informations',
                 'choices' => [
                     'Prénom et nom' => 0,
                     'Nom uniquement' => 1,
