@@ -19,6 +19,23 @@ class IsRecruiterRepository extends ServiceEntityRepository
         parent::__construct($registry, IsRecruiter::class);
     }
 
+    /**
+     * @return Query
+     */
+
+    public function findViewProfil($candidateId)
+    {
+       $qb = $this
+           ->createQueryBuilder('isRecruiter')
+           ->join('isRecruiter.isCandidates', 'isCandidate')
+           ->addSelect('isCandidate')
+           ->where('isCandidate.id = :isCandidateId')
+           ->setParameter('isCandidateId', $candidateId);
+       ;
+
+       return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return IsRecruiter[] Returns an array of IsRecruiter objects
     //  */

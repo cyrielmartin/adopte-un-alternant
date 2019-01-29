@@ -19,6 +19,8 @@ class IsCandidateRepository extends ServiceEntityRepository
         parent::__construct($registry, IsCandidate::class);
     }
 
+    
+
     // /**
     //  * @return IsCandidate[] Returns an array of IsCandidate objects
     //  */

@@ -19,9 +19,9 @@
 
             <div class="card">
 
-                <div class="d-md-flex flex-row">{# Carte de visite #}
+                <div class="card d-md-flex flex-row flex-wrap justify-content-around">{# Carte de visite #}
 
-                    <div class="d-flex flex-column col-3">
+                    <div class="d-flex flex-column">{# picture & boutons modif#}
                         <div class="p-2">
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
@@ -37,92 +37,157 @@
                             </a>
 
                         </div>
-                    </div>
+                    </div>{# fin picture & boutons modif#}
 
 
-                    <div class="d-flex flex-column col-5">
+                    <div class="d-flex flex-column ">{# nom prénon mail phone number & boutons modif#}
 
-                        <div class="p-2">
-                            {{ app.user.lastname }} {{ app.user.firstname }}
+                        <div class="p-2 table-responsive">
+                            
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th>{{ app.user.lastname }} {{ app.user.firstname }}
+                                        </th>
+                                        <th>
+                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
+                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            </a>
+                                        </th>
+                                        </tr>
+                                    <tr>
+                                        <th>{{ app.user.email }}
+                                        </th>
+                                    
+                                        <th>
+                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
+                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ candidateDatas.phoneNumber }}
+                                        </th>
+                                        <th>
+                                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
+                                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            </a>
+                                        </th>
+                                    </tr>
 
-                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            </a>
-                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                            </a>
 
-
+                                </tbody>
+                            </table>
+                                                       
                         </div>
 
-                        <div class="p-2">
-                            {{ app.user.email }}
 
-                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            </a>
-                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                            </a>
-
-                        </div>
-
-                        <div class="p-2">
-                            {{ candidateDatas.phoneNumber }}
-                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            </a>
-                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                            </a>
-                        </div>
+                    </div> {# fin nom prénon mail phone number & boutons modif#}
 
 
-                    </div>
+                    
 
+                        <div class="d-flex flex-column"> {# site web, statut recherche ou adopté & boutons modif#}
+                            <div class="p-2 table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Site:
+                                                <a href="{{webSite.link}}"> {{webSite.name}}</a>
+                                            </th>
+                                            <td>
+                                                <a href= "{{ path("website_edit", {"id": webSite.id }) }}">
+                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <a href= "{{ path("website_delete", {"id": webSite.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>
 
-                    <div class="p-2">
+                                        <tr>
+                                            {% if candidateInformation.adopted == 1 %}
+                                                <th class="text-success">
+                                                    Adopté
+                                            {% else %}
+                                                <th class="text-danger"> En recherche d'alternance
+                                            {% endif %}
+                                                </th>
+                                                <td>                                   
+                                                    <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("about_delete", {"id": visitCardId }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    </a>
+                                                </td>
+                                                
 
-                        <div class="d-flex flex-column">
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                            <div class="p-2">
-
-                                Site :
-                                <a href="{{webSite.link}}"> {{webSite.name}}</a>
-
-                                <a href= "{{ path("website_edit", {"id": webSite.id }) }}">
-                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                </a>
-                                <a href= "{{ path("website_delete", {"id": webSite.id }) }}">
-                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                </a>
+                                
                             </div>
 
 
-                            {% if candidateInformation.adopted == 1 %}
-                                <div class="p-2 text-success">
-                                    Adopté
-                            {% else %}
-                                <div class="p-2 text-danger"> En recherche d'alternance
-                            {% endif %}
+                            
+                            
+                        </div> {# fin site web, statut recherche ou adopté & boutons modif#}
 
-                                    <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
-                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                    </a>
-                                    <a href= "{{ path("about_delete", {"id": visitCardId }) }}">
-                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                    </a>
+
+
+                </div> {# Fin carte visite #}
+
+                    <div class="accordion col-12 col-lg-12 p-0" id="accordionExample"> {# Accordéon #}
+                        <div class="card"> {# Carte Ils ont vu votre prolfil #}
+                    
+                            <div class="card-header col-12 bg-dark text-white h5 text-center" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Ils ont vu votre profil, Mettons nous cette card en hamburger? car si la liste est longue?
+                            </div>
+                    
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                         <tr>
+                                            <th scope="col">
+                                            Nom du recruteur
+                                            </th>
+                                            <th scope="col">
+                                            Nombre de vues
+                                            </th>            
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                    <tbody>
+                                        
+                                            {% for viewInfo in viewsInfo %}
+                                            <tr>
+                                                <td>{{ viewInfo.companyName}}
+                                                </td>
+                                                <td>
+                                                </td> 
+                                            </tr>                        
+                                            {% endfor %}
+                                    </tbody>
+                                    </table>
                                 </div>
-                                <span class="list-group-item bg-light font-weight-bold">
-                        Ils m'ont vu
-                    </span>
+
                             </div>
-
-                        </div>
-
-
-
-                    </div> {# Fin carte visite #}
+                            </div>
+                    
+                        </div>{# fin Carte Ils ont vu votre prolfil #}
+                    </div>{# fin accordéon #}
 
                     <div class="card"> {# Carte Alternace recherchée #}
                         <div class="card-header">
@@ -161,8 +226,7 @@
                                                             </a>
                                                             <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
                                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                        
+                                                            </a>                
                                                         <td>
                                                     </tr>
                                                     <tr>
@@ -171,8 +235,7 @@
                                                             {% for mobilityInfo in mobilitiesInfo %}
                                                             <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
                                                            {% endfor %}
-                                                        </td>                   
-                                                        
+                                                        </td>                                                  
                                                         <td>
                                                         {% for mobilityInfo in mobilitiesInfo %}
                                                             <p>
@@ -186,10 +249,7 @@
                                                             </p>
                                                         
                                                              {% endfor %}
-                                                             </td>
-                                                             
-                                                            
-                                                        
+                                                             </td>    
                                                         
                                                     </tr>
                                                     <tr>
@@ -287,46 +347,46 @@
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                         <tbody>
-                                          <tr> {#Nom de l'école#}
-                                            <th scope="row">Ecole
-                                            </th> 
+                                            <tr> {#Nom de l'école#}
+                                                <th scope="row">Ecole
+                                                </th> 
                                                 {% for formationInfo in formationsInfo %}
                                                     <td>{{ formationInfo.school.name}}
                                                     </td>                          
                                                 {% endfor %}
-                                        </tr>
+                                            </tr>
                 
-                                        <tr> {#Intitulé du diplôme#}
-                                            <th scope="row">Diplôme
-                                            </th>
+                                            <tr> {#Intitulé du diplôme#}
+                                                <th scope="row">Diplôme
+                                                </th>
+                                                    {% for formationInfo in formationsInfo %}
+                                                        <td>{{ formationInfo.awardName}}
+                                                        </td>
+                                                {% endfor %}
+                                            </tr>
+
+                                            <tr>{#Niveau du diplôme#}
+                                                <th scope="row">Niveau scolaire</th>
+                                                    {% for formationInfo in formationsInfo %}
+                                                        <td>{{ formationInfo.awardLevel.name}}
+                                                        </td>       
+                                                {% endfor %}
+                                            </tr>
+
+                                            <tr>{#Date obtention diplôme OU formation toujours en cours#}
+                                                <th scope="row">Date d'obtention du diplôme</th>
                                                 {% for formationInfo in formationsInfo %}
-                                                    <td>{{ formationInfo.awardName}}
-                                                    </td>
-                                            {% endfor %}
-                                        </tr>
+                                                    {% if formationInfo.status == 0 %}
+                                                    <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                    {% elseif formationInfo.status == 1 %}
+                                                    <td>en cours</td>
+                                                    {% elseif formationInfo.status == 2 %}
+                                                    <td>en cours et en recherche d'alternance</td>
 
-                                        <tr>{#Niveau du diplôme#}
-                                            <th scope="row">Niveau scolaire</th>
-                                                {% for formationInfo in formationsInfo %}
-                                                    <td>{{ formationInfo.awardLevel.name}}
-                                                    </td>       
-                                            {% endfor %}
-                                          </tr>
+                                                    {% endif %}
+                                                {% endfor %}
 
-                                          <tr>{#Date obtention diplôme OU formation toujours en cours#}
-                                            <th scope="row">Date d'obtention du diplôme</th>
-                                            {% for formationInfo in formationsInfo %}
-                                                {% if formationInfo.status == 0 %}
-                                                <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                                {% elseif formationInfo.status == 1 %}
-                                                <td>en cours</td>
-                                                {% elseif formationInfo.status == 2 %}
-                                                <td>en cours et en recherche d'alternance</td>
-
-                                                {% endif %}
-                                            {% endfor %}
-                                                
-                                          </tr>
+                                            </tr>
 
                                         </tbody>
                                     </table>
