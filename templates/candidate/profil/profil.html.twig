@@ -13,7 +13,6 @@
 
 <div class="col-12 ">
 
-
     <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between">
 
         <div class="col-12 col-lg-11 p-0">
@@ -30,9 +29,12 @@
 
                         <div class="p-2">
 
-
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            </a>
 
                         </div>
                     </div>
@@ -43,10 +45,12 @@
                         <div class="p-2">
                             {{ app.user.lastname }} {{ app.user.firstname }}
 
-
-                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-
-                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            </a>
 
 
                         </div>
@@ -54,15 +58,23 @@
                         <div class="p-2">
                             {{ app.user.email }}
 
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            </a>
 
                         </div>
 
                         <div class="p-2">
                             {{ candidateDatas.phoneNumber }}
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                            </a>
+                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                            </a>
                         </div>
 
 
@@ -78,9 +90,12 @@
                                 Site :
                                 <a href="{{webSite.link}}"> {{webSite.name}}</a>
 
-                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-
-                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                <a href= "{{ path("website_edit", {"id": webSite.id }) }}">
+                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                </a>
+                                <a href= "{{ path("website_delete", {"id": webSite.id }) }}">
+                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                </a>
                             </div>
 
 
@@ -111,14 +126,6 @@
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Alternance recherchée
                             </h2>
-                            {#
-                            
-                            Date début
-                            Date fin
-                            Localisation ( l'utilisateur peut entrer jusqu'à 3 villes pour définir son périmètre de
-                            recherche d'une entreprise )
-                            #}
-
                         </div>
                         <div class="card-body">
                                 <div class="table-responsive">
@@ -126,6 +133,8 @@
                                         <tbody>
                                              
                                             {% for formationInfo in formationsInfo %}
+                                            
+                                        
                                                 {% if formationInfo.status == 2 %}
                                                     <tr>
                                                         <th scope="row">A partir du </th> 
@@ -197,9 +206,12 @@
                         <div class="card-header">
                                 <h2 class="h5 mb-0 text-center text-secondary">
                                     A propos de moi
-                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-
-                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                    <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
+                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                    </a>
+                                    <a href= "{{ path("about_delete", {"id": visitCardId }) }}">
+                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                    </a>
                                 </h2>
                         </div>
                             <div class="card-body">
@@ -249,9 +261,11 @@
                                             <th scope="row">Niveau scolaire</th>
                                             {% for formationInfo in formationsInfo %}
                                             <td>{{ formationInfo.awardLevel.name}}</td>
+                                            
+                                            
                                             {% endfor %}
                                             <td>
-                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <a href= "{{ path("formation_edit", {"id": candidateInformation.id }) }}"> <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button><a>
                                                 <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
                                             <td>
 
@@ -434,6 +448,8 @@
         </div>
 
     </div>
+
+</div>
 
 
     {% endblock %}

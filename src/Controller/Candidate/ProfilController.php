@@ -35,7 +35,7 @@ class ProfilController extends AbstractController
         $candidateId=$candidateDatas->getId();
 
         $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
-
+        //dd ($candidateInformation);
 
         //récupération de l'Id de la visitCard pour accéder aux metatables
         $visitCardId = $candidateInformation->getId();
@@ -43,7 +43,7 @@ class ProfilController extends AbstractController
         $webSite = $webSiteRepo->findOneByVisitCard($visitCardId);
        
         $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
-        
+        //dd ($formationsInfo);
 
         $experiencesInfo =$experienceRepo->findByVisitCard($visitCardId);
 
@@ -57,7 +57,7 @@ class ProfilController extends AbstractController
 
         //création d'un requête join dans le fichier mobilityRepo pour récupérer les mobilités du candidat par Id de visitCard
         $mobilitiesInfo = $mobilityRepo ->findByVisitCard($visitCardId);
-        dump ($mobilitiesInfo);
+        //dump ($mobilitiesInfo);
 
      
         
@@ -71,6 +71,7 @@ class ProfilController extends AbstractController
             'skillsInfo'=>$skillsInfo,
             'additionalsInfo'=>$additionalsInfo,
             'mobilitiesInfo'=>$mobilitiesInfo,
+            'visitCardId'=>$visitCardId
 
         ]);
     }
