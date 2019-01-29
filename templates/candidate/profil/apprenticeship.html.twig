@@ -2,15 +2,21 @@
 
 {% block title %} {{ tab_type }} une alternance {% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="container">
-
+    
+    <div class="h5 my-4 text-center">Informations concernant la formation en alternance pour laquelle vous cherchez un employeur</div>
+    
     <div class="col-12 col-mg-6 col-lg-5 mx-auto my-3">
-
+    
         <div class="my-3">
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_widget(form) }}
-                <button type="submit" class="btn btn-secondary mb-2 p-2 col-6 d-block mx-auto">
+                <button type="submit" class="btn btn-secondary mb-2 p-2 col-8 d-block mx-auto">
                     Ajouter cette alternance
                 </button>
             {{ form_end(form) }}
@@ -19,4 +25,10 @@
 
 </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ asset('js/autocomplete.js') }}"></script>
 {% endblock %}
