@@ -1,20 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ApprenticeshipController!{% endblock %}
+{% block title %} {{ tab_type }} une alternance {% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="col-12 col-mg-6 col-lg-5 mx-auto my-3">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/src/Controller/Candidate/ApprenticeshipController.php'|file_link(0) }}">src/Controller/Candidate/ApprenticeshipController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/templates/candidate/apprenticeship/index.html.twig'|file_link(0) }}">templates/candidate/apprenticeship/index.html.twig</a></code></li>
-    </ul>
+        <div class="my-3">
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_widget(form) }}
+                <button type="submit" class="btn btn-secondary mb-2 p-2 col-6 d-block mx-auto">
+                    Ajouter cette alternance
+                </button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
 </div>
+
 {% endblock %}
