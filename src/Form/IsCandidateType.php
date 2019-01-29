@@ -29,10 +29,10 @@ class IsCandidateType extends AbstractType
             ->add('picture', FileType::class, [
                 'data_class' => null,
                 'attr' => [
-                    'placeholder' => 'Taille de fichier maximale : 20Ko',
+                    'placeholder' => 'Facultatif',
                 ],
                 'label'=>'Photo',
-                'help' => 'Facultatif',
+                'help' => 'Taille de fichier maximale : 20Ko',
             ])
             // ->add('user')
             // ->add('isRecruiters')

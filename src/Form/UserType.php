@@ -83,6 +83,11 @@ class UserType extends AbstractType
             'second_options' => [
                 'label' => 'Vérification du mot de passe'
             ],
+            'constraints' => [
+                new NotBlank([
+                    'message' => 'Veuillez saisir un mot de passe'
+                ]),
+            ]
         ])
             // ->add('token')
             // ->add('status')

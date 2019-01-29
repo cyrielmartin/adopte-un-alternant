@@ -42,6 +42,7 @@ class AboutController extends AbstractController
                 'notice',
                 'La page de présentation a bien été modifiée'
             );
+            return $this->redirectToRoute('about_edit', ['id' => $user->getId()]);
         }
 
         $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);
@@ -50,6 +51,10 @@ class AboutController extends AbstractController
             $em->persist($visitCard);
             $em->flush();
 
+            $this->addFlash(
+                'notice',
+                'La page de présentation a bien été modifiée'
+            );
             return $this->redirectToRoute('about_edit', ['id' => $user->getId()]);
         }
 
