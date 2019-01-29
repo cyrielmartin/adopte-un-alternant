@@ -231,7 +231,16 @@
                                           
                                             {% for experienceInfo in experiencesInfo %}
                                             <tr>
-                                                <td></td>
+                                                <td>
+                                                Du {{ experienceInfo.startedAt|date("m/d/Y")}}
+                                                {% if experienceInfo.endedAt == null %}
+                                                à aujourd'hui
+                                                
+                                                {% else %}
+                                                à {{ experienceInfo.endedAt|date("m/d/Y")}}
+                                                {% endif %}
+            
+                                                </td>
                                                 <td>{{ experienceInfo.companyName}}</td>
                                                 <td>{{ experienceInfo.description}}</td>
                                                
