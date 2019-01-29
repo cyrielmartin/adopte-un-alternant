@@ -5,10 +5,12 @@ namespace App\Form;
 use App\Entity\IsCandidate;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeExtensionGuesser;
 
 class IsCandidateType extends AbstractType
 {
@@ -26,17 +28,15 @@ class IsCandidateType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('picture', FileType::class, [
-                'data_class' => null,
-                'attr' => [
-                    'placeholder' => 'Facultatif',
-                ],
-                'label'=>'Photo',
-                'help' => 'Taille de fichier maximale : 20Ko',
+            ->add('pictureFile', VichImageType::class, [
+                'allow_delete' => true, // not mandatory, default is true
+                'download_link' => false, // not mandatory, default is true
+                'label' => 'Votre photo',
             ])
             // ->add('user')
             // ->add('isRecruiters')
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
