@@ -285,12 +285,64 @@
 
                     </div> {# Fin carte compétences #}
 
-                    <div class="card"> {# carte Savoirs-faire et centres d'intérêts #}
+                    <div class="card"> {# carte Atouts et centres d'intérêts #}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
-                                Savoirs-faire et centres d'intérêts
+                                Atouts et centres d'intérêts
                             </h2>
                         </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr>
+                                          <th scope="col">Atouts</th>
+                                          <th></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+
+                                    <tbody>{# corps tableau atouts#}
+                                    {% for additionalInfo in additionalsInfo %}
+                                        <tr>
+                                        {% if additionalInfo.typeInfo == 'assert' %}
+                                            <td>
+                                            {{additionalInfo.content}}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            </td>          
+                                        {% else %}
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+
+                                    <thead>{# titre de colonnes #}
+                                        <tr>
+                                          <th scope="col">Centres d'intérêts</th>
+                                          <th></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+
+                                    <tbody>{# corps tableau centres d'intérêts#}
+                                    {% for additionalInfo in additionalsInfo %}
+                                        <tr>
+                                        {% if additionalInfo.typeInfo == 'interest' %}
+                                            <td>
+                                            {{additionalInfo.content}}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            </td>          
+                                        {% else %}
+                                        {% endif %}
+                                        
+                                    {% endfor %}
+
+                                </table>
+                            </div>
+                        </div>            
 
                     </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
 
