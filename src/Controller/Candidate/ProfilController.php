@@ -12,6 +12,7 @@ use App\Repository\FormationRepository;
 use App\Repository\ExperienceRepository;
 use App\Repository\SkillRepository;
 use App\Repository\AdditionalRepository;
+use App\Repository\MobilityRepository;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -19,12 +20,13 @@ use App\Repository\AdditionalRepository;
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("/profil/{id}", name="profil")
+     * @Route("/profil", name="profil")
      */
-    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo)
+    public function show(IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
     {
         // Affiche le profil du user 
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
+        $user = $this->getUser();
         $userId= $user->getId();
         
         $candidateDatas= $isCandidateRepo->findOneByuser($userId);
@@ -52,6 +54,10 @@ class ProfilController extends AbstractController
 
         $additionalsInfo = $additionalRepo ->findByVisitCard($visitCardId);
         //dd($additionalsInfo);
+
+        //création d'un requête join dans le fichier mobilityRepo pour récupérer les mobilités du candidat par Id de visitCard
+        //$mobilitiesInfo = $mobilityRepo ->findByVisitCard($visitCardId);
+        //dd ($mobilitiesInfo);
 
      
         
