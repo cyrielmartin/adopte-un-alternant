@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Repository\IsCandidateRepository;
 use App\Repository\VisitCardRepository;
 use App\Repository\WebsiteRepository;
+use App\Repository\FormationRepository;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -17,32 +18,36 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil")
      */
-    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo)
+    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo)
     {
+        // Affiche le profil du user 
+        // Pas de form ici ( seulement de la récupèration d'info pour affichage )
         $userId= $user->getId();
         
         $candidateDatas= $isCandidateRepo->findOneByuser($userId);
-        dump($candidateDatas);
+        //dump($candidateDatas);
 
         $candidateId=$candidateDatas->getId();
-        dump($candidateId);
+        //dump($candidateId);
 
         $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
-        dump ($candidateInformation);
+        //dump($candidateInformation);
 
         $visitCardId = $candidateInformation->getId();
         //dd($visitCardId);
         $webSite = $webSiteRepo->findOneByVisitCard($visitCardId);
         //dd($webSite);
+        $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
+        //dd($formationsInfo);
         
      
-        // Affiche le profil du user 
-        // Pas de form ici ( seulement de la récupèration d'info pour affichage )
+        
 
         return $this->render('candidate/profil/profil.html.twig', [
             'candidateDatas' =>  $candidateDatas,
             'candidateInformation' => $candidateInformation,
             'webSite'=>$webSite,
+            'formationsInfo'=>$formationsInfo,
 
         ]);
     }

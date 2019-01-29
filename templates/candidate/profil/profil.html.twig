@@ -16,11 +16,11 @@
 
     <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between">
 
-        <div class="col-12 col-lg-8 p-0"> {# Carte de visite #}
+        <div class="col-12 col-lg-8 p-0">
 
             <div class="card">
 
-                <div class="d-md-flex flex-row">
+                <div class="d-md-flex flex-row">{# Carte de visite #}
 
                     <div class="d-flex flex-column">
                         <div class="p-2">
@@ -36,9 +36,6 @@
 
                         </div>
                     </div>
-
-
-
 
 
                     <div class="d-flex flex-column">
@@ -72,9 +69,6 @@
                     </div>
 
 
-
-
-
                     <div class="p-2">
 
                         <div class="d-flex flex-column">
@@ -84,111 +78,208 @@
                                 Site :
                                 <a href="{{webSite.link}}"> {{webSite.name}}</a>
 
-
                                 <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
 
                                 <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
                             </div>
+
+
+                            {% if candidateInformation.adopted == 1 %}
+                                <div class="p-2 text-success">
+                                    Adopté
+                            {% else %}
+                                <div class="p-2 text-danger"> En recherche d'alternance
+                            {% endif %}
+
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                </div>
+                            </div>
+
                         </div>
 
-                    </div>
+
+
+                    </div> {# Fin carte visite #}
+
+                    <div class="card"> {# Carte Alternace recherchée #}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Alternance recherchée
+                            </h2>
+                            {#
+                            Nom de l'école
+                            Intitulé du diplôme à obtenir
+                            Niveau scolaire du diplôme à obtenir
+                            Date début
+                            Date fin
+                            Localisation ( l'utilisateur peut entrer jusqu'à 3 villes pour définir son périmètre de
+                            recherche d'une entreprise )
+                            #}
+
+                        </div>
+                    </div> {# Fin carte Alternance recherchée #}
+
+                    <div class="card"> {# Carte About #}
+                        <div class="card-header">
+                                <h2 class="h5 mb-0 text-center text-secondary">
+                                    A propos de moi
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                </h2>
+                        </div>
+                            <div class="card-body">
+                                <p class="text-justify">
+                                    {{ candidateInformation.about}}
+                                </p>
+
+                            </div>
+                        
+                    </div> {# Fin carte About #}
 
 
 
-                </div> {# Fin carte visite #}
+                    <div class="card"> {# Carte formation#}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Formations
+                            </h2>
+                        </div>
+                            <div class="card-body">
 
-                <div class="card"> {# Carte Alternace recherchée #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Alternance recherchée
-                        </h2>
-                    </div>
-                </div> {# Fin carte Alternance recherchée #}
+                                        {#
+                                        
+                                        SI formation en cours : date fin formation
 
-                <div class="card"> {# Carte About #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            A propos de moi
-                        </h2>
-                    </div>
-                </div> {# Fin carte About #}
+                                        #}
+                                <table class="table">
+                                    <tbody>
+                                      <tr> {#Nom de l'école#}
+                                        <th scope="row">Ecole</th> 
+                                        {% for formationInfo in formationsInfo %}
+                                        <td>{{ formationInfo.school.name}}</td>
+                                        {% endfor %}
+                                        <td>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                        <td>
+                                      </tr>
+
+                                      <tr> {#Intitulé du diplôme#}
+                                        <th scope="row">Diplôme</th>
+                                       {% for formationInfo in formationsInfo %}
+                                        <td>{{ formationInfo.awardName}}</td>
+                                        {% endfor %}
+                                        
+                                        <td>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                        <td> 
+                                      </tr>
+
+                                      <tr>{#Niveau du diplôme#}
+                                        <th scope="row">Niveau scolaire</th>
+                                        {% for formationInfo in formationsInfo %}
+                                        <td>{{ formationInfo.awardLevel.name}}</td>
+                                        {% endfor %}
+                                        <td>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                        <td>
+                                        
+                                      </tr>
+
+                                      <tr>{#Date obtention diplôme OU formation toujours en cours#}
+                                        <th scope="row">Date d'obtention du diplôme</th>
+                                        {% for formationInfo in formationsInfo %}
+                                            {% if formationInfo.status == 0 %}
+                                            <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                            {% elseif formationInfo.status == 1 %}
+                                            <td>en cours</td>
+                                            {% elseif formationInfo.status == 2 %}
+                                            <td>en cours et en recherche d'alternance</td>
+
+                                            {% endif %}
+                                        {% endfor %}
+                                        <td>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                        <td>
+                                      </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                    </div> {# Fin carte formation #}
+
+                    <div class="card"> {# Carte expériences #}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Expériences
+                            </h2>
+                        </div>
+
+                    </div> {# Fin carte Formation #}
+
+                    <div class="card"> {# Carte compétences #}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Compétences
+                            </h2>
+                        </div>
+
+                    </div> {# Fin carte compétences #}
+
+                    <div class="card"> {# Carte compétences #}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Savoirs-faire et centres d'intéres
+                            </h2>
+                        </div>
+
+                    </div> {# Fin carte compétences #}
+
+                </div>
 
 
-
-                <div class="card"> {# Carte experience #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Formations
-                        </h2>
-                    </div>
-
-                </div> {# Fin carte experience #}
-
-                <div class="card"> {# Carte formation #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Expériences
-                        </h2>
-                    </div>
-
-                </div> {# Fin carte Formation #}
-
-                <div class="card"> {# Carte compétences #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Compétences
-                        </h2>
-                    </div>
-
-                </div> {# Fin carte compétences #}
-
-                <div class="card"> {# Carte compétences #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Savoirs-faire et centres d'intéres
-                        </h2>
-                    </div>
-
-                </div> {# Fin carte compétences #}
-
+                {# Lien retour #}
+                <p>
+                    <a href="{{path('home')}}" class="btn btn-dark">
+                        <i class="fas fa-arrow-circle-left"></i>
+                        Retour
+                    </a>
+                </p>
             </div>
 
 
-            {# Lien retour #}
-            <p>
-                <a href="{{path('home')}}" class="btn btn-dark">
-                    <i class="fas fa-arrow-circle-left"></i>
-                    Retour
-                </a>
-            </p>
+            <div class="col-3 d-none d-lg-block p-0 aside"> {# ils m'ont vu #}
+                <aside class="aside-absolute">
+
+
+                    <span class="list-group-item bg-light font-weight-bold">
+                        Ils m'ont vu
+                    </span>
+                    <div class="aside-size">
+
+                    </div>
+
+
+                    <span class="list-group-item bg-light font-weight-bold">
+                        En savoir plus sur l'alternances
+                    </span>
+                    <div class="aside-size">
+
+                    </div>
+
+
+                </aside>
+            </div> {# Fin #}
         </div>
 
-
-        <div class="col-3 d-none d-lg-block p-0 aside"> {# ils m'ont vu #}
-            <aside class="aside-absolute">
-
-
-                <span class="list-group-item bg-light font-weight-bold">
-                    Ils m'ont vu
-                </span>
-                <div class="aside-size">
-
-                </div>
-
-
-                <span class="list-group-item bg-light font-weight-bold">
-                    En savoir plus sur l'alternances
-                </span>
-                <div class="aside-size">
-
-                </div>
-
-
-            </aside>
-        </div> {# Fin #}
     </div>
 
-</div>
 
-
-{% endblock %}
+    {% endblock %}
