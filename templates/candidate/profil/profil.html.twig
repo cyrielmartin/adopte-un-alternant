@@ -227,7 +227,7 @@
                                               <th scope="col"></th>
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
-                                        <tbody>
+                                        <tbody>{# corps tableau exp #}
                                           
                                             {% for experienceInfo in experiencesInfo %}
                                             <tr>
@@ -247,9 +247,10 @@
                                                 <td>
                                                     <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                <td>
+                                                </td>
                                             </tr>
-                                             {% endfor %}
+                                            {% endfor %}
+                                        </tbody>{# fin corps tableau exp #}
 
                                     </table>
                                 </div>
@@ -264,16 +265,34 @@
                             </h2>
                         </div>
 
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    {% for skillInfo in skillsInfo %}
+                                    <tr>
+                                        <td>
+                                        {{skillInfo.name}}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                        </td>
+                                    {% endfor %}
+                                
+                                </table>
+                            </div>
+                        </div>                        
+
                     </div> {# Fin carte compétences #}
 
-                    <div class="card"> {# Carte compétences #}
+                    <div class="card"> {# carte Savoirs-faire et centres d'intérêts #}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
-                                Savoirs-faire et centres d'intéres
+                                Savoirs-faire et centres d'intérêts
                             </h2>
                         </div>
 
-                    </div> {# Fin carte compétences #}
+                    </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
 
                 </div>
 

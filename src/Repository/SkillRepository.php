@@ -47,4 +47,20 @@ class SkillRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @return Query
+     */
+
+    public function findByVisitCard($visitCardId)
+    {
+       $qb = $this
+           ->createQueryBuilder('skill')
+           ->join('skill.visitCards', 'visitCard')
+           ->addSelect('visitCard')
+           ->where('visitCard.id = :visitcardId')
+            ->setParameter('visitcardId', $visitCardId);
+       ;
+
+       return $qb->getQuery()->getResult();
+    }
 }
