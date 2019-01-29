@@ -336,8 +336,12 @@
                                                 <td>{{ experienceInfo.description}}</td>
                                                
                                                 <td>
-                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    </a>
                                                 </td>
                                             </tr>
                                             {% endfor %}
