@@ -19,7 +19,7 @@ use phpDocumentor\Reflection\Types\Boolean;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/connexion", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils)
     {
@@ -35,7 +35,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/signup", name="signup", methods={"GET","POST"})
+     * @Route("/inscription", name="signup", methods={"GET","POST"})
      */
     public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
     {

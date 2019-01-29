@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/candidates", name="candidates_list")
+     * @Route("/candidats", name="candidates_list")
      */
     public function showList(Request $request, EntityManagerInterface $em)
     {
