@@ -9,6 +9,7 @@ use App\Repository\IsCandidateRepository;
 use App\Repository\VisitCardRepository;
 use App\Repository\WebsiteRepository;
 use App\Repository\FormationRepository;
+use App\Repository\ExperienceRepository;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -18,7 +19,7 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil/{id}", name="profil")
      */
-    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo)
+    public function show(User $user, IsCandidateRepository $isCandidateRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo)
     {
         // Affiche le profil du user 
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
@@ -39,7 +40,11 @@ class ProfilController extends AbstractController
         //dd($webSite);
         $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
         //dd($formationsInfo);
-        
+
+        $experiencesInfo =$experienceRepo->findByVisitCard($visitCardId);
+
+        //dd($experiencesInfo);
+
      
         
 
@@ -48,6 +53,7 @@ class ProfilController extends AbstractController
             'candidateInformation' => $candidateInformation,
             'webSite'=>$webSite,
             'formationsInfo'=>$formationsInfo,
+            'experiencesInfo'=>$experiencesInfo,
 
         ]);
     }

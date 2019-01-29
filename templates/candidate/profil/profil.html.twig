@@ -148,69 +148,64 @@
                             </h2>
                         </div>
                             <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                          <tr> {#Nom de l'école#}
+                                            <th scope="row">Ecole</th> 
+                                            {% for formationInfo in formationsInfo %}
+                                            <td>{{ formationInfo.school.name}}</td>
+                                            {% endfor %}
+                                            <td>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            <td>
+                                          </tr>
 
-                                        {#
-                                        
-                                        SI formation en cours : date fin formation
+                                          <tr> {#Intitulé du diplôme#}
+                                            <th scope="row">Diplôme</th>
+                                            {% for formationInfo in formationsInfo %}
+                                            <td>{{ formationInfo.awardName}}</td>
+                                            {% endfor %}
+                                            <td>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            <td> 
+                                          </tr>
 
-                                        #}
-                                <table class="table">
-                                    <tbody>
-                                      <tr> {#Nom de l'école#}
-                                        <th scope="row">Ecole</th> 
-                                        {% for formationInfo in formationsInfo %}
-                                        <td>{{ formationInfo.school.name}}</td>
-                                        {% endfor %}
-                                        <td>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                        <td>
-                                      </tr>
+                                          <tr>{#Niveau du diplôme#}
+                                            <th scope="row">Niveau scolaire</th>
+                                            {% for formationInfo in formationsInfo %}
+                                            <td>{{ formationInfo.awardLevel.name}}</td>
+                                            {% endfor %}
+                                            <td>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                            <td>
 
-                                      <tr> {#Intitulé du diplôme#}
-                                        <th scope="row">Diplôme</th>
-                                       {% for formationInfo in formationsInfo %}
-                                        <td>{{ formationInfo.awardName}}</td>
-                                        {% endfor %}
-                                        
-                                        <td>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                        <td> 
-                                      </tr>
+                                          </tr>
 
-                                      <tr>{#Niveau du diplôme#}
-                                        <th scope="row">Niveau scolaire</th>
-                                        {% for formationInfo in formationsInfo %}
-                                        <td>{{ formationInfo.awardLevel.name}}</td>
-                                        {% endfor %}
-                                        <td>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                        <td>
-                                        
-                                      </tr>
+                                          <tr>{#Date obtention diplôme OU formation toujours en cours#}
+                                            <th scope="row">Date d'obtention du diplôme</th>
+                                            {% for formationInfo in formationsInfo %}
+                                                {% if formationInfo.status == 0 %}
+                                                <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                {% elseif formationInfo.status == 1 %}
+                                                <td>en cours</td>
+                                                {% elseif formationInfo.status == 2 %}
+                                                <td>en cours et en recherche d'alternance</td>
 
-                                      <tr>{#Date obtention diplôme OU formation toujours en cours#}
-                                        <th scope="row">Date d'obtention du diplôme</th>
-                                        {% for formationInfo in formationsInfo %}
-                                            {% if formationInfo.status == 0 %}
-                                            <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                            {% elseif formationInfo.status == 1 %}
-                                            <td>en cours</td>
-                                            {% elseif formationInfo.status == 2 %}
-                                            <td>en cours et en recherche d'alternance</td>
+                                                {% endif %}
+                                            {% endfor %}
+                                                <td>
+                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                <td>
+                                          </tr>
 
-                                            {% endif %}
-                                        {% endfor %}
-                                        <td>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                        <td>
-                                      </tr>
-
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                     </div> {# Fin carte formation #}
@@ -221,6 +216,35 @@
                                 Expériences
                             </h2>
                         </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr>
+                                              <th scope="col">Période</th>
+                                              <th scope="col">Entreprise</th>
+                                              <th scope="col">Description</th>
+                                              <th scope="col"></th>
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                        <tbody>
+                                          
+                                            {% for experienceInfo in experiencesInfo %}
+                                            <tr>
+                                                <td></td>
+                                                <td>{{ experienceInfo.companyName}}</td>
+                                                <td>{{ experienceInfo.description}}</td>
+                                               
+                                                <td>
+                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                <td>
+                                            </tr>
+                                             {% endfor %}
+
+                                    </table>
+                                </div>
+                            </div>
 
                     </div> {# Fin carte Formation #}
 
