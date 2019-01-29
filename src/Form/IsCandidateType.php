@@ -18,7 +18,7 @@ class IsCandidateType extends AbstractType
     {
         $builder
             ->add('phoneNumber', TelType::class, [
-                'label'=>'Numéro de téléphone',
+                'label'=>'Votre numéro de téléphone',
                 'attr' => [
                     'placeholder' => 'Veuillez saisir un numéro de téléphone valide',
                 ],
@@ -32,6 +32,7 @@ class IsCandidateType extends AbstractType
                 'allow_delete' => true, // not mandatory, default is true
                 'download_link' => false, // not mandatory, default is true
                 'label' => 'Votre photo',
+                'help' => 'Facultatif',
             ])
             // ->add('user')
             // ->add('isRecruiters')

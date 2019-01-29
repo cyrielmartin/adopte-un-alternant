@@ -3,14 +3,15 @@
 namespace App\Controller\Candidate;
 
 use App\Entity\User;
+use App\Entity\VisitCard;
 use App\Entity\IsCandidate;
 use App\Form\VisitCardType;
 use App\Form\IsCandidateType;
+use App\Form\VisitCardAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\VisitCard;
 
 /**
  * @Route("/candidat/presentation", name="about_")
@@ -20,10 +21,45 @@ class AboutController extends AbstractController
     /**
      * @Route("/ajouter", name="add")
      */
-    public function add()
+    public function add(Request $request, EntityManagerInterface $em)
     {
-        return $this->render('candidate/profil/about.html.twig', [
-            'controller_name' => 'AboutController',
+        $isCandidate = new IsCandidate();
+        $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
+        $isCandidateForm->handleRequest($request);
+
+        if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+            $em->persist($isCandidate);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Les informations ont bien été enregistrées'
+            );
+            
+            return $this->redirectToRoute('home');
+        }
+
+        $visitCardAdd = new VisitCard();
+        $visitCardAddForm = $this->createForm(VisitCardAddType::class, $visitCardAdd);
+        $visitCardAddForm->handleRequest($request);
+
+        if ($visitCardAddForm->isSubmitted() && $visitCardAddForm->isValid()) {
+            $visitCardAdd->setAdopted(0);
+            $em->persist($visitCardAdd);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Les informations ont bien été enregistrées'
+            );
+            
+            return $this->redirectToRoute('home');
+        }
+
+
+        return $this->render('candidate/profil/about_add.html.twig', [
+            'isCandidateForm' => $isCandidateForm->createView(),
+            'visitCardAddForm' => $visitCardAddForm->createView(),
         ]);
     }
 
@@ -58,7 +94,7 @@ class AboutController extends AbstractController
             return $this->redirectToRoute('about_edit', ['id' => $user->getId()]);
         }
 
-        return $this->render('candidate/profil/about.html.twig', [
+        return $this->render('candidate/profil/about_edit.html.twig', [
             'isCandidateForm' => $isCandidateForm->createView(),
             'visitCardForm' => $visitCardForm->createView(),
         ]);      
