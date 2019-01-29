@@ -103,8 +103,17 @@ class AboutController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
+    public function delete(IsCandidate $isCandidate, VisitCard $visitCard, EntityManagerInterface $em)
     {
-        return $this->redirectToRoute('candidate_profil');
+        $em->remove($isCandidate);
+        $em->remove($visitCard);
+        $em->flush();
+
+        $this->addFlash(
+            'notice',
+            'Suppression ok'
+        );
+
+        return $this->redirectToRoute('home');
     }
 }
