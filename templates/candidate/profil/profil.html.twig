@@ -141,7 +141,7 @@
                                                 {% if formationInfo.status == 2 %}
                                                     <tr>
                                                         <th scope="row">A partir du </th> 
-                                                        <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>
+                                                        <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
                                                         <td>
                                                             <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
                                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
@@ -170,13 +170,27 @@
                                                         <td>
                                                             {% for mobilityInfo in mobilitiesInfo %}
                                                             <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
-                                                            {% endfor %}
+                                                           {% endfor %}
                                                         </td>                   
-                                                        <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                         
                                                         <td>
+                                                        {% for mobilityInfo in mobilitiesInfo %}
+                                                            <p>
+                                                            <a href= "{{ path("mobility_edit", {"id": mobilityInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                             
+                                                            <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
+                                                            </p>
+                                                        
+                                                             {% endfor %}
+                                                             </td>
+                                                             
+                                                            
+                                                        
+                                                        
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Avec l'école</th> 
