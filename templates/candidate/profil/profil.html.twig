@@ -143,8 +143,12 @@
                                                         <th scope="row">A partir du </th> 
                                                         <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>
                                                         <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
                                                         
                                                         <td>
                                                     </tr>
@@ -152,8 +156,12 @@
                                                         <th scope="row">Jusqu'au </th> 
                                                         <td>{{ formationInfo.endedAt|date("m/d/Y")}}</td>
                                                         <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
                                                         
                                                         <td>
                                                     </tr>
@@ -174,16 +182,24 @@
                                                         <th scope="row">Avec l'école</th> 
                                                         <td>{{ formationInfo.school.name}}</td>
                                                         <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
                                                         <td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Pour obtenir le diplôme</th> 
                                                         <td>{{ formationInfo.awardName}}</td>
                                                         <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
                                                         
                                                         <td>
                                                     </tr>
@@ -191,8 +207,12 @@
                                                         <th scope="row">De niveau</th> 
                                                         <td>{{ formationInfo.awardLevel.name}}</td>
                                                         <td>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                            </a>
+                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                            </a>
                                                         
                                                         <td>
                                                     </tr>
