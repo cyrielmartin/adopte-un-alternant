@@ -11,12 +11,12 @@
     </a>
 </p>
 
-<div class="col-12 p-0 my-3">
+<div class="col-12 ">
 
 
     <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between">
 
-        <div class="col-12 col-lg-8 p-0">
+        <div class="col-12 col-lg-11 p-0">
 
             <div class="card">
 
@@ -95,6 +95,9 @@
 
                                     <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
                                 </div>
+                                <span class="list-group-item bg-light font-weight-bold">
+                        Ils m'ont vu
+                    </span>
                             </div>
 
                         </div>
@@ -125,8 +128,8 @@
                                             {% for formationInfo in formationsInfo %}
                                                 {% if formationInfo.status == 2 %}
                                                     <tr>
-                                                        <th scope="row">A partir de </th> 
-                                                        <td></td>
+                                                        <th scope="row">A partir du </th> 
+                                                        <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>
                                                         <td>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
@@ -134,8 +137,8 @@
                                                         <td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">Pour une durée de </th> 
-                                                        <td></td>
+                                                        <th scope="row">Jusqu'au </th> 
+                                                        <td>{{ formationInfo.endedAt|date("m/d/Y")}}</td>
                                                         <td>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
@@ -144,7 +147,11 @@
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">Aux alentours de </th> 
-                                                        <td> </td>
+                                                        <td>
+                                                            {% for mobilityInfo in mobilitiesInfo %}
+                                                            <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
+                                                            {% endfor %}
+                                                        </td>                   
                                                         <td>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
                                                             <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
@@ -424,28 +431,6 @@
             </div>
 
 
-            <div class="col-3 d-none d-lg-block p-0 aside"> {# ils m'ont vu #}
-                <aside class="aside-absolute">
-
-
-                    <span class="list-group-item bg-light font-weight-bold">
-                        Ils m'ont vu
-                    </span>
-                    <div class="aside-size">
-
-                    </div>
-
-
-                    <span class="list-group-item bg-light font-weight-bold">
-                        En savoir plus sur l'alternances
-                    </span>
-                    <div class="aside-size">
-
-                    </div>
-
-
-                </aside>
-            </div> {# Fin #}
         </div>
 
     </div>

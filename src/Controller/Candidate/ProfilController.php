@@ -56,8 +56,8 @@ class ProfilController extends AbstractController
         //dd($additionalsInfo);
 
         //création d'un requête join dans le fichier mobilityRepo pour récupérer les mobilités du candidat par Id de visitCard
-        //$mobilitiesInfo = $mobilityRepo ->findByVisitCard($visitCardId);
-        //dd ($mobilitiesInfo);
+        $mobilitiesInfo = $mobilityRepo ->findByVisitCard($visitCardId);
+        dump ($mobilitiesInfo);
 
      
         
@@ -70,6 +70,7 @@ class ProfilController extends AbstractController
             'experiencesInfo'=>$experiencesInfo,
             'skillsInfo'=>$skillsInfo,
             'additionalsInfo'=>$additionalsInfo,
+            'mobilitiesInfo'=>$mobilitiesInfo,
 
         ]);
     }

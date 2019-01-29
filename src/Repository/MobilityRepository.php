@@ -55,8 +55,8 @@ class MobilityRepository extends ServiceEntityRepository
     public function findByVisitCard($visitCardId)
     {
        $qb = $this
-           ->createQueryBuilder('skill')
-           ->join('skill.visitCards', 'visitCard')
+           ->createQueryBuilder('mobility')
+           ->join('mobility.visitCards', 'visitCard')
            ->addSelect('visitCard')
            ->where('visitCard.id = :visitcardId')
             ->setParameter('visitcardId', $visitCardId);
