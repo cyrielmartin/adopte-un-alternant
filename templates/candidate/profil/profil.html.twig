@@ -372,7 +372,7 @@
                                             <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
-                                            <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
+                                            <a href= "{{ path("skill_delete", {"id": skillInfo.id }) }}">
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                             </a>
                                         </td>
@@ -408,8 +408,12 @@
                                             {{additionalInfo.content}}
                                             </td>
                                             <td>
-                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                </a>
                                             </td>          
                                         {% else %}
                                         {% endif %}
@@ -431,8 +435,12 @@
                                             {{additionalInfo.content}}
                                             </td>
                                             <td>
-                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                </a>
                                             </td>          
                                         {% else %}
                                         {% endif %}
