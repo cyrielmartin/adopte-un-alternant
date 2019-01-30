@@ -37,6 +37,14 @@ body {
     color:grey;
 }
 
+.profil {
+    background-color:#343a40;
+}
+
+.profil:hover{
+    background-color: grey;
+}
+
 .recruiter p,
 .candidate p {
     background-color: white;

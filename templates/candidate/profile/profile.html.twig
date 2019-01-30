@@ -19,7 +19,7 @@
 
             <div class="card">
 
-                <div class="card d-md-flex flex-row flex-wrap justify-content-around">{# Carte de visite #}
+                <div class="card d-flex flex-row flex-wrap justify-content-around">{# Carte de visite #}
 
                     <div class="d-flex flex-column">{# picture & boutons modif#}
                         <div class="p-2">
@@ -148,46 +148,25 @@
 
                 </div> {# Fin carte visite #}
 
-                    <div class="accordion col-12 col-lg-12 p-0" id="accordionExample"> {# Accordéon il m'ont vu #}
-                        <div class="card"> {# Carte Ils ont vu votre prolfil #}
+                    <div class="card accordion col-12 col-lg-12 p-0 " id="accordionExample"> {# Accordéon il m'ont vu #} {# Carte Ils ont vu votre prolfil #}
+                         
                     
-                            <div class="card-header col-12 bg-dark text-white h5 text-center" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Ils ont vu votre profil, Mettons nous cette card en hamburger? car si la liste est longue?
+                            <div class="card-header col-12 h5 mb-0 text-white h5 text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Ils ont vu votre profil!
                             </div>
                     
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                    <thead>{# titre de colonnes #}
-                                         <tr>
-                                            <th scope="col">
-                                            Nom du recruteur
-                                            </th>
-                                            <th scope="col">
-                                            Nombre de vues
-                                            </th>            
-                                        </tr>
-                                    </thead>{# fin titre de colonnes #}
-                                    <tbody>
-                                        
-                                            {% for viewInfo in viewsInfo %}
-                                            <tr>
-                                                <td>{{ viewInfo.companyName}}
-                                                </td>
-                                                <td>
-                                                </td> 
-                                            </tr>                        
-                                            {% endfor %}
-                                    </tbody>
-                                    </table>
-                                </div>
+                                <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
 
-                            </div>
+                                    {% for viewInfo in viewsInfo %}
+                                        <h3><span class="badge badge-pill badge-warning">{{ viewInfo.companyName}}</span></h3>                         
+                                    {% endfor %}
+
+                                </div>
                             </div>
                     
-                        </div>{# fin Carte Ils ont vu votre prolfil #}
-                    </div>{# fin accordéon #}
+                       
+                    </div>{# fin accordéon #} {# fin Carte Ils ont vu votre prolfil #}
 
                     <div class="card"> {# Carte Alternace recherchée #}
                         <div class="card-header">
