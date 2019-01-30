@@ -35,6 +35,29 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/confirmation-compte{token}", name="account_confirm")
+     */
+    public function accountConfirm(string $token)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $user = $entityManager->getRepository(User::class)->findOneByToken($token); 
+
+        if($user != null) 
+        {
+            $user->setToken(null);
+            $user->setStatus(1);
+            $entityManager->flush();
+            $this->addFlash('notice', 'Votre compte a été activé !');
+        } 
+        else 
+        {
+            $this->addFlash('danger', 'Le compte a déjà été validé. Veuillez vous connecter.');
+        }
+        return $this->redirectToRoute('login');
+    }
+
+    /**
      * @Route("/inscription", name="signup", methods={"GET","POST"})
      */
     public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
@@ -42,6 +65,7 @@ class UserController extends AbstractController
         $user = new User();
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
         $user->setRole($role);
+        $user->setStatus(0);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -54,12 +78,11 @@ class UserController extends AbstractController
             ));
                 $token = $tokenGenerator->generateToken();
                 $user->setToken($token);
-                $user->setStatus(0);
 
                 $em->persist($user);
                 $em->flush();
 
-                $url = $this->generateUrl('login', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+                $url = $this->generateUrl('account_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
                 $message = (new \Swift_Message('Validez votre inscription'))
             ->setFrom('adoptealternant@gmail.com')
@@ -113,7 +136,7 @@ class UserController extends AbstractController
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('home');
             }
  
             $url = $this->generateUrl('pass_recover', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
@@ -123,7 +146,7 @@ class UserController extends AbstractController
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
-                        'emails/passRecover.html.twig',
+                        'emails/pass_recover.html.twig',
                         ['user'=>$user,
                         'url' => $url,
                         ]
@@ -136,7 +159,7 @@ class UserController extends AbstractController
  
             return $this->redirectToRoute('login');
         }
-        return $this->render('user/passForgotten.html.twig');
+        return $this->render('user/pass_forgotten.html.twig');
     }  
 
     /**
@@ -145,26 +168,40 @@ class UserController extends AbstractController
 
     public function passRecover(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
-        if ($request->isMethod('POST')) {
-            $entityManager = $this->getDoctrine()->getManager();
- 
-            $user = $entityManager->getRepository(User::class)->findOneByToken($token);
- 
-            if ($user === null) {
-                $this->addFlash('danger', 'Le mot de passe associé à cet email a déjà été modifié. Veuillez vous connecter.');
+        $pass = $request->get('password');
+        $passConfirm = $request->get('password_confirm');
+        
+        if( !empty($pass) && !empty($passConfirm))
+        {
+            if($pass === $passConfirm)
+            {
+                $entityManager = $this->getDoctrine()->getManager();
+        
+                $user = $entityManager->getRepository(User::class)->findOneByToken($token);
+
+                if($user === null) 
+                {
+                    $this->addFlash('danger', 'Le lien servant à modifier ce mot de passe a déjà été utilisé. Veuillez cliquer à nouveau sur "mot de passe oublié.');
+                    return $this->redirectToRoute('login');
+                }
+
+                $user->setToken(null);
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
+                $entityManager->flush();
+
+                $this->addFlash('notice', 'Le mot de passe a bien été modifié');
+
                 return $this->redirectToRoute('login');
             }
- 
-            $user->setToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
-            $entityManager->flush();
- 
-            $this->addFlash('notice', 'Le mot de passe a bien été modifié');
- 
-            return $this->redirectToRoute('login');
-        } else {
-            return $this->render('user/passRecover.html.twig');
+            else
+            {
+                $this->addFlash('danger', 'Les mots de passe saisis ne correspondent pas.');
+                return $this->render('user/pass_recover.html.twig');
+            }   
+        } 
+        else 
+        {
+            return $this->render('user/pass_recover.html.twig');
         }
     }
-
 }

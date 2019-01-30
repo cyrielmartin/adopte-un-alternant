@@ -6,8 +6,17 @@
 <div class="col-5 mx-auto my-4">
     <form method="post">
         <h1 class="h3 mb-3 font-weight-normal">Nouveau mot de passe</h1>
+        
+        {# Messages flash #}
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Veuillez saisir votre nouveau mot de passe" required>
+        <input type="password" name="password" id="inputPassword" class="form-control mt-2" placeholder="Veuillez saisir votre nouveau mot de passe" required>
+        <input type="password" name="password_confirm" id="inputPasswordConfirm" class="form-control mt-2" placeholder="Veuillez confirmer votre nouveau mot de passe" required>
         <input type="hidden" name="token" value="{token}">
         <button type="submit" class="btn btn-secondary mt-2">Valider</button>
     </form>
