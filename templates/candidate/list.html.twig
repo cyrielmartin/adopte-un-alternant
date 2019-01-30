@@ -39,7 +39,7 @@
                         <div>
                             <div class=" text-center">
                                 <p> 
-                                    {% if visitCard.visibilityChoice == 1 %}
+                                    {% if visitCard.visibilityChoice == 0 %}
                                         {{ visitCard.isCandidate.user.firstname }} {{ visitCard.isCandidate.user.lastname }}
                                     {% elseif visitCard.visibilityChoice == 2 %}
                                         {{ visitCard.isCandidate.user.firstname }}

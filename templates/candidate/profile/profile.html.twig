@@ -46,11 +46,12 @@
                             
                             <table class="table">
                                 <thead>{# titre de colonnes #}
-                                    <tr>
-                
-                    
-                                        <th scope="col">
+                                    <tr>          
+                                        <th scope="col" class="font-weight-bold h5">
                                         Informations Personnelles
+                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
+                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
                                         </th>
                     
                                     </tr>
@@ -59,38 +60,44 @@
                                     <tr>
                                         <th>{{ app.user.lastname }} {{ app.user.firstname }}
                                         </th>
-                                        <th>
-                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            </a>
-        
-                                        </th>
                                         </tr>
                                     <tr>
-                                        <th>{{ app.user.email }}
-                                        </th>
-                                    
-                                        <th>
-                                            <a href= "{{ path("candidate_informations", {"id": app.user.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            </a>
-                                            
-                                        </th>
+                                        <td>{{ app.user.email }}
+                                        </td>
                                     </tr>
-                                    <tr>
-                                        <th>{{ candidateDatas.phoneNumber }}
-                                        </th>
-                                        <th>
+                                </tbody>
+                            </table>
+
+                            <table class="table">
+                                <thead>{# titre de colonnes #}
+                                    <tr>          
+                                        <th scope="col" class="font-weight-bold h5">
+                                        Carte de visite
                                             <a href= "{{ path("presentation_edit", {"id": candidateDatas.id }) }}">
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
-                                            <a href= "{{ path("presentation_delete", {"id": candidateDatas.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                            </a>
                                         </th>
                                     </tr>
-
-
+                                </thead>
+                                <tbody>                              
+                                    <tr>
+                                        <td>
+                                            <span class="font-weight-bold">téléphone:</span>
+                                            {{ candidateDatas.phoneNumber }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="font-weight-bold">Visible par les recruteurs:</span>
+                                                {% if candidateInformation.visibilityChoice == 0 %}
+                                                    Nom et prénom
+                                                {% elseif candidateInformation.visibilityChoice == 2 %}
+                                                    Prénom uniquement
+                                                {% else %}
+                                                    Nom uniquement
+                                                {% endif %}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                                                        
@@ -102,7 +109,7 @@
 
                     
 
-                        <div class="d-flex flex-column"> {# site web, statut recherche ou adopté & boutons modif#}
+                        <div class="d-flex flex-column"> {# site web, statut recherche ou adopté & mobilities & boutons #}
                             <div class="p-2 table-responsive">
                                 <table class="table">
                                     <tbody>
@@ -136,9 +143,55 @@
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                     </a>
                                                 </td>
-                                                
-
                                         </tr>
+
+                                        
+                                        {% if candidateInformation.adopted == 1 %}
+                                        <tr> <th></th></tr>
+                                                    
+                                        {% else %}
+                                        <tr>
+                                            <th class="text-secondary font-italic"> Aux alentours de:
+                                            </th>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                {% for mobilityInfo in mobilitiesInfo %}
+                                                    <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
+                                                {% endfor %}
+                                            </td> 
+                                                                                         
+                                            <td>
+                                                {% for mobilityInfo in mobilitiesInfo %}
+                                                    <p>
+                                                        <a href= "{{ path("mobility_edit", {"id": mobilityInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                        </a>
+                                                        <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        </a>
+                                                    </p>
+                                                {% endfor %}
+                                            </td>                                                       
+                                        </tr>
+                                        <tr>
+                                        
+                                            <td>
+                                            Ajouter une localité
+                                            </td>
+        
+                                            <td>
+                                                <p>
+                                                    <a href= "{{ path("mobility_add")}}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-square"></i></button>
+                                                    </a>
+                                                </p>
+                                            
+                                            </td>
+                                        </tr>
+                                            
+                                        {% endif %}
                                     </tbody>
                                 </table>
 
@@ -148,7 +201,7 @@
 
                             
                             
-                        </div> {# fin site web, statut recherche ou adopté & boutons modif#}
+                        </div> {# fin site web, statut recherche ou adopté &mobilities & boutons modif#}
 
 
 
@@ -184,124 +237,60 @@
                                     </a>
                                 </h2>
                         </div>
-                            <div class="card-body">
-                                <p class="text-justify">
-                                    {{ candidateInformation.about}}
-                                </p>
-
-                            </div>
-                        
-                    </div> {# Fin carte About #}
-
-                    <div class="card"> {# Carte Alternace recherchée #}
-                        <div class="card-header">
-                            <h2 class="h5 mb-0 text-center text-secondary">
-                                Alternance recherchée
-                            </h2>
-                        </div>
                         <div class="card-body">
+                            <p class="text-justify">
+                                {{ candidateInformation.about}}
+                            </p>
+                        </div>
+                        
+                </div> {# Fin carte About #}
+
+
+                {% for formationInfo in formationsInfo %}  {# Carte Alternace recherchée n'apparait que s'il y a une formation avec le statu 2 Pas de bouton add car 1 seul alternance possible à la fois#}                                    
+                    {% if formationInfo.status == 2 %}
+                        <div class="card"> {# Carte Alternace recherchée #}
+                            <div class="card-header">
+                                <h2 class="h5 mb-0 text-center text-secondary">
+                                    Alternance recherchée
+                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                    </a>
+                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                    </a>
+                                </h2>
+                            </div>
+                            <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                     <table class="table">
                                         <tbody>
-                                             
-                                            {% for formationInfo in formationsInfo %}
-                                            
-                                        
-                                                {% if formationInfo.status == 2 %}
-                                                    <tr>
-                                                        <th scope="row">A partir du </th> 
-                                                        <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
-                                                        <td>
-                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                        
-                                                        <td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Jusqu'au </th> 
-                                                        <td>{{ formationInfo.endedAt|date("m/d/Y")}}</td>
-                                                        <td>
-                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>                
-                                                        <td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Aux alentours de </th> 
-                                                        <td>
-                                                            {% for mobilityInfo in mobilitiesInfo %}
-                                                            <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
-                                                           {% endfor %}
-                                                        </td>                                                  
-                                                        <td>
-                                                        {% for mobilityInfo in mobilitiesInfo %}
-                                                            <p>
-                                                            <a href= "{{ path("mobility_edit", {"id": mobilityInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                             
-                                                            <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                            </p>
-                                                        
-                                                        {% endfor %}
-                                                        </td>    
-                                                        
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Avec l'école</th> 
-                                                        <td>{{ formationInfo.school.name}}</td>
-                                                        <td>
-                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                        <td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">Pour obtenir le diplôme</th> 
-                                                        <td>{{ formationInfo.awardName}}</td>
-                                                        <td>
-                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                        
-                                                        <td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th scope="row">De niveau</th> 
-                                                        <td>{{ formationInfo.awardLevel.name}}</td>
-                                                        <td>
-                                                            <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                            </a>
-                                                            <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
-                                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                            </a>
-                                                        
-                                                        <td>
-                                                    </tr>
-                                                    {% endif %}
-                                                
-                                                {% endfor %}
-                                            
+                                        <tr>
+                                            <th scope="row">A partir du </th> 
+                                            <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Jusqu'au </th> 
+                                            <td>{{ formationInfo.endedAt|date("m/d/Y")}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Avec l'école</th> 
+                                            <td>{{ formationInfo.school.name}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Pour obtenir le diplôme</th> 
+                                            <td>{{ formationInfo.awardName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">De niveau</th> 
+                                            <td>{{ formationInfo.awardLevel.name}}</td>
+                                        </tr>                                           
                                         </tbody>
                                     </table>
                                 </div>
-                    </div> {# Fin carte Alternance recherchée #}
+                            </div>
+                        </div> {# Fin carte Alternance recherchée #}
+                    {% endif %}
+               {% endfor %}
 
                     
 

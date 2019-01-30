@@ -1,4 +1,5 @@
 <?php
+namespace App\Controller\Candidate;
 
 namespace App\Controller\Candidate;
 
