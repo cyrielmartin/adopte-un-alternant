@@ -92,4 +92,8 @@ class Mobility
 
         return $this;
     }
+    
+    public function __toString(){
+        return $this->town_name;
+    }
 }

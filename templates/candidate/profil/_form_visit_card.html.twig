@@ -1,0 +1,16 @@
+{{ form_start(visitCardForm, {'attr': {'novalidate': 'novalidate'}}) }}
+
+        {{ form_row(visitCardForm.adopted) }}
+    <button type="submit" class="btn btn-outline-success mb-2 col-1">
+        <i class="fas fa-check"></i>
+    </button>
+        {{ form_row(visitCardForm.visibilityChoice) }}
+    <button type="submit" class="btn btn-outline-success mb-2 col-1">
+        <i class="fas fa-check"></i>
+    </button>
+        {{ form_row(visitCardForm.about) }}
+    <button type="submit" class="btn btn-outline-success mb-2 col-1">
+        <i class="fas fa-check"></i>
+    </button>
+
+{{ form_end(visitCardForm) }}

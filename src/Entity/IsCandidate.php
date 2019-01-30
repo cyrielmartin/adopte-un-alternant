@@ -2,12 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IsCandidateRepository")
+ * @Vich\Uploadable
  */
 class IsCandidate
 {
@@ -22,9 +26,18 @@ class IsCandidate
      * @ORM\Column(type="string", length=15, nullable=true)
      */
     private $phoneNumber;
+    
+    /**
+    * @Vich\UploadableField(mapping="image", fileNameProperty="picture")
+    * 
+    * @var File
+    */
+    private $pictureFile;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * 
+     * @var string
      */
     private $picture;
 
@@ -63,6 +76,25 @@ class IsCandidate
         $this->phoneNumber = $phoneNumber;
 
         return $this;
+    }
+
+    /**
+    * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $pictureFile
+    */
+    public function setPictureFile(?File $pictureFile = null): void
+    {
+        $this->pictureFile = $pictureFile;
+
+        if (null !== $pictureFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getPictureFile(): ?File
+    {
+        return $this->pictureFile;
     }
 
     public function getPicture(): ?string
