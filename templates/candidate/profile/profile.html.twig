@@ -292,14 +292,14 @@
                     {% endif %}
                {% endfor %}{# FIN Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2#}
 
-                    <div class="card"> {# Carte formation#}
+                    <div class="card"> {# Carte formation Si pas de formation trouvée se trouve juste le boutons ajouter une formation#}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Formations
                             </h2>
                         </div>
                             <div class="card-body">
-                            <div class="table-responsive">
+                                <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
                                             <tr>
@@ -375,6 +375,20 @@
                             </h2>
                         </div>
                             <div class="card-body">
+
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr>
+                                                <th scope="col" class="text-info">
+                                                    <a href= "{{ path("experience_add") }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    </a>
+                                                Ajouter une expérience</th>                                          
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                    </table>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
@@ -429,7 +443,21 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr>
+                                                <th scope="col" class="text-info">
+                                                    <a href= "{{ path("experience_add") }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    </a>
+                                                Ajouter une compétence</th>                                          
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                    </table>
+                                </div>
+                            <div class="table-responsive">
                                 <table class="table">
+                                    
                                     {% for skillInfo in skillsInfo %}
                                     <tr>
                                         <td>
@@ -443,6 +471,7 @@
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                             </a>
                                         </td>
+                                    </tr>
                                     {% endfor %}
                                 
                                 </table>
@@ -458,6 +487,20 @@
                             </h2>
                         </div>
                         <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr>
+                                          <th scope="col" class="text-info">
+                                                <a href= "{{ path("asset_add") }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                </a>
+                                          Ajouter un atout ou un centre d'intérêt</th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>{# titre de colonnes #}
