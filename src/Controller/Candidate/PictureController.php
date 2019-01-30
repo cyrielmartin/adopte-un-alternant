@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\PictureType;
 
 /**
- * @Route("/candidat/image", name="candidate_picture")
+ * @Route("/candidat/image", name="candidate_picture_")
  */
 class PictureController extends AbstractController
 {
@@ -39,7 +39,7 @@ class PictureController extends AbstractController
                     'notice',
                     'La photo a bien été modifiée'
                 );
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('candidate_picture_edit', ['id' => 2]);
             }
     
         return $this->render('candidate/profile/picture.html.twig', [
@@ -50,8 +50,18 @@ class PictureController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
-    {
-        return $this->redirectToRoute('candidate_profil');
-    }
+    // public function delete(IsCandidate $isCandidate, EntityManagerInterface $em)
+    // {
+    //     $currentPicture = $isCandidate->getPictureFile();
+
+    //     $em->remove($currentPicture);
+    //     $em->flush();
+
+    //     $this->addFlash(
+    //         'notice',
+    //         'La photo a bien été supprimée !'
+    //     );
+
+    //     return $this->redirectToRoute('candidate_picture_edit', ['id' => 2]);
+    // }
 }

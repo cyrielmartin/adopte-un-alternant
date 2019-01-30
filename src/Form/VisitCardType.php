@@ -16,21 +16,21 @@ class VisitCardType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('about', TextareaType::class, [
-                'label' => 'À propos de vous',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Ce champs ne peut pas être vide'
-                    ]),
-                    new Length([
-                        'min' => 10,
-                        'minMessage' => 'Votre texte doit comporter au moins {{ limit }} mots',
-                        'max' => 1000,
-                        'maxMessage' => 'Votre texte ne peut pas excéder {{ limit }} mots',
-                    ]),
-                    ],
-                'help' => 'Ce que vous écrivez ici est accessible depuis votre profil public',
-            ])
+            // ->add('about', TextareaType::class, [
+            //     'label' => 'À propos de vous',
+            //     'constraints' => [
+            //         new NotBlank([
+            //             'message' => 'Ce champs ne peut pas être vide'
+            //         ]),
+            //         new Length([
+            //             'min' => 10,
+            //             'minMessage' => 'Votre texte doit comporter au moins {{ limit }} mots',
+            //             'max' => 1000,
+            //             'maxMessage' => 'Votre texte ne peut pas excéder {{ limit }} mots',
+            //         ]),
+            //         ],
+            //     'help' => 'Ce que vous écrivez ici est accessible depuis votre profil public',
+            // ])
             ->add('adopted', ChoiceType::class, [
                 'label' => 'Avez-vous été adopté par une entreprise ?',
                 'help' => 'Ne cochez oui que si votre contrat d\'alternance a été signé',
