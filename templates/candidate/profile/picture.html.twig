@@ -1,7 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier son image{% endblock %}
+{% block title %}Modifier mon image{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
 
 {% block body %}
-
+<div class="col-10 col-md-7 mx-auto my-4">
+<h1>Modifier mon image</h1>
+    {# Messages flash #}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+{{ form_start(pictureForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(pictureForm.pictureFile) }}
+    <button type="submit" class="btn btn-outline-success mb-2 col-1">
+        <i class="fas fa-check"></i>
+    </button>
+{{ form_end(pictureForm) }}
+   <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+</div>
 {% endblock %}

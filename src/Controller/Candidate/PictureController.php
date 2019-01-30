@@ -29,9 +29,9 @@ class PictureController extends AbstractController
      */
     public function edit(IsCandidate $isCandidate, Request $request, EntityManagerInterface $em)
         {
-            $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
-            $isCandidateForm->handleRequest($request);
-            if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+            $pictureForm = $this->createForm(IsCandidateType::class, $isCandidate);
+            $pictureForm->handleRequest($request);
+            if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
                 $em->persist($isCandidate);
                 $em->flush();
                 
@@ -43,7 +43,7 @@ class PictureController extends AbstractController
             }
     
         return $this->render('candidate/profile/picture.html.twig', [
-            'isCandidateForm' => $isCandidateForm->createView(),
+            'pictureForm' => $pictureForm->createView(),
         ]);
     }
 
