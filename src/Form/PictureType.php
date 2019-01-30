@@ -14,10 +14,9 @@ class PictureType extends AbstractType
     {
         $builder
         ->add('pictureFile', VichImageType::class, [
-            'allow_delete' => true, // not mandatory, default is true
-            'download_link' => false, // not mandatory, default is true
-            'label' => 'Votre photo',
-            'help' => 'Facultatif',
+            'allow_delete' => true,
+            'download_link' => false,
+            'label' => false,
         ])
         ;
     }
