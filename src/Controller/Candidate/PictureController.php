@@ -35,6 +35,6 @@ class PictureController extends AbstractController
      */
     public function delete()
     {
-        return $this->redirectToRoute('candidate_profil');
+        return $this->redirectToRoute('candidate_profile');
     }
 }

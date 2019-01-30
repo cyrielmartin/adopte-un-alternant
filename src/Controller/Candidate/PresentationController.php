@@ -36,7 +36,7 @@ class PresentationController extends AbstractController
                 'Les informations ont bien été enregistrées'
             );
             
-            return $this->redirectToRoute('candidate_profil');
+            return $this->redirectToRoute('candidate_profile');
         }
 
         $visitCardAdd = new VisitCard();
@@ -53,7 +53,7 @@ class PresentationController extends AbstractController
                 'Les informations ont bien été enregistrées'
             );
             
-            return $this->redirectToRoute('candidate_profil');
+            return $this->redirectToRoute('candidate_profile');
         }
 
 
@@ -114,6 +114,6 @@ class PresentationController extends AbstractController
             'Suppression ok'
         );
 
-        return $this->redirectToRoute('candidate_profil');
+        return $this->redirectToRoute('candidate_profile');
     }
 }
