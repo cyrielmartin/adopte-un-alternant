@@ -302,8 +302,8 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr>
-                                                <th scope="col" class="text-info">
+                                            <tr class ="d-flex">
+                                                <th scope="col" class="text-info col-12">
                                                     <a href= "{{ path("formation_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
@@ -317,46 +317,44 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr>
-                                                <th scope="col" class="text-info">
+                                            <tr class ="d-flex">
+                                                <th scope="col" class="text-info col-4">
+                                                {{ formationInfo.awardName}}</th>
+                                                <th class="text-info col-8">
                                                     <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
                                                     <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                     </a>
-                                                {{ formationInfo.awardName}}</th>
+                                                </th>
+                                                
                                                     
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                         <tbody>
-                                            <tr>{#Niveau du diplôme#}
-                                                <th scope="row">Niveau scolaire
-                                                </th>
-                                            </tr>
-                                            <tr>                                                    
-                                                <td>{{ formationInfo.awardLevel.name}}
+                                            <tr class ="d-flex">{#Niveau du diplôme#}
+                                                <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                                </th>                                                    
+                                                <td class ="d-flex col-8">{{ formationInfo.awardLevel.name}}
                                                 </td>                                                       
                                             </tr>
-                                            <tr> {#Nom de l'école#}
-                                                <th scope="row">Ecole
-                                                </th>
-                                            </tr>
-                                            <tr>                                          
-                                                <td>{{ formationInfo.school.name}}
+                                            <tr class ="d-flex"> {#Nom de l'école#}
+                                                <th scope="row" class ="d-flex col-4">Ecole
+                                                </th>                                         
+                                                <td class ="d-flex col-8">{{ formationInfo.school.name}}
                                                 </td>                                                                         
                                             </tr>
-                                            <tr>{#Date obtention diplôme OU formation toujours en cours#}
-                                                <th scope="row">Date d'obtention du diplôme
+                                            <tr class ="d-flex">{#Date obtention diplôme OU formation toujours en cours#}
+                                                <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
                                                 </th>
-                                            </tr>
-                                            <tr>                                          
+                                                                                      
                                                 {% if formationInfo.status == 0 %}
-                                                <td>{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                <td class ="d-flex col-8">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
                                                 {% elseif formationInfo.status == 1 %}
-                                                <td>en cours</td>
+                                                <td class ="d-flex col-8">en cours</td>
                                                 {% elseif formationInfo.status == 2 %}
-                                                <td>en cours et en recherche d'alternance</td>
+                                                <td class ="d-flex col-8">en cours et en recherche d'alternance</td>
                                                 {% endif %}
                                             </tr>
                                         </tbody>
