@@ -23,21 +23,21 @@ class PresentationController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
-        $isCandidate = new IsCandidate();
-        $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
-        $isCandidateForm->handleRequest($request);
+        // $isCandidate = new IsCandidate();
+        // $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
+        // $isCandidateForm->handleRequest($request);
 
-        if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
-            $em->persist($isCandidate);
-            $em->flush();
+        // if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+        //     $em->persist($isCandidate);
+        //     $em->flush();
 
-            $this->addFlash(
-                'notice',
-                'Les informations ont bien été enregistrées'
-            );
+        //     $this->addFlash(
+        //         'notice',
+        //         'Les informations ont bien été enregistrées'
+        //     );
             
-            return $this->redirectToRoute('candidate_profil');
-        }
+        //     return $this->redirectToRoute('candidate_profil');
+        // }
 
         $visitCardAdd = new VisitCard();
         $visitCardAddForm = $this->createForm(VisitCardAddType::class, $visitCardAdd);
@@ -58,7 +58,7 @@ class PresentationController extends AbstractController
 
 
         return $this->render('candidate/profile/presentation_add.html.twig', [
-            'isCandidateForm' => $isCandidateForm->createView(),
+            // 'isCandidateForm' => $isCandidateForm->createView(),
             'visitCardAddForm' => $visitCardAddForm->createView(),
         ]);
     }
@@ -68,18 +68,18 @@ class PresentationController extends AbstractController
      */
     public function edit(User $user, IsCandidate $isCandidate, VisitCard $visitCard, Request $request, EntityManagerInterface $em)
     {
-        $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
-        $isCandidateForm->handleRequest($request);
-        if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
-            $em->persist($isCandidate);
-            $em->flush();
+        // $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
+        // $isCandidateForm->handleRequest($request);
+        // if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+        //     $em->persist($isCandidate);
+        //     $em->flush();
             
-            $this->addFlash(
-                'notice',
-                'La page de présentation a bien été modifiée'
-            );
-            return $this->redirectToRoute('presentation_edit', ['id' => $user->getId()]);
-        }
+        //     $this->addFlash(
+        //         'notice',
+        //         'La page de présentation a bien été modifiée'
+        //     );
+        //     return $this->redirectToRoute('presentation_edit', ['id' => $user->getId()]);
+        // }
 
         $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);
         $visitCardForm->handleRequest($request);
@@ -95,7 +95,7 @@ class PresentationController extends AbstractController
         }
 
         return $this->render('candidate/profile/presentation_edit.html.twig', [
-            'isCandidateForm' => $isCandidateForm->createView(),
+            // 'isCandidateForm' => $isCandidateForm->createView(),
             'visitCardForm' => $visitCardForm->createView(),
         ]);      
     }
