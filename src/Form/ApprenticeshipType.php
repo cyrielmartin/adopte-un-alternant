@@ -6,6 +6,7 @@ use App\Form\FormationBaseType;
 use App\Entity\IsApprenticeship;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -19,7 +20,12 @@ class ApprenticeshipType extends AbstractType
             ])
             ->add('academicPace', TextType::class, [
                 'label' => 'Quel sera le rythme de la formation ?',
-                'help' => 'exemple : 1 semaine en formation, 1 semaine en entreprise',
+                'help' => 'exemple : Une semaine en formation, deux semaine en entreprise',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez renseigner votre rythme scolaire'
+                    ]),
+                ]
             ])
         ;
     }
