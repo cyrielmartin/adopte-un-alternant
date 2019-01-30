@@ -15,7 +15,7 @@ class ExperienceController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/experience.html.twig', [
+        return $this->render('candidate/profile/experience.html.twig', [
             'controller_name' => 'ExperienceController',
         ]);
     }
@@ -25,7 +25,7 @@ class ExperienceController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/experience.html.twig', [
+        return $this->render('candidate/profile/experience.html.twig', [
             'controller_name' => 'ExperienceController',
         ]);
     }

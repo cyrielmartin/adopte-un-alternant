@@ -15,7 +15,7 @@ class MobilityController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/mobility.html.twig', [
+        return $this->render('candidate/profile/mobility.html.twig', [
             'controller_name' => 'MobilityController',
         ]);
     }
@@ -25,7 +25,7 @@ class MobilityController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/mobility.html.twig', [
+        return $this->render('candidate/profile/mobility.html.twig', [
             'controller_name' => 'MobilityController',
         ]);
     }

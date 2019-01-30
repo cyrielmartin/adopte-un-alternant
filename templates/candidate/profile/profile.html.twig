@@ -29,10 +29,10 @@
 
                         <div class="p-2">
 
-                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
+                            <a href= "{{ path("presentation_edit", {"id": candidateDatas.id }) }}">
                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                             </a>
-                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
+                            <a href= "{{ path("presentation_delete", {"id": candidateDatas.id }) }}">
                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                             </a>
 
@@ -75,10 +75,10 @@
                                         <th>{{ candidateDatas.phoneNumber }}
                                         </th>
                                         <th>
-                                            <a href= "{{ path("about_edit", {"id": candidateDatas.id }) }}">
+                                            <a href= "{{ path("presentation_edit", {"id": candidateDatas.id }) }}">
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
-                                            <a href= "{{ path("about_delete", {"id": candidateDatas.id }) }}">
+                                            <a href= "{{ path("presentation_delete", {"id": candidateDatas.id }) }}">
                                                 <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                             </a>
                                         </th>
@@ -123,10 +123,10 @@
                                             {% endif %}
                                                 </th>
                                                 <td>                                   
-                                                    <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
+                                                    <a href= "{{ path("presentation_edit", {"id": visitCardId }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
-                                                    <a href= "{{ path("about_delete", {"id": visitCardId }) }}">
+                                                    <a href= "{{ path("presentation_delete", {"id": visitCardId }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                     </a>
                                                 </td>
@@ -303,10 +303,10 @@
                         <div class="card-header">
                                 <h2 class="h5 mb-0 text-center text-secondary">
                                     A propos de moi
-                                    <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
+                                    <a href= "{{ path("presentation_edit", {"id": visitCardId }) }}">
                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                     </a>
-                                    <a href= "{{ path("about_delete", {"id": visitCardId }) }}">
+                                    <a href= "{{ path("presentation_delete", {"id": visitCardId }) }}">
                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                     </a>
                                 </h2>

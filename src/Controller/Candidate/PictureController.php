@@ -6,17 +6,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/candidat/curriculum-vitae", name="cv_")
+ * @Route("/candidate/picture", name="candidate_picture")
  */
-class CvController extends AbstractController
+class PictureController extends AbstractController
 {
     /**
      * @Route("/ajouter", name="add")
      */
     public function add()
     {
-        return $this->render('candidate/profile/cv.html.twig', [
-            'controller_name' => 'CvController',
+        return $this->render('candidate/profile/picture.html.twig', [
+            'controller_name' => 'PictureController',
         ]);
     }
 
@@ -25,8 +25,8 @@ class CvController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profile/cv.html.twig', [
-            'controller_name' => 'CvController',
+        return $this->render('candidate/profile/picture.html.twig', [
+            'controller_name' => 'PictureController',
         ]);
     }
 

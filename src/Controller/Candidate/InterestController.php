@@ -15,7 +15,7 @@ class InterestController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/interest.html.twig', [
+        return $this->render('candidate/profile/interest.html.twig', [
             'controller_name' => 'InterestController',
         ]);
     }
@@ -25,7 +25,7 @@ class InterestController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/interest.html.twig', [
+        return $this->render('candidate/profile/interest.html.twig', [
             'controller_name' => 'InterestController',
         ]);
     }

@@ -20,11 +20,15 @@ class ApprenticeshipController extends AbstractController
     public function add(Request $request)
     {
         $user = $this->getUser();
-        dump($user);
+
         $apprenticeship = new IsApprenticeship();
         
         $form = $this->createForm(ApprenticeshipType::class, $apprenticeship);
-        dd($request);
+        
+        dump($request);
+
+        $school = $request->query('school');
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
@@ -32,7 +36,7 @@ class ApprenticeshipController extends AbstractController
             dd($request);
         }
 
-        return $this->render('candidate/profil/apprenticeship.html.twig', [
+        return $this->render('candidate/profile/apprenticeship.html.twig', [
             'tab_type' => 'Ajouter',
             'form' => $form->createView(),
         ]);
@@ -43,7 +47,7 @@ class ApprenticeshipController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/apprenticeship.html.twig', [
+        return $this->render('candidate/profile/apprenticeship.html.twig', [
             'tab_type' => 'Modifier',
         ]);
     }

@@ -15,7 +15,7 @@ class WebsiteController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/website.html.twig', [
+        return $this->render('candidate/profile/website.html.twig', [
             'controller_name' => 'WebsiteController',
         ]);
     }
@@ -25,7 +25,7 @@ class WebsiteController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/website.html.twig', [
+        return $this->render('candidate/profile/website.html.twig', [
             'controller_name' => 'WebsiteController',
         ]);
     }

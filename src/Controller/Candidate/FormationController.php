@@ -15,7 +15,7 @@ class FormationController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/formation.html.twig', [
+        return $this->render('candidate/profile/formation.html.twig', [
             'controller_name' => 'FormationController',
         ]);
     }
@@ -25,7 +25,7 @@ class FormationController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/formation.html.twig', [
+        return $this->render('candidate/profile/formation.html.twig', [
             'controller_name' => 'FormationController',
         ]);
     }

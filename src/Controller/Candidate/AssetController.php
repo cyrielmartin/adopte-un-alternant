@@ -15,7 +15,7 @@ class AssetController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/asset.html.twig', [
+        return $this->render('candidate/profile/asset.html.twig', [
             'controller_name' => 'AssetController',
         ]);
     }
@@ -25,7 +25,7 @@ class AssetController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/asset.html.twig', [
+        return $this->render('candidate/profile/asset.html.twig', [
             'controller_name' => 'AssetController',
         ]);
     }

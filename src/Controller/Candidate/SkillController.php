@@ -15,7 +15,7 @@ class SkillController extends AbstractController
      */
     public function add()
     {
-        return $this->render('candidate/profil/skill.html.twig', [
+        return $this->render('candidate/profile/skill.html.twig', [
             'controller_name' => 'SkillController',
         ]);
     }
@@ -25,7 +25,7 @@ class SkillController extends AbstractController
      */
     public function edit()
     {
-        return $this->render('candidate/profil/skill.html.twig', [
+        return $this->render('candidate/profile/skill.html.twig', [
             'controller_name' => 'SkillController',
         ]);
     }

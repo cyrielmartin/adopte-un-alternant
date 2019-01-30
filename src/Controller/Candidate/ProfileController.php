@@ -18,10 +18,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 /**
  * @Route("/candidat", name="candidate_")
  */
-class ProfilController extends AbstractController
+class ProfileController extends AbstractController
 {
     /**
-     * @Route("/profil", name="profil")
+     * @Route("/profile", name="profile")
      */
     public function show(IsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
     {
@@ -69,7 +69,7 @@ class ProfilController extends AbstractController
      
         
 
-        return $this->render('candidate/profil/profil.html.twig', [
+        return $this->render('candidate/profile/profile.html.twig', [
             'candidateDatas' =>  $candidateDatas,
             'candidateInformation' => $candidateInformation,
             'webSite'=>$webSite,
@@ -92,7 +92,7 @@ class ProfilController extends AbstractController
         // Affiche / traite le(s) formulaire(s) réunissant les infos personelles propre à TOUT les user (nom prénom email mot de passe)
         // ainsi que les info complémentaires propre au role candidat  (telephone picture)
         
-        return $this->render('candidate/profil/user_info.html.twig', [
+        return $this->render('candidate/profile/user_info.html.twig', [
             'controller_name' => 'ProfilController',
         ]);
     }

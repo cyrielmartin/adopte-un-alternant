@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier ma page de présentation{% endblock %}
+{% block title %}Créer ma page de présentation{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="col-10 col-md-7 mx-auto my-4">
-<h1>Modifier ma page de présentation</h1>
+<h1>Créer ma page de présentation</h1>
     {# Messages flash #}
     {% for message in app.flashes('notice') %}
         <div class="alert alert-success flash-message mb-2">
@@ -19,8 +19,8 @@
             {{ message }}
         </div>
     {% endfor %}
-    {{ include('candidate/profil/_form_visit_card.html.twig') }}
-    {{ include('candidate/profil/_form_isCandidate.html.twig') }}
+    {{ include('candidate/profile/_form_visit_card_add.html.twig') }}
+    {{ include('candidate/profile/_form_isCandidate.html.twig') }}
    <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
 {% endblock %}
