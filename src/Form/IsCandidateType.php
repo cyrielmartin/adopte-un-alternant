@@ -9,8 +9,6 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeExtensionGuesser;
 
 class IsCandidateType extends AbstractType
 {
@@ -28,12 +26,7 @@ class IsCandidateType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('pictureFile', VichImageType::class, [
-                'allow_delete' => true, // not mandatory, default is true
-                'download_link' => false, // not mandatory, default is true
-                'label' => 'Votre photo',
-                'help' => 'Facultatif',
-            ])
+            // ->add('pictureFile')
             // ->add('user')
             // ->add('isRecruiters')
         ;

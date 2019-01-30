@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/candidate/picture", name="candidate_picture")
+ * @Route("/candidat/image", name="candidate_picture")
  */
 class PictureController extends AbstractController
 {
