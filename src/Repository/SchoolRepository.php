@@ -19,6 +19,20 @@ class SchoolRepository extends ServiceEntityRepository
         parent::__construct($registry, School::class);
     }
 
+    // je récupère les 5 premires résultat commençant par le contenu de $search
+    public function findLike($search)
+    {
+        return $this
+            ->createQueryBuilder('school')
+            ->where('school.name LIKE :search')
+            ->setParameter( 'search', "%$search%")
+            ->orderBy('school.name')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return School[] Returns an array of School objects
     //  */

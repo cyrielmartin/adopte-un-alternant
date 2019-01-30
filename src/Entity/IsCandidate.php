@@ -38,6 +38,11 @@ class IsCandidate
      */
     private $isRecruiters;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->isRecruiters = new ArrayCollection();
@@ -106,6 +111,18 @@ class IsCandidate
         if ($this->isRecruiters->contains($isRecruiter)) {
             $this->isRecruiters->removeElement($isRecruiter);
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

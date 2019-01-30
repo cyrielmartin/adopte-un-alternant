@@ -1,0 +1,14 @@
+/****** jQuery Autocomplete CSS *************/
+
+.ui-menu {
+    width: 1rem;
+    font-size: 0.9rem;
+    border: 1px solid lightgray;
+    list-style: none;
+    background-color: white;
+    padding-left: 0.5rem;
+}
+
+.ui-menu .ui-menu-item:hover {
+    background-color: rgb(247, 247, 247);
+}
