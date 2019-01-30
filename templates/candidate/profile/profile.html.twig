@@ -368,7 +368,7 @@
 
                     </div> {# Fin carte formation #}
 
-                    <div class="card"> {# Carte expériences #}
+                    <div class="card"> {# Carte expériences si pas d'exp seul l'ajout d'exp possible#}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Expériences
@@ -389,52 +389,51 @@
                                         </thead>{# fin titre de colonnes #}
                                     </table>
                                 </div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>{# titre de colonnes #}
-                                            <tr>
-                                              <th scope="col">Période</th>
-                                              <th scope="col">Entreprise</th>
-                                              <th scope="col">Description</th>
-                                              <th scope="col"></th>
-                                            </tr>
-                                        </thead>{# fin titre de colonnes #}
-                                        <tbody>{# corps tableau exp #}
-                                          
-                                            {% for experienceInfo in experiencesInfo %}
-                                            <tr>
-                                                <td>
-                                                Du {{ experienceInfo.startedAt|date("m/d/Y")}}
-                                                {% if experienceInfo.endedAt == null %}
-                                                à aujourd'hui
-                                                
-                                                {% else %}
-                                                à {{ experienceInfo.endedAt|date("m/d/Y")}}
-                                                {% endif %}
-            
-                                                </td>
-                                                <td>{{ experienceInfo.companyName}}</td>
-                                                <td>{{ experienceInfo.description}}</td>
-                                               
-                                                <td>
-                                                    <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                    </a>
-                                                    <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>{# fin corps tableau exp #}
 
-                                    </table>
-                                </div>
+                                {% for experienceInfo in experiencesInfo %}
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>{# titre de colonnes #}
+                                                <tr>
+                                                  <th scope="col">Période</th>
+                                                  <th scope="col">Entreprise</th>
+                                                  <th scope="col">Description</th>
+                                                  <th scope="col"></th>
+                                                </tr>
+                                            </thead>{# fin titre de colonnes #}
+                                            <tbody>{# corps tableau exp #}
+                                                <tr>
+                                                    <td>
+                                                    Du {{ experienceInfo.startedAt|date("m/d/Y")}}
+                                                    {% if experienceInfo.endedAt == null %}
+                                                    à aujourd'hui
+
+                                                    {% else %}
+                                                    à {{ experienceInfo.endedAt|date("m/d/Y")}}
+                                                    {% endif %}
+
+                                                    </td>
+                                                    <td>{{ experienceInfo.companyName}}</td>
+                                                    <td>{{ experienceInfo.description}}</td>
+
+                                                    <td>
+                                                        <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                        </a>
+                                                        <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>                                              
+                                            </tbody>{# fin corps tableau exp #}
+                                        </table>
+                                    </div>
+                                {% endfor %}
                             </div>
 
-                    </div> {# Fin carte Formation #}
+                    </div> {# Fin carte exp #}
 
-                    <div class="card"> {# Carte compétences #}
+                    <div class="card"> {# Carte compétences si pas de compétence seulement la possibilité d'ajouter #}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Compétences
@@ -445,42 +444,45 @@
                             <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr>
-                                                <th scope="col" class="text-info">
+                                            <tr class = "d-flex">
+                                                <th scope="col" class="text-info d-flex col-6">
+                                                Ajouter une compétence
+                                                </th>
+                                                <th class = "d-flex col-6">
                                                     <a href= "{{ path("experience_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
-                                                Ajouter une compétence</th>                                          
+                                                </th>
+                                                                                          
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                     </table>
                                 </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    
-                                    {% for skillInfo in skillsInfo %}
-                                    <tr>
-                                        <td>
-                                        {{skillInfo.name}}
-                                        </td>
-                                        <td>
-                                            <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            </a>
-                                            <a href= "{{ path("skill_delete", {"id": skillInfo.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                
-                                </table>
-                            </div>
+                            
+                            {% for skillInfo in skillsInfo %}
+                                <div class="table-responsive">
+                                    <table class="table ">                           
+                                        <tr class = "d-flex">
+                                            <td class = "d-flex col-6">
+                                            {{skillInfo.name}}
+                                            </td>
+                                            <td class = "d-flex col-6">
+                                                <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <a href= "{{ path("skill_delete", {"id": skillInfo.id }) }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>                           
+                                    </table>
+                                </div>
+                            {% endfor %}
                         </div>                        
 
                     </div> {# Fin carte compétences #}
 
-                    <div class="card"> {# carte Atouts et centres d'intérêts #}
+                    <div class="card"> {# carte Atouts et centres d'intérêts si pas de donnée seulement la possibilité d'ajouter#}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Atouts et centres d'intérêts
@@ -491,74 +493,85 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>{# titre de colonnes #}
-                                        <tr>
-                                          <th scope="col" class="text-info">
+                                        <tr class = "d-flex">
+                                            <th scope="col" class="text-info d-flex col-6">
+                                            Ajouter un atout ou un centre d'intérêt
+                                            </th>
+                                            <th scope="col" class="d-flex col-6">
                                                 <a href= "{{ path("asset_add") }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                 </a>
-                                          Ajouter un atout ou un centre d'intérêt</th>
+                                            </th>
                                         </tr>
                                     </thead>{# fin titre de colonnes #}
                                 </table>
                             </div>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>{# titre de colonnes #}
-                                        <tr>
-                                          <th scope="col">Atouts</th>
-                                          <th></th>
-                                        </tr>
-                                    </thead>{# fin titre de colonnes #}
+                            {% for additionalInfo in additionalsInfo %}
+                                {% if additionalInfo.typeInfo == 'assert' %}
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>{# titre de colonnes #}
+                                                <tr class = "d-flex">
+                                                  <th class = "d-flex col-6" scope="col">Atouts</th>
+                                                  <th class = "d-flex col-6"></th>
+                                                </tr>
+                                            </thead>{# fin titre de colonnes #}
 
-                                    <tbody>{# corps tableau atouts#}
-                                    {% for additionalInfo in additionalsInfo %}
-                                        <tr>
-                                        {% if additionalInfo.typeInfo == 'assert' %}
-                                            <td>
-                                            {{additionalInfo.content}}
-                                            </td>
-                                            <td>
-                                                <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                </a>
-                                                <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                </a>
-                                            </td>          
-                                        {% else %}
-                                        {% endif %}
+                                            <tbody>{# corps tableau atouts#}                                
+                                                <tr class = "d-flex">
+                                                    <td class = "d-flex col-6">
+                                                    {{additionalInfo.content}}
+                                                    </td>
+                                                    <td class = "d-flex col-6">
+                                                        <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                        </a>
+                                                        <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody> 
+                                        </table>
+                                    </div>         
+                                {% else %}
+                                {% endif %}
                                         
-                                    {% endfor %}
+                            {% endfor %}
 
-                                    <thead>{# titre de colonnes #}
-                                        <tr>
-                                          <th scope="col">Centres d'intérêts</th>
-                                          <th></th>
-                                        </tr>
-                                    </thead>{# fin titre de colonnes #}
+                            {% for additionalInfo in additionalsInfo %}
+                                {% if additionalInfo.typeInfo == 'interest' %}
+                                    <div class="table-responsive">
+                                        <table class="table">
 
-                                    <tbody>{# corps tableau centres d'intérêts#}
-                                    {% for additionalInfo in additionalsInfo %}
-                                        <tr>
-                                        {% if additionalInfo.typeInfo == 'interest' %}
-                                            <td>
-                                            {{additionalInfo.content}}
-                                            </td>
-                                            <td>
-                                                <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                </a>
-                                                <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                </a>
-                                            </td>          
-                                        {% else %}
-                                        {% endif %}
-                                        
-                                    {% endfor %}
+                                            <thead>{# titre de colonnes #}
+                                                <tr class = "d-flex">
+                                                  <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
+                                                  <th class = "d-flex col-6"></th>
+                                                </tr>
+                                            </thead>{# fin titre de colonnes #}
 
-                                </table>
-                            </div>
+                                            <tbody>{# corps tableau centres d'intérêts#}                                  
+                                                <tr class = "d-flex">
+                                                    <td class = "d-flex col-6">
+                                                    {{additionalInfo.content}}
+                                                    </td>
+                                                    <td class = "d-flex col-6">
+                                                        <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                        </a>
+                                                        <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
+                                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>                                              
+                                {% else %}
+                                {% endif %}                                     
+                            {% endfor %}
+                               
                         </div>            
 
                     </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
