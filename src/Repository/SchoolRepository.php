@@ -25,7 +25,7 @@ class SchoolRepository extends ServiceEntityRepository
         return $this
             ->createQueryBuilder('school')
             ->where('school.name LIKE :search')
-            ->setParameter( 'search', "$search%")
+            ->setParameter( 'search', "%$search%")
             ->orderBy('school.name')
             ->setMaxResults(5)
             ->getQuery()

@@ -24,12 +24,12 @@ class ApprenticeshipController extends AbstractController
         $apprenticeship = new IsApprenticeship();
         
         $form = $this->createForm(ApprenticeshipType::class, $apprenticeship);
-        
+        dd($request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            dd('validé');
+            dd($request);
         }
 
         return $this->render('candidate/profil/apprenticeship.html.twig', [
