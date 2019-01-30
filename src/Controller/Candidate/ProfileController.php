@@ -3,6 +3,7 @@
 namespace App\Controller\Candidate;
 
 use App\Entity\User;
+use App\Form\UserEditType;
 use App\Repository\SkillRepository;
 use App\Repository\WebsiteRepository;
 use App\Repository\MobilityRepository;
@@ -12,8 +13,10 @@ use App\Repository\AdditionalRepository;
 use App\Repository\ExperienceRepository;
 use App\Repository\IsCandidateRepository;
 use App\Repository\IsRecruiterRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/candidat", name="candidate_")
@@ -87,16 +90,38 @@ class ProfileController extends AbstractController
     /**
      * @Route("/information-personelle", name="informations")
      */
-    public function userInfoEdit()
+    public function userInfoEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        // Affiche / traite le(s) formulaire(s) réunissant les infos personelles propre à TOUT les user (nom prénom email mot de passe)
-        // ainsi que les info complémentaires propre au role candidat  (telephone picture)
+        // je récupère mon user en session
+        $user = $this->getUser();
+        // ainsi que son ancien mot de passe
+        $oldPass = $user->getPassword();
+        $form = $this->createForm(UserEditType::class, $user);
         
+        $form->handleRequest($request);
+     
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            // si le form contient un mdp vite, je garde l'ancien
+            if (empty($user->getPassword()) || is_null($user->getPassword()))
+            {
+                $encodedPass = $oldPass;
+            } 
+            // sinon je l'encode
+            else 
+            {
+                $encodedPass = $encoder->encodePassword($user, $user->getPassword());
+            }
+            $user->setPassword($encodedPass);
+            $user->setUpdatedAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute('candidate_profile');
+        }
         return $this->render('candidate/profile/user_info.html.twig', [
-            'controller_name' => 'ProfilController',
+            'form' => $form->createView(),
         ]);
     }
-
     // pas de suppression possible au niveau des info perso, seulement de la modification
 
 }

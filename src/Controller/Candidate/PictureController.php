@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/candidate/picture", name="candidate_picture")
+ * @Route("/candidate/picture", name="candidate_picture_")
  */
 class PictureController extends AbstractController
 {
@@ -35,6 +35,6 @@ class PictureController extends AbstractController
      */
     public function delete()
     {
-        return $this->redirectToRoute('candidate_profil');
+        return $this->redirectToRoute('candidate_profile');
     }
 }
