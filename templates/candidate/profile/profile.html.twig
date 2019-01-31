@@ -145,7 +145,7 @@
                                             {% endif %}
                                                 </th>
                                                 <td>                                   
-                                                    <a href= "{{ path("presentation_edit", {"id": visitCardId }) }}">
+                                                    <a href= "{{ path("candidate_adopted_edit", {"id": visitCardId }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
                                                 </td>
@@ -162,15 +162,15 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td >
                                                 {% for mobilityInfo in mobilitiesInfo %}
                                                     <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
                                                 {% endfor %}
                                             </td> 
                                                                                          
-                                            <td>
+                                            <td >
                                                 {% for mobilityInfo in mobilitiesInfo %}
-                                                    <p>
+                                                    <p class ="mb-1">
                                                         <a href= "{{ path("mobility_edit", {"id": mobilityInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                         </a>
@@ -235,7 +235,7 @@
                         <div class="card-header">
                                 <h2 class="h5 mb-0 text-center text-secondary">
                                     A propos de moi
-                                    <a href= "{{ path("presentation_edit", {"id": visitCardId }) }}">
+                                    <a href= "{{ path("candidate_about_edit", {"id": visitCardId }) }}">
                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                     </a>
                                 </h2>
@@ -397,7 +397,7 @@
                                                 Ajouter une compétence
                                                 </th>
                                                 <th class = "d-flex col-5">
-                                                    <a href= "{{ path("experience_add") }}">
+                                                    <a href= "{{ path("skill_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
                                                 </th>
