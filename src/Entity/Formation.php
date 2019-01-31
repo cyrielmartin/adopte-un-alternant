@@ -159,4 +159,10 @@ class Formation
     {
         return $this->id;
     }
+
+    public function getFormation()
+    {
+        // pour faire plaisir au formulaire
+        return $this;
+    }
 }

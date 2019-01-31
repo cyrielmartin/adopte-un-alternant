@@ -19,7 +19,7 @@ class FormationBaseType extends AbstractType
     {
         $builder
             ->add('school', TextType::class, [
-                'label' => 'Au sein de quel établissement comptez vous effectuer votre formation ?',
+                'label' => 'Nom de l\'établissement de formation :',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir un établissement'
@@ -27,7 +27,7 @@ class FormationBaseType extends AbstractType
                 ],
             ])
             ->add('awardName', TextType::class, [
-                'label' => 'Nom du diplôme à obtenir suite à la formation :',
+                'label' => 'Nom du diplôme :',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir le nom du diplôme'
@@ -42,14 +42,16 @@ class FormationBaseType extends AbstractType
                 'expanded'=>false,
             ])
             ->add('startedAt', DateType::class, [
-                'label' => 'La formation commencera le :',
+                'label' => 'Début de la formation :',
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
+                'years' => range(date('Y')-10, date('Y')+5),
             ])
             ->add('endedAt', DateType::class, [
-                'label' => 'Et se finira le :',
+                'label' => 'Fin de la formation :',
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
+                'years' => range(date('Y')-10, date('Y')+5),
             ])
         ;
     }
