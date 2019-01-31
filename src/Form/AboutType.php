@@ -29,13 +29,7 @@ class AboutType extends AbstractType
                 ]),
                 ],
             'help' => 'Ce que vous écrivez ici est accessible depuis votre profil public',
-        ])
-            // ->add('adopted')
-            // ->add('visibilityChoice')
-            // ->add('skills')
-            // ->add('mobilities')
-            // ->add('isCandidate')
-        ;
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

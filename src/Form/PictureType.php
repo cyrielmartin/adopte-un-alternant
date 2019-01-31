@@ -17,8 +17,7 @@ class PictureType extends AbstractType
             'allow_delete' => true,
             'download_link' => false,
             'label' => false,
-        ])
-        ;
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -16,12 +16,7 @@ class IsCandidateType extends AbstractType
             ->add('phoneNumber', TelType::class, [
                 'label' => 'Numéro de téléphone',
                 'help' => 'Facultatif',
-            ])
-            // ->add('picture')
-            // ->add('updatedAt')
-            // ->add('user')
-            // ->add('isRecruiters')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

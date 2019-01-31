@@ -23,12 +23,7 @@ class AdoptedType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false,
-            ] )
-            // ->add('visibilityChoice')
-            // ->add('skills')
-            // ->add('mobilities')
-            // ->add('isCandidate')
-        ;
+            ] );
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -89,12 +89,7 @@ class UserType extends AbstractType
                     'message' => 'Veuillez saisir un mot de passe'
                 ]),
             ]
-        ])
-            // ->add('token')
-            // ->add('status')
-            // ->add('createdAt')
-            // ->add('updatedAt')
-        ;
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

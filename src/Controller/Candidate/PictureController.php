@@ -14,15 +14,6 @@ use App\Form\PictureType;
  */
 class PictureController extends AbstractController
 {
-    /**
-     * @Route("/ajouter", name="add")
-     */
-    public function add()
-    {
-        return $this->render('candidate/profile/picture.html.twig', [
-            'controller_name' => 'PictureController',
-        ]);
-    }
 
     /**
      * @Route("/{id}/modifier", name="edit")
@@ -46,22 +37,4 @@ class PictureController extends AbstractController
             'pictureForm' => $pictureForm->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{id}/supprimer", name="delete")
-     */
-    // public function delete(IsCandidate $isCandidate, EntityManagerInterface $em)
-    // {
-    //     $currentPicture = $isCandidate->getPictureFile();
-
-    //     $em->remove($currentPicture);
-    //     $em->flush();
-
-    //     $this->addFlash(
-    //         'notice',
-    //         'La photo a bien été supprimée !'
-    //     );
-
-    //     return $this->redirectToRoute('candidate_picture_edit', ['id' => 2]);
-    // }
 }
