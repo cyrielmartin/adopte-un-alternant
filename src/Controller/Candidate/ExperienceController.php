@@ -31,8 +31,7 @@ class ExperienceController extends AbstractController
 
         $form->handleRequest($request);
 
-        ;
-
+    
         if ($form->isSubmitted() && $form->isValid()) 
         { //dd($request);
             // ajout des info nécessaire à l'enregistrement
