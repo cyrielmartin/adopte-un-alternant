@@ -39,28 +39,28 @@ class PresentationController extends AbstractController
         //     return $this->redirectToRoute('candidate_profil');
         // }
 
-        $visitCardAdd = new VisitCard();
-        $visitCardAddForm = $this->createForm(VisitCardAddType::class, $visitCardAdd);
-        $visitCardAddForm->handleRequest($request);
+        // $visitCardAdd = new VisitCard();
+        // $visitCardAddForm = $this->createForm(VisitCardAddType::class, $visitCardAdd);
+        // $visitCardAddForm->handleRequest($request);
 
-        if ($visitCardAddForm->isSubmitted() && $visitCardAddForm->isValid()) {
-            $visitCardAdd->setAdopted(0);
-            $em->persist($visitCardAdd);
-            $em->flush();
+        // if ($visitCardAddForm->isSubmitted() && $visitCardAddForm->isValid()) {
+        //     $visitCardAdd->setAdopted(0);
+        //     $em->persist($visitCardAdd);
+        //     $em->flush();
 
-            $this->addFlash(
-                'notice',
-                'Les informations ont bien été enregistrées'
-            );
+        //     $this->addFlash(
+        //         'notice',
+        //         'Les informations ont bien été enregistrées'
+        //     );
             
-            return $this->redirectToRoute('candidate_profil');
-        }
+        //     return $this->redirectToRoute('candidate_profil');
+        // }
 
 
-        return $this->render('candidate/profile/presentation_add.html.twig', [
-            // 'isCandidateForm' => $isCandidateForm->createView(),
-            'visitCardAddForm' => $visitCardAddForm->createView(),
-        ]);
+        // return $this->render('candidate/profile/presentation_add.html.twig', [
+        //     // 'isCandidateForm' => $isCandidateForm->createView(),
+        //     'visitCardAddForm' => $visitCardAddForm->createView(),
+        // ]);
     }
 
     /**
