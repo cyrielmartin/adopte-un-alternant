@@ -28,16 +28,17 @@
                 <div class="card d-flex flex-row flex-wrap justify-content-around">{# Carte de visite #}
 
                     <div class="d-flex flex-column">{# picture & boutons modif#}
-                        <div class="p-2">
+                        <div class="p-2 ">
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
 
                         <div class="p-2">
-
-                            <a href= "{{ path("candidate_picture_edit", {"id": candidateDatas.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            </a>
+                            <p class ="text-center">
+                                <a href= "{{ path("candidate_picture_edit", {"id": candidateDatas.id }) }}">
+                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                </a>
+                            </p>
                             
                         </div>
                     </div>{# fin picture & boutons modif#}
@@ -85,13 +86,13 @@
                                 <tbody>                              
                                     <tr>
                                         <td>
-                                            <span class="font-weight-bold">téléphone:</span>
+                                            <span class="font-weight-bold">Téléphone :</span>
                                             {{ candidateDatas.phoneNumber }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="font-weight-bold">Visible par les recruteurs:</span>
+                                            <span class="font-weight-bold">Visible par les recruteurs :</span>
                                                 {% if candidateInformation.visibilityChoice == 0 %}
                                                     Nom et prénom
                                                 {% elseif candidateInformation.visibilityChoice == 2 %}
@@ -118,7 +119,7 @@
                                     <tbody>
                                         {% for webSite in webSites %}
                                         <tr>
-                                            <th><i class="fab fa-weebly"></i>
+                                            <th>
                                                 <a href="{{webSite.link}}"> {{webSite.name}}</a>
                                             </th>
                                             <td>
@@ -132,13 +133,10 @@
                                         </tr>
                                         {% endfor %}
                                         <tr>
-                                            <td class="font-weight-bold">Ajouter un site <i class="fab fa-weebly"></i>
+                                        
+                                            <td class="font-weight-bold"> <a href= "{{ path("website_add") }}">Ajouter un site </a>
                                             </td>
-                                            <td>
-                                                <a href= "{{ path("website_add") }}">
-                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
-                                                </a>
-                                                
+                                            <td>                       
                                             </td>
                                         </tr>
 
@@ -223,7 +221,7 @@
                      
                 
                     <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Ils ont vu votre profil!
+                        Ils ont vu votre profil !
                     </div>
             
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
@@ -460,18 +458,22 @@
                                     </thead>{# fin titre de colonnes #}
                                 </table>
                             </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class = "d-flex justify-content-center">
+                                          <th class = "d-flex col-6" scope="col">Atouts</th>
+                                          <th class = "d-flex col-5"></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>                                 
+                                                
                             {% for additionalInfo in additionalsInfo %}
                                 {% if additionalInfo.typeInfo == 'assert' %}
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex justify-content-center">
-                                                  <th class = "d-flex col-6" scope="col">Atouts</th>
-                                                  <th class = "d-flex col-5"></th>
-                                                </tr>
-                                            </thead>{# fin titre de colonnes #}
-
-                                            <tbody>{# corps tableau atouts#}                                
+                                            <tbody>
                                                 <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
                                                     {{additionalInfo.content}}
@@ -483,28 +485,29 @@
                                                         <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                         </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody> 
+                                                    </td>                                            
+                                             </tbody> 
                                         </table>
-                                    </div>         
-                                {% else %}
-                                {% endif %}
-                                        
+                                    </div>    
+                                
+                                {% endif %}                                                                            
                             {% endfor %}
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class = "d-flex justify-content-center">
+                                          <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
+                                          <th class = "d-flex col-5"></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>    
 
                             {% for additionalInfo in additionalsInfo %}
                                 {% if additionalInfo.typeInfo == 'interest' %}
                                     <div class="table-responsive">
                                         <table class="table">
-
-                                            <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex justify-content-center">
-                                                  <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
-                                                  <th class = "d-flex col-5"></th>
-                                                </tr>
-                                            </thead>{# fin titre de colonnes #}
-
                                             <tbody>{# corps tableau centres d'intérêts#}                                  
                                                 <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
