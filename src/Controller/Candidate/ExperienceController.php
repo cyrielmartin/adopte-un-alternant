@@ -52,8 +52,6 @@ class ExperienceController extends AbstractController
                 $experience->setEndedAt($endedDate);
             }
 
-            
-
             $em = $this->getDoctrine()->getManager();
 
             // enregistrement en bdd ( par un effet "cascarde", la formation sera enregistré aussi )
@@ -73,10 +71,30 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit()
+    public function edit(Request $request, Experience $experience)
+
     {
-        return $this->render('candidate/profile/experience.html.twig', [
-            'controller_name' => 'ExperienceController',
+        $user = $this->getUser();
+
+        // récupération de la carte de visite du candidat connecté
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
+
+        $experienceForm = $this->createForm(ExperienceType::class, $experience);
+        $experienceForm->handleRequest($request);
+        //if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+        //    $em->persist($isCandidate);
+        //    $em->flush();
+        //    
+        //    $this->addFlash(
+        //        'notice',
+        //        'La carte de visite a bien été modifiée'
+        //    );
+        //    return $this->redirectToRoute('presentation_edit', ['id' => 2]);
+        //}
+        
+        return $this->render('candidate/profile/experience_edit.html.twig', [
+            'experienceForm'=>$experienceForm->createView(),
         ]);
     }
 

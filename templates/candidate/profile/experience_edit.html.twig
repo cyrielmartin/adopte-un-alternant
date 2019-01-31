@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier ma carte de visite{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="col-10 col-md-7 mx-auto my-4">
+   <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+
+<h1>Modifier ma carte de visite</h1>
+    {# Messages flash #}
+   
+
+{# Formulaire experience pour numéro de téléphone  #}
+{{ form_start(experienceForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(experienceForm) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+{{ form_end(experienceForm) }}
+
+
+
+
+{% endblock %}
+
+
