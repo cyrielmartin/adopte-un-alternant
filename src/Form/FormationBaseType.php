@@ -32,7 +32,8 @@ class FormationBaseType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez saisir le nom du diplôme'
                     ]),
-                ]
+                ],
+                'empty_data' => '',
             ])
             ->add('awardLevel', EntityType::class,[
                 'label'=>'Niveau du diplôme ou équivalent :',

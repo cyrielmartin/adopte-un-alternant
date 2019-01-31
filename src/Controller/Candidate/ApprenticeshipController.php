@@ -61,8 +61,9 @@ class ApprenticeshipController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) 
         {
-            // ajout des info nécessaire à l'enregistrement
+            // récupération des infos à enregistrer
             $apprenticeship = $form->getData();
+            // ajout des info nécessaire à l'enregistrement
             $apprenticeship
                 ->getFormation()
                 ->setVisitCard($visitCard)
@@ -70,7 +71,7 @@ class ApprenticeshipController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
 
-            // enregistrement en bdd ( par un effet "cascarde", la formation sera enregistré aussi )
+            // enregistrement en bdd ( par un effet "cascade", la formation sera enregistré aussi )
             $em->persist($apprenticeship);
             $em->flush($apprenticeship);
 
@@ -86,10 +87,44 @@ class ApprenticeshipController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit()
+    public function edit(Request $request, $id)
     {
+        // je récupère l'apprentissage qui doit être modifié
+        $apprenticeRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
+        $apprenticeship = $apprenticeRepo->findOneBy(['formation' => $id]);
+
+        // je récupère le contenu du formulaire
+        $data = $request->request->get('apprenticeship');
+
+        // je l'envoi à la méthode checkSchoolData pour vérifier son contenu
+        $newData = $this->checkSchoolData($data);
+
+        // si la méthode m'a renvoyé autre que chose du null
+        if(!empty($newData))
+        {
+            // je met à jour ma requête en écrasant les anciennes donnée
+            $request->request->set('apprenticeship',$newData);
+        }
+        
+        $form = $this->createForm(ApprenticeshipType::class, $apprenticeship);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            // récupération des infos à enregistrer
+            $editApprenticeship = $form->getData();
+            //dd($editApprenticeship);
+
+            // enregistrement en bdd ( par un effet "cascade", la formation sera enregistré aussi )
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('candidate_profile');
+        }
+
         return $this->render('candidate/profile/apprenticeship.html.twig', [
             'tab_type' => 'Modifier',
+            'form' => $form->createView(),
         ]);
     }
 
@@ -170,8 +205,19 @@ class ApprenticeshipController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
+    public function delete($id)
     {
+        // je récupère l'apprentissage qui doit être supprimé
+        $apprenticeRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
+        $apprenticeship = $apprenticeRepo->findOneBy(['formation' => $id]);
+        
+        $em = $this->getDoctrine()->getManager();
+        // je le supprime
+        $em->remove($apprenticeship);
+        $em->flush();
+
+        $this->addFlash('success', 'Votre alternance a bien été supprimé.');
+
         return $this->redirectToRoute('candidate_profile');
     }
 }

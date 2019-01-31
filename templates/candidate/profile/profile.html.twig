@@ -20,6 +20,11 @@
                 {{ message }}
             </div>
         {% endfor %}
+        {% for message in app.flashes('success') %}
+            <div class="flash-notice bg-success text-light p-2 rounded mx-auto my-3">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <div class="col-12 col-lg-11 p-0">
 

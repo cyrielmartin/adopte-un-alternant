@@ -25,7 +25,8 @@ class ApprenticeshipType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre rythme scolaire'
                     ]),
-                ]
+                ],
+                'empty_data' => '',
             ])
         ;
     }
