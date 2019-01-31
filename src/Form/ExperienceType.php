@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ExperienceType extends AbstractType
 {
@@ -28,7 +30,10 @@ class ExperienceType extends AbstractType
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
             ])
-            //->add('status')
+            ->add('status',CheckboxType ::class, [
+                'label' =>
+                    'J\'occupe actuellement ce poste'       
+            ])
             ->add('endedAt', DateType::class, [
                 'label' => 'Date de fin :',
                 'widget' => 'choice',

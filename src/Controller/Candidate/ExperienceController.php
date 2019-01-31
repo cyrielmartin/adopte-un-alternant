@@ -34,13 +34,26 @@ class ExperienceController extends AbstractController
         ;
 
         if ($form->isSubmitted() && $form->isValid()) 
-        { dd($request);
+        { //dd($request);
             // ajout des info nécessaire à l'enregistrement
             $experience = $form->getData();
-            $experience
-               
-                ->setVisitCard($visitCard)
-                ->setStatus(1);
+            
+            $experience->setVisitCard($visitCard);
+            $status=$experience->getStatus();
+
+            //dd($status);
+            if ($status == false){
+                $endedDate=$experience ->getEndedAt();
+                $experience->setEndedAt($endedDate);
+                //dd($endedDate);
+            }
+
+            else {
+                $endedDate=null;
+                $experience->setEndedAt($endedDate);
+            }
+
+            
 
             $em = $this->getDoctrine()->getManager();
 
