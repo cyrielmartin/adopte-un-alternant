@@ -30,7 +30,7 @@ class AdoptedController extends AbstractController
                'notice',
                'Votre présentation a bien été modifiée'
            );
-           return $this->redirectToRoute('candidate_adopted_edit', ['id' => 2]);
+           return $this->redirectToRoute('candidate_profile');
        }
        return $this->render('candidate/profile/adopted.html.twig', [
            'adoptedForm' => $adoptedForm->createView(),

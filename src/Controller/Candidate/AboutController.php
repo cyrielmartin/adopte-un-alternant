@@ -29,7 +29,7 @@ class AboutController extends AbstractController
                 'notice',
                 'Votre présentation a bien été modifiée'
             );
-            return $this->redirectToRoute('candidate_about_edit', ['id' => 2]);
+            return $this->redirectToRoute('candidate_profile');
         }
         return $this->render('candidate/profile/about.html.twig', [
             'aboutForm' => $aboutForm->createView(),
