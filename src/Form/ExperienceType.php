@@ -25,15 +25,18 @@ class ExperienceType extends AbstractType
                     ]),
                 ],
             ])
+
+            ->add('status',CheckboxType ::class, [
+                'label' =>
+                    'J\'occupe actuellement ce poste'       
+            ])
+
             ->add('startedAt', DateType::class, [
                 'label' => 'Date de début :',
                 'widget' => 'choice',
                 'format' => 'dd-MM-yyyy',
             ])
-            ->add('status',CheckboxType ::class, [
-                'label' =>
-                    'J\'occupe actuellement ce poste'       
-            ])
+            
             ->add('endedAt', DateType::class, [
                 'label' => 'Date de fin :',
                 'widget' => 'choice',

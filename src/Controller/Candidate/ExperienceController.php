@@ -82,16 +82,35 @@ class ExperienceController extends AbstractController
 
         $experienceForm = $this->createForm(ExperienceType::class, $experience);
         $experienceForm->handleRequest($request);
-        //if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
-        //    $em->persist($isCandidate);
-        //    $em->flush();
-        //    
-        //    $this->addFlash(
-        //        'notice',
-        //        'La carte de visite a bien été modifiée'
-        //    );
-        //    return $this->redirectToRoute('presentation_edit', ['id' => 2]);
-        //}
+        if ($experienceForm->isSubmitted() && $experienceForm->isValid()) {      
+            $experience->setVisitCard($visitCard);
+            $status=$experience->getStatus();
+
+            //dd($status);
+            if ($status == false){
+                $endedDate=$experience ->getEndedAt();
+                $experience->setEndedAt($endedDate);
+                //dd($endedDate);
+            }
+
+            else {
+                $endedDate=null;
+                $experience->setEndedAt($endedDate);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+
+            // enregistrement en bdd
+            $em->persist($experience);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Votre expérience a bien été modifiée'
+            );
+
+            return $this->redirectToRoute('candidate_profile');
+        }
         
         return $this->render('candidate/profile/experience_edit.html.twig', [
             'experienceForm'=>$experienceForm->createView(),
