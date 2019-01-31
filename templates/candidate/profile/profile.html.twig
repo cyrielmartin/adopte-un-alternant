@@ -392,6 +392,82 @@
 
                 </div> {# Fin carte exp #}
 
+                <div class="card"> {# Carte formation Si pas de formation trouvée se trouve juste le boutons ajouter une formation#}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Formations
+                            </h2>
+                        </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-info d-flex col-4">
+                                                Ajouter une formation
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-7">
+                                                    <a href= "{{ path("formation_add") }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    </a>
+                                                </th>                           
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                    </table>
+                                </div>
+                            {% for formationInfo in formationsInfo %}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-info col-4">
+                                                {{ formationInfo.awardName}}</th>
+                                                <th class="text-info col-7">
+                                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    </a>
+                                                </th>
+                                                
+                                                    
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                        <tbody>
+                                            <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
+                                                <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                                </th>                                                    
+                                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
+                                                </td>                                                       
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center"> {#Nom de l'école#}
+                                                <th scope="row" class ="d-flex col-4">Ecole
+                                                </th>                                         
+                                                <td class ="d-flex col-7">{{ formationInfo.school.name}}
+                                                </td>                                                                         
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">{#Date obtention diplôme OU formation toujours en cours#}
+                                                <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
+                                                </th>
+                                                                                      
+                                                {% if formationInfo.status == 0 %}
+                                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                {% elseif formationInfo.status == 1 %}
+                                                <td class ="d-flex col-7">en cours</td>
+                                                {% elseif formationInfo.status == 2 %}
+                                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
+                                                {% endif %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            {% endfor %}
+                            </div>
+
+                    </div> {# Fin carte formation #}
+
                 <div class="card"> {# Carte compétences si pas de compétence seulement la possibilité d'ajouter #}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
