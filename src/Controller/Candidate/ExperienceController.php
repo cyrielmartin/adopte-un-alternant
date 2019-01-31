@@ -52,6 +52,10 @@ class ExperienceController extends AbstractController
                 $experience->setEndedAt($endedDate);
             }
 
+            // Contrôle de la cohérence des dates
+
+
+
             $em = $this->getDoctrine()->getManager();
 
             // enregistrement en bdd ( par un effet "cascarde", la formation sera enregistré aussi )
@@ -120,8 +124,17 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
+    public function delete($id)
     {
+        // je récupère l'la formation qui doit être supprimée
+        $formationRepo = $this->getDoctrine()->getRepository(Experience::class);
+        $formation = $formationRepo->findOneById($id);
+        
+        $em = $this->getDoctrine()->getManager();
+        // je le supprime
+        $em->remove($formation);
+        $em->flush();
+        $this->addFlash('success', 'Votre expérience a bien été supprimée.');
         return $this->redirectToRoute('candidate_profile');
     }
 }

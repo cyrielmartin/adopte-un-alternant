@@ -34,12 +34,16 @@ class ExperienceType extends AbstractType
             ->add('startedAt', DateType::class, [
                 'label' => 'Date de début :',
                 'widget' => 'choice',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
                 'format' => 'dd-MM-yyyy',
             ])
             
             ->add('endedAt', DateType::class, [
                 'label' => 'Date de fin :',
                 'widget' => 'choice',
+                // prevents rendering it as type="date", to avoid HTML5 date pickers
+                'html5' => false,
                 'format' => 'dd-MM-yyyy',
             ])
             ->add('description',TextType::class, [
