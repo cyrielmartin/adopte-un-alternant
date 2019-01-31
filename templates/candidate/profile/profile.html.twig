@@ -264,10 +264,10 @@
                             <div class="card-header">
                                 <h2 class="h5 mb-0 text-center text-secondary">
                                     Alternance recherchée
-                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                    <a href= "{{ path("apprenticeship_edit", {"id": formationInfo.id }) }}">
                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                     </a>
-                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                    <a href= "{{ path("apprenticeship_delete", {"id": formationInfo.id }) }}">
                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                     </a>
                                 </h2>
@@ -275,6 +275,18 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                      <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-info d-flex col-4">
+                                                Ajouter une formation en alternance
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-7">
+                                                    <a href= "{{ path("apprenticeship_add") }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    </a>
+                                                </th>                           
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
                                         <tbody>
                                         <tr class ="d-flex justify-content-center">
                                             <th scope="row" class ="d-flex col-4">A partir du </th> 
@@ -301,6 +313,7 @@
                                 </div>
                             </div>
                         </div> {# Fin carte Alternance recherchée #}
+                    
                     {% endif %}
                {% endfor %}{# FIN Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2#}
 
@@ -328,6 +341,7 @@
                                     </table>
                                 </div>
                             {% for formationInfo in formationsInfo %}
+                            
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
@@ -375,6 +389,7 @@
                                     </table>
                                 
                                 </div>
+                            
                             {% endfor %}
                             </div>
 
