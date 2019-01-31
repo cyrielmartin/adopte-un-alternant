@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VisitCardRepository")
@@ -44,11 +45,6 @@ class VisitCard
     private $experiences;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", mappedBy="visitCards")
-     */
-    private $skills;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Mobility", mappedBy="visitCards")
      */
     private $mobilities;
@@ -68,14 +64,23 @@ class VisitCard
      */
     private $isCandidate;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="visitCards")
+     * @Assert\Count(
+     *      max = 5,
+     *      maxMessage = "Vous ne pouvez pas choisir plus de {{ limit }} compétences"
+     * )
+     */
+    private $skill;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
         $this->experiences = new ArrayCollection();
-        $this->skills = new ArrayCollection();
         $this->mobilities = new ArrayCollection();
         $this->websites = new ArrayCollection();
         $this->additionals = new ArrayCollection();
+        $this->skill = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,34 +187,6 @@ class VisitCard
     }
 
     /**
-     * @return Collection|Skill[]
-     */
-    public function getSkills(): Collection
-    {
-        return $this->skills;
-    }
-
-    public function addSkill(Skill $skill): self
-    {
-        if (!$this->skills->contains($skill)) {
-            $this->skills[] = $skill;
-            $skill->addVisitCard($this);
-        }
-
-        return $this;
-    }
-
-    public function removeSkill(Skill $skill): self
-    {
-        if ($this->skills->contains($skill)) {
-            $this->skills->removeElement($skill);
-            $skill->removeVisitCard($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Mobility[]
      */
     public function getMobilities(): Collection
@@ -307,6 +284,32 @@ class VisitCard
     public function setIsCandidate(?IsCandidate $isCandidate): self
     {
         $this->isCandidate = $isCandidate;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Skill[]
+     */
+    public function getSkill(): Collection
+    {
+        return $this->skill;
+    }
+
+    public function addSkill(Skill $skill): self
+    {
+        if (!$this->skill->contains($skill)) {
+            $this->skill[] = $skill;
+        }
+
+        return $this;
+    }
+
+    public function removeSkill(Skill $skill): self
+    {
+        if ($this->skill->contains($skill)) {
+            $this->skill->removeElement($skill);
+        }
 
         return $this;
     }

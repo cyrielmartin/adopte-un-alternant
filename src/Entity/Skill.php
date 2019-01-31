@@ -24,7 +24,7 @@ class Skill
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", inversedBy="skills")
+     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", mappedBy="skill")
      */
     private $visitCards;
 
@@ -50,6 +50,10 @@ class Skill
         return $this;
     }
 
+    public function __toString(){
+        return $this->name;
+    }
+
     /**
      * @return Collection|VisitCard[]
      */
@@ -62,6 +66,7 @@ class Skill
     {
         if (!$this->visitCards->contains($visitCard)) {
             $this->visitCards[] = $visitCard;
+            $visitCard->addSkill($this);
         }
 
         return $this;
@@ -71,12 +76,10 @@ class Skill
     {
         if ($this->visitCards->contains($visitCard)) {
             $this->visitCards->removeElement($visitCard);
+            $visitCard->removeSkill($this);
         }
 
         return $this;
-    }
-    public function __toString(){
-        return $this->name;
     }
 
     
