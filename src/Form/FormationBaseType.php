@@ -8,6 +8,7 @@ use App\Entity\AwardLevel;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,9 +20,19 @@ class FormationBaseType extends AbstractType
         $builder
             ->add('school', TextType::class, [
                 'label' => 'Au sein de quel établissement comptez vous effectuer votre formation ?',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un établissement'
+                    ]),
+                ],
             ])
             ->add('awardName', TextType::class, [
                 'label' => 'Nom du diplôme à obtenir suite à la formation :',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir le nom du diplôme'
+                    ]),
+                ]
             ])
             ->add('awardLevel', EntityType::class,[
                 'label'=>'Niveau du diplôme ou équivalent :',

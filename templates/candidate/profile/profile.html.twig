@@ -14,6 +14,12 @@
 <div class="col-12 ">
 
     <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between">
+        
+        {% for message in app.flashes('warning') %}
+            <div class="flash-notice bg-warning p-2 rounded mx-auto my-3">
+                {{ message }}
+            </div>
+        {% endfor %}
 
         <div class="col-12 col-lg-11 p-0">
 
