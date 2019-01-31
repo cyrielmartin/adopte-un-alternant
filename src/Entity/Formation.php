@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,6 +39,7 @@ class Formation
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Expression("value > this.getStartedAt()")
      */
     private $endedAt;
 

@@ -3,6 +3,7 @@
 namespace App\Controller\Candidate;
 
 use App\Entity\Formation;
+use App\Entity\VisitCard;
 use App\Form\FormationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\Manager\SchoolManager;
@@ -44,8 +45,9 @@ class FormationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $formation = $form->getData();
+
             $end = $formation->getEndedAt();
-            $now = new DateTime();
+            $now = new \DateTime();
             // si la fin de la formation est avant aujourd'hui
             if( $now >= $end )
             {
@@ -69,7 +71,6 @@ class FormationController extends AbstractController
             $em->flush();
 
             return $this->redirectToRoute('candidate_profile');
-
         }
 
         return $this->render('candidate/profile/formation.html.twig', [
@@ -137,8 +138,19 @@ class FormationController extends AbstractController
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
+    public function delete($id)
     {
+        // je récupère la formation qui doit être supprimé
+        $formationRepo = $this->getDoctrine()->getRepository(Formation::class);
+        $formation = $formationRepo->findOneBy(['id' => $id]);
+        
+        $em = $this->getDoctrine()->getManager();
+        // je le supprime
+        $em->remove($formation);
+        $em->flush();
+
+        $this->addFlash('success', 'La formation a bien été supprimé.');
+ 
         return $this->redirectToRoute('candidate_profile');
     }
 }

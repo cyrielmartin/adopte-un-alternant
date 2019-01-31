@@ -89,7 +89,7 @@ class ApprenticeshipController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id, EntityManagerInterface $em)
     {
         // je récupère l'apprentissage qui doit être modifié
         $apprenticeRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
@@ -99,7 +99,7 @@ class ApprenticeshipController extends AbstractController
         $data = $request->request->get('apprenticeship');
 
         // je l'envoi à la méthode checkSchoolData pour vérifier son contenu
-        $newData = $this->checkSchoolData($data);
+        $newData = SchoolManager::checkSchoolData($data, $em);
 
         // si la méthode m'a renvoyé autre que chose du null
         if(!empty($newData))
