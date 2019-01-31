@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SkillController!{% endblock %}
+{% block title %}Ajouter ou modifier une compétence{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="col-10 col-md-7 mx-auto my-4">
+   <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h1>Ajouter ou modifier une compétence</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/src/Controller/Candidate/SkillController.php'|file_link(0) }}">src/Controller/Candidate/SkillController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/templates/candidate/skill/index.html.twig'|file_link(0) }}">templates/candidate/skill/index.html.twig</a></code></li>
-    </ul>
-</div>
+{# Formulaire #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+{{ form_end(form) }}
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
 {% endblock %}
