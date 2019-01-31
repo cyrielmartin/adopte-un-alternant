@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExperienceRepository")
@@ -22,7 +23,9 @@ class Experience
     private $companyName;
 
     /**
+     *  
      * @ORM\Column(type="datetime")
+     * 
      */
     private $startedAt;
 
@@ -32,7 +35,11 @@ class Experience
     private $status;
 
     /**
+     *  
+     * 
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Expression("value >= this.getStartedAt() or value === null", message ="la date doit être supérieure à la date du début ")
+     * 
      */
     private $endedAt;
 

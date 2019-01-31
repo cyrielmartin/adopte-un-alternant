@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
 class ExperienceType extends AbstractType
 {
@@ -25,6 +27,7 @@ class ExperienceType extends AbstractType
                     ]),
                 ],
             ])
+            
 
             ->add('status',CheckboxType ::class, [
                 'label' =>
@@ -37,6 +40,9 @@ class ExperienceType extends AbstractType
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
                 'format' => 'dd-MM-yyyy',
+                'constraints' => [
+                    new LessThanOrEqual("today UTC"),
+                ]             
             ])
             
             ->add('endedAt', DateType::class, [
@@ -44,11 +50,22 @@ class ExperienceType extends AbstractType
                 'widget' => 'choice',
                 // prevents rendering it as type="date", to avoid HTML5 date pickers
                 'html5' => false,
+                'required' => false,
                 'format' => 'dd-MM-yyyy',
+                'constraints' => [
+                    new LessThanOrEqual("today UTC"),
+                    ]
             ])
+
             ->add('description',TextType::class, [
                 'label' => 'Décrivez votre expérience',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir une description'
+                    ]),
+                ],
             ])
+            
             //->add('visitCard')
         ;
     }

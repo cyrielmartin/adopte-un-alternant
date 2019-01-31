@@ -39,17 +39,20 @@ class ExperienceController extends AbstractController
             
             $experience->setVisitCard($visitCard);
             $status=$experience->getStatus();
+            //$endedDate=$experience ->getEndedAt();
+            //dd($endedDate);
 
             //dd($status);
-            if ($status == false){
-                $endedDate=$experience ->getEndedAt();
-                $experience->setEndedAt($endedDate);
-                //dd($endedDate);
+            if ($status == true){
+                $endedDate= null;
+                $experience->setEndedAt(null);
+                
             }
 
             else {
-                $endedDate=null;
+                $endedDate=$experience ->getEndedAt();
                 $experience->setEndedAt($endedDate);
+                //dd($endedDate);
             }
 
             // Contrôle de la cohérence des dates
