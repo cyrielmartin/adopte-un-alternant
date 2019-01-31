@@ -31,6 +31,26 @@ class ExperienceController extends AbstractController
 
         $form->handleRequest($request);
 
+        ;
+
+        if ($form->isSubmitted() && $form->isValid()) 
+        { dd($request);
+            // ajout des info nécessaire à l'enregistrement
+            $experience = $form->getData();
+            $experience
+               
+                ->setVisitCard($visitCard)
+                ->setStatus(1);
+
+            $em = $this->getDoctrine()->getManager();
+
+            // enregistrement en bdd ( par un effet "cascarde", la formation sera enregistré aussi )
+            $em->persist($experience);
+            $em->flush($experience);
+
+            return $this->redirectToRoute('candidate_profile');
+        }
+
 
         return $this->render('candidate/profile/experience.html.twig', [
             'form' => $form->createView(),
