@@ -303,12 +303,14 @@
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
                                             <tr class ="d-flex">
-                                                <th scope="col" class="text-info col-12">
+                                                <th scope="col" class="text-info d-flex col-4">
+                                                Ajouter une formation
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-8">
                                                     <a href= "{{ path("formation_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
-                                                Ajouter une formation</th>
-                                                    
+                                                </th>                           
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                     </table>
@@ -377,12 +379,18 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr>
-                                                <th scope="col" class="text-info">
+                                            <tr class ="d-flex">
+                                                <th scope="col" class="text-info d-flex col-3">
+                                                Ajouter une expérience
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-3">
                                                     <a href= "{{ path("experience_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
-                                                Ajouter une expérience</th>                                          
+                                                </th>
+                                                <th scope="col" class="d-flex col-4"></th>
+                                                  <th scope="col" class="d-flex col-1"></th>
+                                                    
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                     </table>
@@ -392,29 +400,29 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>{# titre de colonnes #}
-                                                <tr>
-                                                  <th scope="col">Période</th>
-                                                  <th scope="col">Entreprise</th>
-                                                  <th scope="col">Description</th>
-                                                  <th scope="col"></th>
+                                                <tr class ="d-flex ">
+                                                  <th scope="col" class="d-flex col-3 ">Période</th>
+                                                  <th scope="col" class="d-flex col-3 ">Entreprise</th>
+                                                  <th scope="col" class="d-flex col-4 ">Description</th>
+                                                  <th scope="col" class="d-flex col-1 "></th>
                                                 </tr>
                                             </thead>{# fin titre de colonnes #}
                                             <tbody>{# corps tableau exp #}
-                                                <tr>
-                                                    <td>
+                                                <tr class ="d-flex ">
+                                                    <td class="d-flex col-3 ">
                                                     Du {{ experienceInfo.startedAt|date("m/d/Y")}}
                                                     {% if experienceInfo.endedAt == null %}
                                                     à aujourd'hui
 
                                                     {% else %}
-                                                    à {{ experienceInfo.endedAt|date("m/d/Y")}}
+                                                    au {{ experienceInfo.endedAt|date("m/d/Y")}}
                                                     {% endif %}
 
                                                     </td>
-                                                    <td>{{ experienceInfo.companyName}}</td>
-                                                    <td>{{ experienceInfo.description}}</td>
+                                                    <td class="d-flex col-3">{{ experienceInfo.companyName}}</td>
+                                                    <td class="d-flex col-4">{{ experienceInfo.description}}</td>
 
-                                                    <td>
+                                                    <td class="d-flex col-1">
                                                         <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                         </a>
