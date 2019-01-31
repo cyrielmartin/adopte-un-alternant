@@ -68,18 +68,18 @@ class PresentationController extends AbstractController
      */
     public function edit(User $user, IsCandidate $isCandidate, VisitCard $visitCard, Request $request, EntityManagerInterface $em)
     {
-        // $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
-        // $isCandidateForm->handleRequest($request);
-        // if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
-        //     $em->persist($isCandidate);
-        //     $em->flush();
+        $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
+        $isCandidateForm->handleRequest($request);
+        if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
+            $em->persist($isCandidate);
+            $em->flush();
             
-        //     $this->addFlash(
-        //         'notice',
-        //         'La page de présentation a bien été modifiée'
-        //     );
-        //     return $this->redirectToRoute('presentation_edit', ['id' => $user->getId()]);
-        // }
+            $this->addFlash(
+                'notice',
+                'La carte de visite a bien été modifiée'
+            );
+            return $this->redirectToRoute('presentation_edit', ['id' => 2]);
+        }
 
         $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);
         $visitCardForm->handleRequest($request);
@@ -89,13 +89,13 @@ class PresentationController extends AbstractController
 
             $this->addFlash(
                 'notice',
-                'La page de présentation a bien été modifiée'
+                'La carte de visite a bien été modifiée'
             );
-            return $this->redirectToRoute('presentation_edit', ['id' => $user->getId()]);
+            return $this->redirectToRoute('presentation_edit', ['id' => 2]);
         }
 
         return $this->render('candidate/profile/presentation_edit.html.twig', [
-            // 'isCandidateForm' => $isCandidateForm->createView(),
+            'isCandidateForm' => $isCandidateForm->createView(),
             'visitCardForm' => $visitCardForm->createView(),
         ]);      
     }

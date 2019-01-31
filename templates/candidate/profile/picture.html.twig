@@ -21,15 +21,15 @@
             {{ message }}
         </div>
     {% endfor %}
+
+{# Formulaire #}
 {{ form_start(pictureForm, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(pictureForm) }}
-<button type="submit" class="btn btn-secondary mb-2">Valider</button>
-    </button>
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
 {{ form_end(pictureForm) }}
-</div>
 {% endblock %}
-{% block footer %}
 
+{% block footer %}
     <footer>
         <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
             <form class="form-inline">
@@ -38,5 +38,4 @@
             </form>
         </nav>
     </footer>
-
 {% endblock %}
