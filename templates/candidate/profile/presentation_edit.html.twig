@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier ma page de présentation{% endblock %}
+{% block title %}Modifier ma carte de visite{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 {% endblock %}
 
 {% block body %}
 <div class="col-10 col-md-7 mx-auto my-4">
-<h1>Modifier ma page de présentation</h1>
+   <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+
+<h1>Modifier ma carte de visite</h1>
     {# Messages flash #}
     {% for message in app.flashes('notice') %}
         <div class="alert alert-success flash-message mb-2">
@@ -19,8 +21,21 @@
             {{ message }}
         </div>
     {% endfor %}
-    {{ include('candidate/profile/_form_visit_card.html.twig') }}
-    {{ include('candidate/profile/_form_isCandidate.html.twig') }}
-   <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
-</div>
+
+{# Formulaire isCandidate pour numéro de téléphone  #}
+{{ form_start(isCandidateForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(isCandidateForm) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+{{ form_end(isCandidateForm) }}
+
+{# Formulaire VisitCard pour choix d'affichage  #}
+{{ form_start(visitCardForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(visitCardForm) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+{{ form_end(visitCardForm) }}
+
+
+
 {% endblock %}
+
+

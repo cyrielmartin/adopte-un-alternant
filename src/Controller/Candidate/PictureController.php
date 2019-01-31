@@ -2,39 +2,39 @@
 
 namespace App\Controller\Candidate;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\IsCandidate;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\PictureType;
 
 /**
- * @Route("/candidate/picture", name="candidate_picture_")
+ * @Route("/candidat/image", name="candidate_picture_")
  */
 class PictureController extends AbstractController
 {
-    /**
-     * @Route("/ajouter", name="add")
-     */
-    public function add()
-    {
-        return $this->render('candidate/profile/picture.html.twig', [
-            'controller_name' => 'PictureController',
-        ]);
-    }
 
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit()
-    {
+    public function edit(IsCandidate $isCandidate, Request $request, EntityManagerInterface $em)
+        {
+            $pictureForm = $this->createForm(PictureType::class, $isCandidate);
+            $pictureForm->handleRequest($request);
+            if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
+                $em->persist($isCandidate);
+                $em->flush();
+                
+                $this->addFlash(
+                    'notice',
+                    'La photo a bien été modifiée'
+                );
+                return $this->redirectToRoute('candidate_picture_edit', ['id' => 2]);
+            }
+    
         return $this->render('candidate/profile/picture.html.twig', [
-            'controller_name' => 'PictureController',
+            'pictureForm' => $pictureForm->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/{id}/supprimer", name="delete")
-     */
-    public function delete()
-    {
-        return $this->redirectToRoute('candidate_profile');
     }
 }

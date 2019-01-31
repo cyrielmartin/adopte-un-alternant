@@ -2,39 +2,38 @@
 
 namespace App\Controller\Candidate;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\AboutType;
+use App\Entity\VisitCard;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/candidate/a-propos", name="candidate_about")
+ * @Route("/candidat/a-propos", name="candidate_about_")
  */
 class AboutController extends AbstractController
 {
     /**
-     * @Route("/ajouter", name="add")
-     */
-    public function add()
-    {
-        return $this->render('candidate/profile/about.html.twig', [
-            'controller_name' => 'AboutController',
-        ]);
-    }
-
-    /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit()
+    public function edit(VisitCard $visitCard, Request $request, EntityManagerInterface $em)
     {
+        $aboutForm = $this->createForm(AboutType::class, $visitCard);
+        $aboutForm->handleRequest($request);
+        if ($aboutForm->isSubmitted() && $aboutForm->isValid()) {
+            $em->persist($visitCard);
+            $em->flush();
+            
+            $this->addFlash(
+                'notice',
+                'Votre présentation a bien été modifiée'
+            );
+            return $this->redirectToRoute('candidate_about_edit', ['id' => 2]);
+        }
         return $this->render('candidate/profile/about.html.twig', [
-            'controller_name' => 'AboutController',
+            'aboutForm' => $aboutForm->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/supprimer", name="delete")
-     */
-    public function delete()
-    {
-        return $this->redirectToRoute('candidate_profil');
-    }
 }
