@@ -17,6 +17,11 @@ var search = {
             source: '/autocomplete/search/school',
             //minLength : 3
         });
+
+        $('#formation_formation_school').autocomplete({
+            source: '/autocomplete/search/school',
+            //minLength : 3
+        });
     }
 };
 $(search.init)
