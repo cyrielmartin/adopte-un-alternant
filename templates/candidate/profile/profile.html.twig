@@ -113,8 +113,9 @@
                             <div class="p-2 table-responsive">
                                 <table class="table">
                                     <tbody>
+                                        {% for webSite in webSites %}
                                         <tr>
-                                            <th>Site:
+                                            <th><i class="fab fa-weebly"></i>
                                                 <a href="{{webSite.link}}"> {{webSite.name}}</a>
                                             </th>
                                             <td>
@@ -124,6 +125,17 @@
                                                 <a href= "{{ path("website_delete", {"id": webSite.id }) }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                 </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td class="font-weight-bold">Ajouter un site <i class="fab fa-weebly"></i>
+                                            </td>
+                                            <td>
+                                                <a href= "{{ path("website_add") }}">
+                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                </a>
+                                                
                                             </td>
                                         </tr>
 
@@ -184,7 +196,7 @@
                                             <td>
                                                 <p>
                                                     <a href= "{{ path("mobility_add")}}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-square"></i></button>
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
                                                 </p>
                                             

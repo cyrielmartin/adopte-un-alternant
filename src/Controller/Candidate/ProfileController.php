@@ -51,7 +51,8 @@ class ProfileController extends AbstractController
         //récupération de l'Id de la visitCard pour accéder aux metatables
         $visitCardId = $candidateInformation->getId();
        
-        $webSite = $webSiteRepo->findOneByVisitCard($visitCardId);
+        $webSites = $webSiteRepo->findByVisitCard($visitCardId);
+        //dd ($webSites);
        
         $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
         //dd ($formationsInfo);
@@ -76,7 +77,7 @@ class ProfileController extends AbstractController
         return $this->render('candidate/profile/profile.html.twig', [
             'candidateDatas' =>  $candidateDatas,
             'candidateInformation' => $candidateInformation,
-            'webSite'=>$webSite,
+            'webSites'=>$webSites,
             'formationsInfo'=>$formationsInfo,
             'experiencesInfo'=>$experiencesInfo,
             'skillsInfo'=>$skillsInfo,
