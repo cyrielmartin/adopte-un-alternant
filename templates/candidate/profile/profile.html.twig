@@ -264,25 +264,25 @@
                                 <div class="table-responsive">
                                      <table class="table">
                                         <tbody>
-                                        <tr>
-                                            <th scope="row">A partir du </th> 
-                                            <td>{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="row" class ="d-flex col-4">A partir du </th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
                                         </tr>
-                                        <tr>
-                                            <th scope="row">Jusqu'au </th> 
-                                            <td>{{ formationInfo.endedAt|date("m/d/Y")}}</td>
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="row" class ="d-flex col-4">Jusqu'au </th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.endedAt|date("m/d/Y")}}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">Avec l'école</th> 
-                                            <td>{{ formationInfo.school.name}}</td>
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="row" class ="d-flex col-4">Avec l'école</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.school.name}}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">Pour obtenir le diplôme</th> 
-                                            <td>{{ formationInfo.awardName}}</td>
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.awardName}}</td>
                                         </tr>
-                                        <tr>
-                                            <th scope="row">De niveau</th> 
-                                            <td>{{ formationInfo.awardLevel.name}}</td>
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="row" class ="d-flex col-4">De niveau</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}</td>
                                         </tr>                                           
                                         </tbody>
                                     </table>
@@ -302,11 +302,11 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr class ="d-flex">
+                                            <tr class ="d-flex justify-content-center">
                                                 <th scope="col" class="text-info d-flex col-4">
                                                 Ajouter une formation
                                                 </th>
-                                                <th scope="col" class="text-info d-flex col-8">
+                                                <th scope="col" class="text-info d-flex col-7">
                                                     <a href= "{{ path("formation_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
@@ -319,10 +319,10 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr class ="d-flex">
+                                            <tr class ="d-flex justify-content-center">
                                                 <th scope="col" class="text-info col-4">
                                                 {{ formationInfo.awardName}}</th>
-                                                <th class="text-info col-8">
+                                                <th class="text-info col-7">
                                                     <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
@@ -335,28 +335,28 @@
                                             </tr>
                                         </thead>{# fin titre de colonnes #}
                                         <tbody>
-                                            <tr class ="d-flex">{#Niveau du diplôme#}
+                                            <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
                                                 <th scope="row" class ="d-flex col-4">Niveau scolaire
                                                 </th>                                                    
-                                                <td class ="d-flex col-8">{{ formationInfo.awardLevel.name}}
+                                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
                                                 </td>                                                       
                                             </tr>
-                                            <tr class ="d-flex"> {#Nom de l'école#}
+                                            <tr class ="d-flex justify-content-center"> {#Nom de l'école#}
                                                 <th scope="row" class ="d-flex col-4">Ecole
                                                 </th>                                         
-                                                <td class ="d-flex col-8">{{ formationInfo.school.name}}
+                                                <td class ="d-flex col-7">{{ formationInfo.school.name}}
                                                 </td>                                                                         
                                             </tr>
-                                            <tr class ="d-flex">{#Date obtention diplôme OU formation toujours en cours#}
+                                            <tr class ="d-flex justify-content-center">{#Date obtention diplôme OU formation toujours en cours#}
                                                 <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
                                                 </th>
                                                                                       
                                                 {% if formationInfo.status == 0 %}
-                                                <td class ="d-flex col-8">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
                                                 {% elseif formationInfo.status == 1 %}
-                                                <td class ="d-flex col-8">en cours</td>
+                                                <td class ="d-flex col-7">en cours</td>
                                                 {% elseif formationInfo.status == 2 %}
-                                                <td class ="d-flex col-8">en cours et en recherche d'alternance</td>
+                                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
                                                 {% endif %}
                                             </tr>
                                         </tbody>
@@ -379,7 +379,7 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr class ="d-flex">
+                                            <tr class ="d-flex justify-content-center">
                                                 <th scope="col" class="text-info d-flex col-3">
                                                 Ajouter une expérience
                                                 </th>
@@ -400,7 +400,7 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>{# titre de colonnes #}
-                                                <tr class ="d-flex ">
+                                                <tr class ="d-flex justify-content-center ">
                                                   <th scope="col" class="d-flex col-3 ">Période</th>
                                                   <th scope="col" class="d-flex col-3 ">Entreprise</th>
                                                   <th scope="col" class="d-flex col-4 ">Description</th>
@@ -408,7 +408,7 @@
                                                 </tr>
                                             </thead>{# fin titre de colonnes #}
                                             <tbody>{# corps tableau exp #}
-                                                <tr class ="d-flex ">
+                                                <tr class ="d-flex justify-content-center">
                                                     <td class="d-flex col-3 ">
                                                     Du {{ experienceInfo.startedAt|date("m/d/Y")}}
                                                     {% if experienceInfo.endedAt == null %}
@@ -450,11 +450,11 @@
                             <div class="table-responsive">
                                     <table class="table">
                                         <thead>{# titre de colonnes #}
-                                            <tr class = "d-flex">
+                                            <tr class = "d-flex justify-content-center">
                                                 <th scope="col" class="text-info d-flex col-6">
                                                 Ajouter une compétence
                                                 </th>
-                                                <th class = "d-flex col-6">
+                                                <th class = "d-flex col-5">
                                                     <a href= "{{ path("experience_add") }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
@@ -468,11 +468,11 @@
                             {% for skillInfo in skillsInfo %}
                                 <div class="table-responsive">
                                     <table class="table ">                           
-                                        <tr class = "d-flex">
+                                        <tr class = "d-flex justify-content-center">
                                             <td class = "d-flex col-6">
                                             {{skillInfo.name}}
                                             </td>
-                                            <td class = "d-flex col-6">
+                                            <td class = "d-flex col-5">
                                                 <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                 </a>
@@ -499,11 +499,11 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>{# titre de colonnes #}
-                                        <tr class = "d-flex">
+                                        <tr class = "d-flex justify-content-center">
                                             <th scope="col" class="text-info d-flex col-6">
                                             Ajouter un atout ou un centre d'intérêt
                                             </th>
-                                            <th scope="col" class="d-flex col-6">
+                                            <th scope="col" class="d-flex col-5">
                                                 <a href= "{{ path("asset_add") }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                 </a>
@@ -517,18 +517,18 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex">
+                                                <tr class = "d-flex justify-content-center">
                                                   <th class = "d-flex col-6" scope="col">Atouts</th>
-                                                  <th class = "d-flex col-6"></th>
+                                                  <th class = "d-flex col-5"></th>
                                                 </tr>
                                             </thead>{# fin titre de colonnes #}
 
                                             <tbody>{# corps tableau atouts#}                                
-                                                <tr class = "d-flex">
+                                                <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
                                                     {{additionalInfo.content}}
                                                     </td>
-                                                    <td class = "d-flex col-6">
+                                                    <td class = "d-flex col-5">
                                                         <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                         </a>
@@ -551,18 +551,18 @@
                                         <table class="table">
 
                                             <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex">
+                                                <tr class = "d-flex justify-content-center">
                                                   <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
-                                                  <th class = "d-flex col-6"></th>
+                                                  <th class = "d-flex col-5"></th>
                                                 </tr>
                                             </thead>{# fin titre de colonnes #}
 
                                             <tbody>{# corps tableau centres d'intérêts#}                                  
-                                                <tr class = "d-flex">
+                                                <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
                                                     {{additionalInfo.content}}
                                                     </td>
-                                                    <td class = "d-flex col-6">
+                                                    <td class = "d-flex col-5">
                                                         <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                         </a>
