@@ -4,7 +4,10 @@ namespace App\Controller\Candidate;
 
 use App\Entity\VisitCard;
 use App\Entity\Experience;
+use App\Entity\IsCandidate;
 use App\Form\ExperienceType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Controller\Manager\SchoolManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -86,51 +89,76 @@ class ExperienceController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit(Request $request, Experience $experience)
+    public function edit(Request $request, $id, EntityManagerInterface $em)
 
     {
         $user = $this->getUser();
 
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+
         // récupération de la carte de visite du candidat connecté
-        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
-        $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
 
-        $form = $this->createForm(ExperienceType::class, $experience);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {      
-            $experience->setVisitCard($visitCard);
-            $status=$experience->getStatus();
+        // je récupère l'expérience qui doit être mise à jours
+        $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
+        $experience = $experienceRepo->findOneBy(['visitCard' => $visitCard->getId()]);
+        //dd($experience);
 
-            //dd($status);
-            if ($status == false){
-                $endedDate=$experience ->getEndedAt();
-                $experience->setEndedAt($endedDate);
-                //dd($endedDate);
-            }
+        // si cette expérience appartient bien au candidat connecté
 
-            else {
-                $endedDate=null;
-                $experience->setEndedAt($endedDate);
-            }
+        if(!empty($experience))
+        {
+            
 
-            $em = $this->getDoctrine()->getManager();
+            $form = $this->createForm(ExperienceType::class, $experience);
+            $form->handleRequest($request);
 
-            // enregistrement en bdd
-            $em->persist($experience);
-            $em->flush();
-
-            $this->addFlash(
-                'notice',
-                'Votre expérience a bien été modifiée'
-            );
-
-            return $this->redirectToRoute('candidate_profile');
-        }
         
+            if ($form->isSubmitted() && $form->isValid())
+            { 
+                //$experience = $form->getData();
+                $experience->setVisitCard($visitCard);
+                $status=$experience->getStatus();
+    
+                //dd($status);
+                if ($status == false){
+                    $endedDate=$experience ->getEndedAt();
+                    $experience->setEndedAt($endedDate);
+                    //dd($endedDate);
+                }
+    
+                else {
+                    $endedDate=null;
+                    $experience->setEndedAt($endedDate);
+                }
+    
+                //$em = $this->getDoctrine()->getManager();
+    
+                // enregistrement en bdd
+                //$em->persist($experience);
+                $em->flush();
+    
+                
+                return $this->redirectToRoute('candidate_profile');
+            }
+
+        }
+        // si cette formation n'appartient pas au user connecté
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue lors de la modification.');
+            
+            return $this->redirectToRoute('candidate_profile');
+            
+        }
         return $this->render('candidate/profile/experience.html.twig', [
             'form'=>$form->createView(),
             'tab_type' => 'Modifier',
         ]);
+        
     }
 
     /**
@@ -138,15 +166,35 @@ class ExperienceController extends AbstractController
      */
     public function delete($id)
     {
-        // je récupère l'experience qui doit être supprimée
-        $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
-        $experience = $experienceRepo->findOneById($id);
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
         
-        $em = $this->getDoctrine()->getManager();
-        // je la supprime
-        $em->remove($experience);
-        $em->flush();
-        $this->addFlash('success', 'Votre expérience a bien été supprimée.');
+        // je récupère l'expérience qui doit être supprimée
+        $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
+        $experience = $experienceRepo->findOneById(['id' => $id, 'visitCard' => $visitCard->getId()]);
+        
+        
+        if(!empty($experience))
+        {
+            $em = $this->getDoctrine()->getManager();
+            // je la supprime
+            $em->remove($experience);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre expérience a bien été supprimée.');
+        }
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue lors de la suppression.');
+        }
+        
+
         return $this->redirectToRoute('candidate_profile');
     }
 }
