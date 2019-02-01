@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Ajouter un site {% endblock %}
+{% block title %} {{ tab_type }} un site {% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
@@ -9,7 +9,7 @@
 {% block body %}
 <div class="container">
     
-    <div class="h5 my-4 text-center">Ajouter un site web</div>
+    <div class="h5 my-4 text-center">{{ tab_type }} un site web</div>
     
     <div class="col-12 col-mg-6 col-lg-5 mx-auto my-3">
     
@@ -17,7 +17,7 @@
             {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                 {{ form_widget(form) }}
                 <button type="submit" class="btn btn-secondary mb-2 p-2 col-8 d-block mx-auto">
-                    Ajouter ce site
+                    Enregistrer
                 </button>
             {{ form_end(form) }}
         </div>
