@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page Profil{% endblock %}
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
 
@@ -228,18 +228,12 @@
                 <div class="card-header">
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Compétences
+                        <a href= "{{ path("skill_edit", {"id": candidateInformation.id}) }}">
+                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                        </a>
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class ="d-flex justify-content-center">
-                                    <a href="{{ path("skill_edit", {"id": candidateInformation.id}) }}"><button type="button" class="btn btn-outline-success btn-sm">Modifier ses compétences <i class="fas fa-plus-circle"></i></button></a>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
                     <div class="row justify-content-around">
                         {% for skill in candidateInformation.skills %}
                         <button type="button" class="btn btn-warning">{{ skill.name }}<a href=""><i class="far fa-times-circle delete-skill"></i></a></button>
@@ -253,17 +247,20 @@
                 <div class="card-header">
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Alternance recherchée
+                        {% for formationInfo in formationsInfo %} 
+                            {% if formationInfo.status == 0 %}
+                            <a href= "{{ path("apprenticeship_add") }}">
+                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                            {% elseif formationInfo.status == 2 %}
+                            {% endif %}  
+                        {% endfor %}  
+                        </a>
                     </h2>
                 </div>
 
                 {# Si alternance recherchée (statut 2), pas de bouton Ajouter #}
                 <div class="card-body">
                 {% for formationInfo in formationsInfo %}   
-                    {% if formationInfo.status == 0 %}
-                        <tr class ="d-flex justify-content-center">
-                            <a href="{{ path("apprenticeship_add") }}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une alternance <i class="fas fa-plus-circle"></i></button></a>
-                        </tr>
-                    {% elseif formationInfo.status == 2 %}
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -305,7 +302,6 @@
                         </table>
                     </div>
                 </div>             
-                    {% endif %}
                 {% endfor %}
             </div> {# Fin Alternance recherchée #}
 
@@ -314,19 +310,14 @@
                 <div class="card-header">
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Formations
+                        <a href= "{{ path("formation_add") }}">
+                            <button class="btn btn-light " id="" type="button"> <i class="far fa-plus-square"></i></button>
+                        </a>
                     </h2>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class ="d-flex justify-content-center">
-                                    <a href="{{ path("formation_add") }}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une formation <i class="fas fa-plus-circle"></i></button></a>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
                     {% for formationInfo in formationsInfo %}
+                     {% if formationInfo.status == 2 %}
+                     {% else %}
                     <div class="table-responsive">
                         <table class="table">
                             <thead>{# titre de colonnes #}
@@ -370,6 +361,7 @@
                             </tbody>
                         </table>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div> {# Fin carte formation #}
 
@@ -378,18 +370,12 @@
                 <div class="card-header">
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Expériences
+                        <a href= "{{ path("experience_add")}}">
+                            <button class="btn btn-light " id="" type="button"> <i class="far fa-plus-square"></i></button>
+                        </a>
                     </h2>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class ="d-flex justify-content-center">
-                                    <a href="{{ path("experience_add")}}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une expérience <i class="fas fa-plus-circle"></i></button></a>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
                     {% for experienceInfo in experiencesInfo %}
                     <div class="table-responsive">
                         <table class="table">

@@ -19,8 +19,8 @@ class ApprenticeshipType extends AbstractType
                 'label' => false,
             ])
             ->add('academicPace', TextType::class, [
-                'label' => 'Quel sera le rythme de la formation ?',
-                'help' => 'exemple : Une semaine en formation, deux semaine en entreprise',
+                'label' => 'Rythme de formation souhaité :',
+                'help' => 'Par exemple, une semaine en formation, deux semaines en entreprise.',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez renseigner votre rythme scolaire'

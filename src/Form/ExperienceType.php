@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 
@@ -20,7 +21,7 @@ class ExperienceType extends AbstractType
     {
         $builder
             ->add('companyName', TextType::class, [
-                'label' => 'Nom de l\'entreprise',
+                'label' => 'Nom de l\'entreprise :',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir une entreprise'
@@ -57,8 +58,8 @@ class ExperienceType extends AbstractType
                     ]
             ])
 
-            ->add('description',TextType::class, [
-                'label' => 'Décrivez votre expérience',
+            ->add('description',TextareaType::class, [
+                'label' => 'Décrivez votre expérience :',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez saisir une description'

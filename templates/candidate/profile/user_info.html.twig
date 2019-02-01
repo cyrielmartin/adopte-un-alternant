@@ -3,20 +3,15 @@
 {% block title %}Modifier mes informations{% endblock %}
 
 {% block body %}
+<div class="col-10 col-md-7 mx-auto my-4">
+   <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-<div class="container">
+<h1>Modifier mes informations personnelles</h1>
 
-    <div class="h4 text-center my-3 p-0 col-12">Modifier mes informations personnelles</div>
-    
-    <div class="col-12 col-md-6 col-lg-5 mx-auto my-3">
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-secondary mb-2 p-2 col-6 d-block mx-auto">
-                Enregistrer les modifications
-            </button>
-        {{ form_end(form) }}
+{# Formulaire #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+{{ form_end(form) }}
     </div>
-    
-</div>
-
 {% endblock %}
