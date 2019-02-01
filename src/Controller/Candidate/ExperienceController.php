@@ -104,10 +104,6 @@ class ExperienceController extends AbstractController
         // je récupère l'expérience qui doit être mise à jours
         $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
         $experience = $experienceRepo->findOneBy(['visitCard' => $visitCard->getId(), 'id' => $id]);
-<<<<<<< HEAD
-        //dd($experience);
-=======
->>>>>>> 2ee86cb3dc66ae31ec7a9d41e67e6d61941f7456
 
         // si cette expérience appartient bien au candidat connecté
         if(!empty($experience))
@@ -137,6 +133,10 @@ class ExperienceController extends AbstractController
             
                 // enregistrement en bdd
                 $em->flush();
+                $this->addFlash(
+                    'notice',
+                    'Votre expérience a bien été modifiée'
+                );
                 
                 return $this->redirectToRoute('candidate_profile');
             }
