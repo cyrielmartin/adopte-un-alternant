@@ -288,6 +288,11 @@ class VisitCard
         return $this;
     }
 
+    public function getSkill(): Collection
+    {
+        return $this->skills;
+    }
+
     /**
      * @return Collection|Skill[]
      */
