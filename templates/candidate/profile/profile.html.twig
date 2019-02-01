@@ -50,7 +50,7 @@
 
                         <div class="p-2">
                             <p class ="text-center">
-                                <a href= "{{ path("candidate_picture_edit", {"id": candidateDatas.id }) }}">
+                                <a href= "{{ path("picture_edit", {"id": candidateDatas.id }) }}">
                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                 </a>
                             </p>
@@ -164,7 +164,7 @@
                                             {% endif %}
                                                 </th>
                                                 <td>                                   
-                                                    <a href= "{{ path("candidate_adopted_edit", {"id": visitCardId }) }}">
+                                                    <a href= "{{ path("adopted_edit", {"id": visitCardId }) }}">
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
                                                 </td>
@@ -245,7 +245,7 @@
                             <div class="card-header">
                                     <h2 class="h5 mb-0 text-center text-secondary">
                                         A propos de moi
-                                        <a href= "{{ path("candidate_about_edit", {"id": visitCardId }) }}">
+                                        <a href= "{{ path("about_edit", {"id": visitCardId }) }}">
                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                         </a>
                                     </h2>

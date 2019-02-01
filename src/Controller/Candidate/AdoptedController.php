@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/candidat/adopte", name="candidate_adopted_")
+ * @Route("/candidat/adopte", name="adopted_")
  */
 class AdoptedController extends AbstractController
 {

@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\PictureType;
 
 /**
- * @Route("/candidat/image", name="candidate_picture_")
+ * @Route("/candidat/image", name="picture_")
  */
 class PictureController extends AbstractController
 {
