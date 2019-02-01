@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+
+//Nb pour les fonctions add et edit, le contrôle de la cohérence des dates a été fait grâce aux annotations Assert directement dans les entity ou encore grace aux constraints directement dans l'ExperienceType
+
 /**
  * @Route("/candidat/experience", name="experience_")
  */
@@ -34,7 +37,7 @@ class ExperienceController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) 
         { //dd($request);
-            // ajout des info nécessaire à l'enregistrement
+            // ajout des info nécessaires à l'enregistrement
             $experience = $form->getData();
             
             $experience->setVisitCard($visitCard);
@@ -55,13 +58,17 @@ class ExperienceController extends AbstractController
                 //dd($endedDate);
             }
 
-            // Contrôle de la cohérence des dates
+            $this->addFlash(
+                'notice',
+                'Votre expérience a bien été ajoutée'
+            );
+
 
 
 
             $em = $this->getDoctrine()->getManager();
 
-            // enregistrement en bdd ( par un effet "cascarde", la formation sera enregistré aussi )
+            // enregistrement en bdd ( par un effet "cascade", l'experience sera enregistré aussi )
             $em->persist($experience);
             $em->flush($experience);
 
@@ -129,13 +136,13 @@ class ExperienceController extends AbstractController
      */
     public function delete($id)
     {
-        // je récupère l'la formation qui doit être supprimée
-        $formationRepo = $this->getDoctrine()->getRepository(Experience::class);
-        $formation = $formationRepo->findOneById($id);
+        // je récupère l'experience qui doit être supprimée
+        $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
+        $experience = $experienceRepo->findOneById($id);
         
         $em = $this->getDoctrine()->getManager();
-        // je le supprime
-        $em->remove($formation);
+        // je la supprime
+        $em->remove($experience);
         $em->flush();
         $this->addFlash('success', 'Votre expérience a bien été supprimée.');
         return $this->redirectToRoute('candidate_profile');
