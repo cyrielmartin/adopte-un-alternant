@@ -71,7 +71,7 @@ class VisitCard
      *      maxMessage = "Vous ne pouvez pas choisir plus de {{ limit }} compétences"
      * )
      */
-    private $skill;
+    private $skills;
 
     public function __construct()
     {
@@ -80,7 +80,7 @@ class VisitCard
         $this->mobilities = new ArrayCollection();
         $this->websites = new ArrayCollection();
         $this->additionals = new ArrayCollection();
-        $this->skill = new ArrayCollection();
+        $this->skills = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -291,15 +291,15 @@ class VisitCard
     /**
      * @return Collection|Skill[]
      */
-    public function getSkill(): Collection
+    public function getSkills(): Collection
     {
-        return $this->skill;
+        return $this->skills;
     }
 
     public function addSkill(Skill $skill): self
     {
-        if (!$this->skill->contains($skill)) {
-            $this->skill[] = $skill;
+        if (!$this->skills->contains($skill)) {
+            $this->skills[] = $skill;
         }
 
         return $this;
@@ -307,8 +307,8 @@ class VisitCard
 
     public function removeSkill(Skill $skill): self
     {
-        if ($this->skill->contains($skill)) {
-            $this->skill->removeElement($skill);
+        if ($this->skills->contains($skill)) {
+            $this->skills->removeElement($skill);
         }
 
         return $this;

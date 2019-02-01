@@ -24,7 +24,7 @@ class Skill
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", mappedBy="skill")
+     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", mappedBy="skills")
      */
     private $visitCards;
 

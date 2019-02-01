@@ -44,12 +44,13 @@ class ProfileController extends AbstractController
         //dd($viewsInfo);
 
         $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
-        //dd ($candidateInformation);
+        // dd ($candidateInformation);
 
 
 
         //récupération de l'Id de la visitCard pour accéder aux metatables
         $visitCardId = $candidateInformation->getId();
+        // dd($visitCardId);
        
         $webSites = $webSiteRepo->findByVisitCard($visitCardId);
         //dd ($webSites);
@@ -62,7 +63,7 @@ class ProfileController extends AbstractController
 
         //création d'un requête join dans le fichier skill repo pour récupérer les compétences par Id de visitCard
         $skillsInfo = $skillRepo ->findByVisitCard($visitCardId);
-        //dd ($skillsInfo);
+        // dd ($skillsInfo);
 
         $additionalsInfo = $additionalRepo ->findByVisitCard($visitCardId);
         //dd($additionalsInfo);

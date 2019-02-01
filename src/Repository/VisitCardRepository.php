@@ -95,4 +95,5 @@ class VisitCardRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    
 }
