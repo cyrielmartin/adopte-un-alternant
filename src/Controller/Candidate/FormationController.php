@@ -4,6 +4,7 @@ namespace App\Controller\Candidate;
 
 use App\Entity\Formation;
 use App\Entity\VisitCard;
+use App\Entity\IsCandidate;
 use App\Form\FormationType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Controller\Manager\SchoolManager;
@@ -140,17 +141,33 @@ class FormationController extends AbstractController
      */
     public function delete($id)
     {
-        // je récupère la formation qui doit être supprimé
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        // je récupère la formation du candidat connecté, qui doit être supprimé
         $formationRepo = $this->getDoctrine()->getRepository(Formation::class);
-        $formation = $formationRepo->findOneBy(['id' => $id]);
-        
-        $em = $this->getDoctrine()->getManager();
-        // je le supprime
-        $em->remove($formation);
-        $em->flush();
+        $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
-        $this->addFlash('success', 'La formation a bien été supprimé.');
- 
+        if(!empty($formation))
+        {
+            $em = $this->getDoctrine()->getManager();
+            // je le supprime
+            $em->remove($formation);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre formation a bien été supprimée.');
+        }
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue lors de la suppression.');
+        }
+        
+
         return $this->redirectToRoute('candidate_profile');
     }
 }

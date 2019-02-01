@@ -5,6 +5,7 @@ namespace App\Controller\Candidate;
 use App\Entity\School;
 use App\Entity\Formation;
 use App\Entity\VisitCard;
+use App\Entity\IsCandidate;
 use App\Entity\IsApprenticeship;
 use App\Form\ApprenticeshipType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -135,16 +136,35 @@ class ApprenticeshipController extends AbstractController
      */
     public function delete($id)
     {
-        // je récupère l'apprentissage qui doit être supprimé
-        $apprenticeRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
-        $apprenticeship = $apprenticeRepo->findOneBy(['formation' => $id]);
-        
-        $em = $this->getDoctrine()->getManager();
-        // je le supprime
-        $em->remove($apprenticeship);
-        $em->flush();
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        // je récupère la formation du candidat connecté, qui doit être supprimé
+        $formationRepo = $this->getDoctrine()->getRepository(Formation::class);
+        $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
-        $this->addFlash('success', 'Votre alternance a bien été supprimé.');
+        if(!empty($formation))
+        {
+            $apprenticeshipRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
+            $apprenticeship = $apprenticeshipRepo->findOneBy(['formation' => $formation->getId()]);
+            
+            $em = $this->getDoctrine()->getManager();
+            // je le supprime
+            $em->remove($apprenticeship);
+            $em->flush();
+
+            $this->addFlash('success', 'Votre alternance a bien été supprimée.');
+        }
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue lors de la suppression.');
+        }
+        
 
         return $this->redirectToRoute('candidate_profile');
     }
