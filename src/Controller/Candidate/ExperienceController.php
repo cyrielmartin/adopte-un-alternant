@@ -78,6 +78,7 @@ class ExperienceController extends AbstractController
 
         return $this->render('candidate/profile/experience.html.twig', [
             'form' => $form->createView(),
+            'tab_type' => 'Ajouter',
             
         ]);
     }
@@ -94,9 +95,9 @@ class ExperienceController extends AbstractController
         $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
         $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
 
-        $experienceForm = $this->createForm(ExperienceType::class, $experience);
-        $experienceForm->handleRequest($request);
-        if ($experienceForm->isSubmitted() && $experienceForm->isValid()) {      
+        $form = $this->createForm(ExperienceType::class, $experience);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {      
             $experience->setVisitCard($visitCard);
             $status=$experience->getStatus();
 
@@ -126,8 +127,9 @@ class ExperienceController extends AbstractController
             return $this->redirectToRoute('candidate_profile');
         }
         
-        return $this->render('candidate/profile/experience_edit.html.twig', [
-            'experienceForm'=>$experienceForm->createView(),
+        return $this->render('candidate/profile/experience.html.twig', [
+            'form'=>$form->createView(),
+            'tab_type' => 'Modifier',
         ]);
     }
 
