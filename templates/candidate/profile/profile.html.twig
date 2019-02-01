@@ -408,7 +408,7 @@
                                                 Ajouter une compétence
                                                 </th>
                                                 <th class = "d-flex col-5">
-                                                    <a href= "{{ path("skill_add") }}">
+                                                    {# <a href= "{{ path("skill_add") }}"> #}
                                                         <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
                                                     </a>
                                                 </th>
@@ -417,26 +417,30 @@
                                         </thead>{# fin titre de colonnes #}
                                     </table>
                                 </div>
-                            
-                            {% for skillInfo in skillsInfo %}
+                            {# {{ dump(candidateInformation.skills)}} #}
+                                
+                                {% for skill in candidateInformation.skills %}
+                                    <p> {{ skill.name }}</p>
+                                {% endfor %}
+        
                                 <div class="table-responsive">
                                     <table class="table ">                           
                                         <tr class = "d-flex justify-content-center">
                                             <td class = "d-flex col-6">
-                                            {{skillInfo.name}}
+                                            {# {{skillInfo.name}} #}
                                             </td>
-                                            <td class = "d-flex col-5">
+                                            {# <td class = "d-flex col-5">
                                                 <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                 </a>
                                                 <a href= "{{ path("skill_delete", {"id": skillInfo.id }) }}">
                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                </a>
+                                                </a> #}
                                             </td>
                                         </tr>                           
                                     </table>
                                 </div>
-                            {% endfor %}
+  
                         </div>                        
 
                     </div> {# Fin carte compétences #}
