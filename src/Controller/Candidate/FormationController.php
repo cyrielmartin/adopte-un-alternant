@@ -85,48 +85,67 @@ class FormationController extends AbstractController
      */
     public function edit(Request $request, $id, EntityManagerInterface $em)
     {
-        // je récupère la formation qui doit être modifié
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $em->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        // je récupère la formation du candidat connecté, qui doit être modifié
         $formationRepo = $em->getRepository(Formation::class);
-        $formation = $formationRepo->findOneBy(['id' => $id]);
+        $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
-        // je récupère le contenu du formulaire
-        $data = $request->request->get('formation');
-        $newData = SchoolManager::checkSchoolData($data, $em);
-
-        // si la méthode m'a renvoyé autre que chose du null
-        if(!empty($newData))
+        // si cette formation appartient bien au candidat connecté
+        if(!empty($formation))
         {
-            // je met à jour ma requête en écrasant les anciennes donnée
-            $request->request->set('formation',$newData);
+            // je récupère le contenu du formulaire
+            $data = $request->request->get('formation');
+            $newData = SchoolManager::checkSchoolData($data, $em);
+
+            // si la méthode m'a renvoyé autre que chose du null
+            if(!empty($newData))
+            {
+                // je met à jour ma requête en écrasant les anciennes donnée
+                $request->request->set('formation',$newData);
+            }
+            
+            $form = $this->createForm(FormationType::class, $formation);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) 
+            {
+                $formation = $form->getData();
+
+                $end = $formation->getEndedAt();
+                $now = new \Datetime();
+
+                // si la fin de la formation est avant aujourd'hui
+                if( $now >= $end )
+                {
+                    // status -> formation terminé
+                    $formation->setStatus(0);
+                }
+                // si la fin de la formation est après aujourd'hui
+                else if ( $now < $end )
+                {
+                    // status -> formation toujours en cours
+                    $formation->setStatus(1);
+                }
+
+                // enregistrement en bdd
+                $em->flush();
+
+                return $this->redirectToRoute('candidate_profile');
+            }
+
         }
-        
-        $form = $this->createForm(FormationType::class, $formation);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) 
+        // si cette formation n'appartient pas au user connecté
+        else 
         {
-            $formation = $form->getData();
-
-            $end = $formation->getEndedAt();
-            $now = new \Datetime();
-
-            // si la fin de la formation est avant aujourd'hui
-            if( $now >= $end )
-            {
-                // status -> formation terminé
-                $formation->setStatus(0);
-            }
-            // si la fin de la formation est après aujourd'hui
-            else if ( $now < $end )
-            {
-                // status -> formation toujours en cours
-                $formation->setStatus(1);
-            }
-
-            // enregistrement en bdd
-            $em->flush();
-
+            $this->addFlash('danger', 'Une erreur est survenue.');
             return $this->redirectToRoute('candidate_profile');
         }
 
@@ -153,6 +172,7 @@ class FormationController extends AbstractController
         $formationRepo = $this->getDoctrine()->getRepository(Formation::class);
         $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
+        // si cette formation appartient bien au candidat connecté
         if(!empty($formation))
         {
             $em = $this->getDoctrine()->getManager();

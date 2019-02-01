@@ -92,36 +92,67 @@ class ApprenticeshipController extends AbstractController
      */
     public function edit(Request $request, $id, EntityManagerInterface $em)
     {
-        // je récupère l'apprentissage qui doit être modifié
-        $apprenticeRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
-        $apprenticeship = $apprenticeRepo->findOneBy(['formation' => $id]);
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $em->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        // je récupère la formation du candidat connecté, qui doit être modifié
+        $formationRepo = $em->getRepository(Formation::class);
+        $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
-        // je récupère le contenu du formulaire
-        $data = $request->request->get('apprenticeship');
-
-        // je l'envoi à la méthode checkSchoolData pour vérifier son contenu
-        $newData = SchoolManager::checkSchoolData($data, $em);
-
-        // si la méthode m'a renvoyé autre que chose du null
-        if(!empty($newData))
+        // si cette formation appartient bien au candidat connecté
+        if(!empty($formation))
         {
-            // je met à jour ma requête en écrasant les anciennes donnée
-            $request->request->set('apprenticeship',$newData);
+            // je récupère l'alternance à modifier
+            $apprenticeshipRepo = $em->getRepository(IsApprenticeship::class);
+            $apprenticeship = $apprenticeshipRepo->findOneBy(['formation' => $formation->getId()]);
+            
+            // si je récupère bien une alternance
+            if(!empty($apprenticeship))
+            {
+                // je récupère le contenu du formulaire
+                $data = $request->request->get('apprenticeship');
+
+                // je l'envoi à la méthode checkSchoolData pour vérifier son contenu
+                $newData = SchoolManager::checkSchoolData($data, $em);
+
+                // si la méthode m'a renvoyé autre que chose du null
+                if(!empty($newData))
+                {
+                    // je met à jour ma requête en écrasant les anciennes donnée
+                    $request->request->set('apprenticeship',$newData);
+                }
+                
+                $form = $this->createForm(ApprenticeshipType::class, $apprenticeship);
+
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) 
+                {
+                    // récupération des infos à enregistrer
+                    $editApprenticeship = $form->getData();
+
+                    // enregistrement en bdd ( par un effet "cascade", la formation sera enregistré aussi )
+                    $this->getDoctrine()->getManager()->flush();
+
+                    return $this->redirectToRoute('candidate_profile');
+                }
+            }
+            // si cette formation n'est pas une alternance
+            else 
+            {
+                $this->addFlash('danger', 'Une erreur est survenue.');
+                return $this->redirectToRoute('candidate_profile');
+            }
         }
-        
-        $form = $this->createForm(ApprenticeshipType::class, $apprenticeship);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) 
+        // si cette formation n'appartient pas au user connecté
+        else 
         {
-            // récupération des infos à enregistrer
-            $editApprenticeship = $form->getData();
-            //dd($editApprenticeship);
-
-            // enregistrement en bdd ( par un effet "cascade", la formation sera enregistré aussi )
-            $this->getDoctrine()->getManager()->flush();
-
+            $this->addFlash('danger', 'Une erreur est survenue.');
             return $this->redirectToRoute('candidate_profile');
         }
 
@@ -148,6 +179,7 @@ class ApprenticeshipController extends AbstractController
         $formationRepo = $this->getDoctrine()->getRepository(Formation::class);
         $formation = $formationRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
 
+        // si cette formation appartient bien au candidat connecté
         if(!empty($formation))
         {
             $apprenticeshipRepo = $this->getDoctrine()->getRepository(IsApprenticeship::class);
@@ -164,7 +196,6 @@ class ApprenticeshipController extends AbstractController
         {
             $this->addFlash('danger', 'Une erreur est survenue lors de la suppression.');
         }
-        
 
         return $this->redirectToRoute('candidate_profile');
     }
