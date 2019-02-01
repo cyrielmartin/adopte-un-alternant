@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\RoleRepository;
+use App\Entity\VisitCard;
+use App\Entity\IsCandidate;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,7 +17,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class UserController extends AbstractController
 {
@@ -60,10 +62,15 @@ class UserController extends AbstractController
     /**
      * @Route("/inscription", name="signup", methods={"GET","POST"})
      */
-    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
+    public function signup(\Swift_Mailer $mailer, Request $request, UserPasswordEncoderInterface $passwordEncoder, TokenGeneratorInterface $tokenGenerator)
     {
+        $em = $this->Doctrine()->getManager();
+        
         $user = new User();
+
+        $roleRepo = $em->getRepository(Role::class);
         $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
+        
         $user->setRole($role);
         $user->setStatus(0);
 
@@ -72,22 +79,46 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-                $user->setPassword($passwordEncoder->encodePassword(
-                $user,
-                $user->getPassword()
-            ));
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $user->getPassword()
+                    )
+                );
                 $token = $tokenGenerator->generateToken();
                 $user->setToken($token);
 
+                // j'ajoute le user en base et le refresh pour mettre à jour l'objet avec son id
                 $em->persist($user);
+                $em->flush($user);
+                $em->refresh($user);
+
+                // je créer un objet is candidate et l'affilie au user de type candidat
+                $isCandidate = new IsCandidate();
+                $isCandidate->setUser($user);
+                
+                // je 'enregistre et refresh pour mettre à jour l'objet avec son id
+                $em->persist($isCandidate);
+                $em->flush($isCandidate);
+                $em->refresh($isCandidate);
+                
+                // je créer un objet carte de visite et l'affilie au candidat
+                $visitCard = new VisitCard();
+                $visitCard->setIsCandidate($isCandidate);
+                $visitCard->setAdopted(0);
+                $visitCard->setVisibilityChoice(0);
+                $visitCard->setAbout('Cette section n\'a pas encore été renseigné.');
+                
+                $em->persist($visitCard);
+                // j'envoi tout en base
                 $em->flush();
 
                 $url = $this->generateUrl('account_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
                 $message = (new \Swift_Message('Validez votre inscription'))
-            ->setFrom('adoptealternant@gmail.com')
-            ->setTo($user->getEmail())
-            ->setBody(
+                    ->setFrom('adoptealternant@gmail.com')
+                    ->setTo($user->getEmail())
+                    ->setBody(
                 $this->renderView(
                     'emails/registration.html.twig',
                     ['user'=>$user,
