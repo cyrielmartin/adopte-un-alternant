@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\IsApprenticeshipRepository")
@@ -23,6 +24,7 @@ class IsApprenticeship
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Formation", cascade={"persist", "remove"})
+     * @Assert\Valid
      */
     private $formation;
 

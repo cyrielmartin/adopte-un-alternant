@@ -39,7 +39,8 @@ class Formation
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\Expression("value > this.getStartedAt()")
+     * @Assert\Expression("value > this.getStartedAt()",
+     *      message = "Données invalides: Dates de début et fin de formation incohérentes")
      */
     private $endedAt;
 
