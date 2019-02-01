@@ -30,7 +30,7 @@ class PictureController extends AbstractController
                     'notice',
                     'La photo a bien été modifiée'
                 );
-                return $this->redirectToRoute('candidate_picture_edit', ['id' => 2]);
+                return $this->redirectToRoute('candidate_profile');
             }
     
         return $this->render('candidate/profile/picture.html.twig', [
