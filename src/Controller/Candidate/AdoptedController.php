@@ -14,7 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  */
 class AdoptedController extends AbstractController
 {
-
     /**
     * @Route("/{id}/modifier", name="edit")
     */

@@ -33,7 +33,7 @@ class PresentationController extends AbstractController
                 'notice',
                 'La carte de visite a bien été modifiée'
             );
-            return $this->redirectToRoute('presentation_edit', ['id' => 2]);
+            return $this->redirectToRoute('presentation', ['id' => 2]);
         }
 
         $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);
@@ -49,7 +49,7 @@ class PresentationController extends AbstractController
             return $this->redirectToRoute('candidate_profile');
         }
 
-        return $this->render('candidate/profile/presentation_edit.html.twig', [
+        return $this->render('candidate/profile/presentation.html.twig', [
             'isCandidateForm' => $isCandidateForm->createView(),
             'visitCardForm' => $visitCardForm->createView(),
         ]);      
