@@ -33,16 +33,17 @@
                 <div class="card d-flex flex-row flex-wrap justify-content-around">{# Carte de visite #}
 
                     <div class="d-flex flex-column">{# picture & boutons modif#}
-                        <div class="p-2">
+                        <div class="p-2 ">
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
 
                         <div class="p-2">
-
-                            <a href= "{{ path("candidate_picture_edit", {"id": candidateDatas.id }) }}">
-                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                            </a>
+                            <p class ="text-center">
+                                <a href= "{{ path("candidate_picture_edit", {"id": candidateDatas.id }) }}">
+                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                </a>
+                            </p>
                             
                         </div>
                     </div>{# fin picture & boutons modif#}
@@ -90,13 +91,13 @@
                                 <tbody>                              
                                     <tr>
                                         <td>
-                                            <span class="font-weight-bold">téléphone:</span>
+                                            <span class="font-weight-bold">Téléphone :</span>
                                             {{ candidateDatas.phoneNumber }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="font-weight-bold">Visible par les recruteurs:</span>
+                                            <span class="font-weight-bold">Visible par les recruteurs :</span>
                                                 {% if candidateInformation.visibilityChoice == 0 %}
                                                     Nom et prénom
                                                 {% elseif candidateInformation.visibilityChoice == 2 %}
@@ -123,7 +124,7 @@
                                     <tbody>
                                         {% for webSite in webSites %}
                                         <tr>
-                                            <th><i class="fab fa-weebly"></i>
+                                            <th>
                                                 <a href="{{webSite.link}}"> {{webSite.name}}</a>
                                             </th>
                                             <td>
@@ -137,13 +138,10 @@
                                         </tr>
                                         {% endfor %}
                                         <tr>
-                                            <td class="font-weight-bold">Ajouter un site <i class="fab fa-weebly"></i>
+                                        
+                                            <td class="font-weight-bold"> <a href= "{{ path("website_add") }}">Ajouter un site </a>
                                             </td>
-                                            <td>
-                                                <a href= "{{ path("website_add") }}">
-                                                     <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
-                                                </a>
-                                                
+                                            <td>                       
                                             </td>
                                         </tr>
 
@@ -168,7 +166,7 @@
                                                     
                                         {% else %}
                                         <tr>
-                                            <th class="text-secondary font-italic"> Aux alentours de:
+                                            <th class="text-secondary font-italic"> Aux alentours de :
                                             </th>
                                             <td></td>
                                         </tr>
@@ -210,118 +208,125 @@
                                             
                                         {% endif %}
                                     </tbody>
-                                </table>
-
-                                
-                            </div>
-
-
-                            
-                            
+                                </table>                             
+                            </div>                     
                         </div> {# fin site web, statut recherche ou adopté &mobilities & boutons modif#}
-
-
 
                 </div> {# Fin carte visite #}
 
                 <div class="card accordion col-12 col-lg-12 p-0 " id="accordionExample"> {# Accordéon il m'ont vu #} {# Carte Ils ont vu votre prolfil #}
-                     
-                
-                    <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Ils ont vu votre profil!
-                    </div>
-            
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                        <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
-                            {% for viewInfo in viewsInfo %}
-                                <h3><span class="badge badge-pill badge-warning">{{ viewInfo.companyName}}</span></h3>                         
-                            {% endfor %}
+
+                        <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Ils ont vu votre profil !
                         </div>
-                    </div>
+
+                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
+                                {% for viewInfo in viewsInfo %}
+                                    <h3><span class="badge badge-pill badge-warning">{{ viewInfo.companyName}}</span></h3>                         
+                                {% endfor %}
+                            </div>
+                        </div>
                 
                    
                 </div>{# fin accordéon #} {# fin Carte Ils ont vu votre prolfil #}
 
-                <div class="card"> {# Carte About #}
-                        <div class="card-header">
-                                <h2 class="h5 mb-0 text-center text-secondary">
-                                    A propos de moi
-                                    <a href= "{{ path("candidate_about_edit", {"id": visitCardId }) }}">
-                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                    </a>
-                                </h2>
-                        </div>
-                        <div class="card-body">
-                            <p class="text-justify">
-                                {{ candidateInformation.about}}
-                            </p>
-                        </div>
-                        
-                </div> {# Fin carte About #}
-
-
-                {% for formationInfo in formationsInfo %}  {# Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2 Pas de bouton add car 1 seul alternance possible à la fois#}                                    
-                    {% if formationInfo.status == 2 %}
-                        <div class="card"> {# Carte Alternace recherchée #}
+                 <div class="card"> {# Carte About #}
                             <div class="card-header">
-                                <h2 class="h5 mb-0 text-center text-secondary">
-                                    Alternance recherchée
-                                    <a href= "{{ path("apprenticeship_edit", {"id": formationInfo.id }) }}">
-                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                    </a>
-                                    <a href= "{{ path("apprenticeship_delete", {"id": formationInfo.id }) }}">
-                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                    </a>
-                                </h2>
+                                    <h2 class="h5 mb-0 text-center text-secondary">
+                                        A propos de moi
+                                        <a href= "{{ path("candidate_about_edit", {"id": visitCardId }) }}">
+                                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                        </a>
+                                    </h2>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                     <table class="table">
-                                        <thead>{# titre de colonnes #}
-                                            <tr class ="d-flex justify-content-center">
+                                <p class="text-justify">
+                                    {{ candidateInformation.about}}
+                                </p>
+                            </div>
+
+                 </div> {# Fin carte About #}
+
+                <div class="card"> {# Carte Alternace recherchée #}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Alternance recherchée
+
+                            </h2>
+                        </div>                      
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                 <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="col" class="text-info d-flex col-4">
+                                            Ajouter une alternance
+                                            </th>
+                                            <th scope="col" class="text-info d-flex col-7">
+                                                <a href= "{{ path("apprenticeship_add") }}">
+                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                </a>                    
+                                            </th>                           
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>
+                        </div>
+                        {% for formationInfo in formationsInfo %}  {# Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2 Pas de bouton add car 1 seul alternance possible à la fois#}                                    
+                            {% if formationInfo.status == 2 %}
+                        
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                         <table class="table">
+                                            <thead>{# titre de colonnes #}
+                                                <tr class ="d-flex justify-content-center">
                                                 <th scope="col" class="text-info d-flex col-4">
-                                                Ajouter une formation en alternance
+                                                Modifier mes informations
                                                 </th>
                                                 <th scope="col" class="text-info d-flex col-7">
-                                                    <a href= "{{ path("apprenticeship_add") }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    <a href= "{{ path("apprenticeship_edit", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                     </a>
+                                                    <a href= "{{ path("apprenticeship_delete", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    </a>
+                                                    
                                                 </th>                           
-                                            </tr>
-                                        </thead>{# fin titre de colonnes #}
-                                        <tbody>
-                                        <tr class ="d-flex justify-content-center">
+                                                </tr>
+                                            </thead>{# fin titre de colonnes #}
+                                            <tbody>
+                                            <tr class ="d-flex justify-content-center">
                                             <th scope="row" class ="d-flex col-4">A partir du </th> 
                                             <td class ="d-flex col-7">{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center">
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
                                             <th scope="row" class ="d-flex col-4">Jusqu'au </th> 
                                             <td class ="d-flex col-7">{{ formationInfo.endedAt|date("m/d/Y")}}</td>
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center">
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
                                             <th scope="row" class ="d-flex col-4">Avec l'école</th> 
                                             <td class ="d-flex col-7">{{ formationInfo.school.name}}</td>
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center">
-                                            <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
-                                            <td class ="d-flex col-7">{{ formationInfo.awardName}}</td>
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center">
-                                            <th scope="row" class ="d-flex col-4">De niveau</th> 
-                                            <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}</td>
-                                        </tr>                                           
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div> {# Fin carte Alternance recherchée #}
-                    
-                    {% endif %}
-               {% endfor %}{# FIN Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2#}
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
+                                                <td class ="d-flex col-7">{{ formationInfo.awardName}}</td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">De niveau</th> 
+                                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}</td>
+                                            </tr>                                           
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>             
+                            {% endif %}
+                        {% endfor %}{# FIN Carte Alternace recherchée n'apparait que s'il y a une formation avec le statut 2#}
+                </div> {# Fin carte Alternance recherchée #}
 
                 
 
-                    <div class="card"> {# Carte expériences si pas d'exp seul l'ajout d'exp possible#}
+                <div class="card"> {# Carte expériences si pas d'exp seul l'ajout d'exp possible#}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Expériences
@@ -390,9 +395,85 @@
                                 {% endfor %}
                             </div>
 
-                    </div> {# Fin carte exp #}
+                </div> {# Fin carte exp #}
 
-                    <div class="card"> {# Carte compétences si pas de compétence seulement la possibilité d'ajouter #}
+                <div class="card"> {# Carte formation Si pas de formation trouvée se trouve juste le boutons ajouter une formation#}
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Formations
+                            </h2>
+                        </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-info d-flex col-4">
+                                                Ajouter une formation
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-7">
+                                                    <a href= "{{ path("formation_add") }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
+                                                    </a>
+                                                </th>                           
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                    </table>
+                                </div>
+                            {% for formationInfo in formationsInfo %}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-info col-4">
+                                                {{ formationInfo.awardName}}</th>
+                                                <th class="text-info col-7">
+                                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
+                                                    </a>
+                                                </th>
+                                                
+                                                    
+                                            </tr>
+                                        </thead>{# fin titre de colonnes #}
+                                        <tbody>
+                                            <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
+                                                <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                                </th>                                                    
+                                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
+                                                </td>                                                       
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center"> {#Nom de l'école#}
+                                                <th scope="row" class ="d-flex col-4">Ecole
+                                                </th>                                         
+                                                <td class ="d-flex col-7">{{ formationInfo.school.name}}
+                                                </td>                                                                         
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">{#Date obtention diplôme OU formation toujours en cours#}
+                                                <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
+                                                </th>
+                                                                                      
+                                                {% if formationInfo.status == 0 %}
+                                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                {% elseif formationInfo.status == 1 %}
+                                                <td class ="d-flex col-7">en cours</td>
+                                                {% elseif formationInfo.status == 2 %}
+                                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
+                                                {% endif %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            {% endfor %}
+                            </div>
+
+                    </div> {# Fin carte formation #}
+
+                <div class="card"> {# Carte compétences si pas de compétence seulement la possibilité d'ajouter #}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Compétences
@@ -443,9 +524,9 @@
   
                         </div>                        
 
-                    </div> {# Fin carte compétences #}
+                </div> {# Fin carte compétences #}
 
-                    <div class="card"> {# carte Atouts et centres d'intérêts si pas de donnée seulement la possibilité d'ajouter#}
+                <div class="card"> {# carte Atouts et centres d'intérêts si pas de donnée seulement la possibilité d'ajouter#}
                         <div class="card-header">
                             <h2 class="h5 mb-0 text-center text-secondary">
                                 Atouts et centres d'intérêts
@@ -469,18 +550,22 @@
                                     </thead>{# fin titre de colonnes #}
                                 </table>
                             </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class = "d-flex justify-content-center">
+                                          <th class = "d-flex col-6" scope="col">Atouts</th>
+                                          <th class = "d-flex col-5"></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>                                 
+                                                
                             {% for additionalInfo in additionalsInfo %}
                                 {% if additionalInfo.typeInfo == 'assert' %}
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex justify-content-center">
-                                                  <th class = "d-flex col-6" scope="col">Atouts</th>
-                                                  <th class = "d-flex col-5"></th>
-                                                </tr>
-                                            </thead>{# fin titre de colonnes #}
-
-                                            <tbody>{# corps tableau atouts#}                                
+                                            <tbody>
                                                 <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
                                                     {{additionalInfo.content}}
@@ -492,28 +577,29 @@
                                                         <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
                                                             <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
                                                         </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody> 
+                                                    </td>                                            
+                                             </tbody> 
                                         </table>
-                                    </div>         
-                                {% else %}
-                                {% endif %}
-                                        
+                                    </div>    
+                                
+                                {% endif %}                                                                            
                             {% endfor %}
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class = "d-flex justify-content-center">
+                                          <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
+                                          <th class = "d-flex col-5"></th>
+                                        </tr>
+                                    </thead>{# fin titre de colonnes #}
+                                </table>
+                            </div>    
 
                             {% for additionalInfo in additionalsInfo %}
                                 {% if additionalInfo.typeInfo == 'interest' %}
                                     <div class="table-responsive">
                                         <table class="table">
-
-                                            <thead>{# titre de colonnes #}
-                                                <tr class = "d-flex justify-content-center">
-                                                  <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
-                                                  <th class = "d-flex col-5"></th>
-                                                </tr>
-                                            </thead>{# fin titre de colonnes #}
-
                                             <tbody>{# corps tableau centres d'intérêts#}                                  
                                                 <tr class = "d-flex justify-content-center">
                                                     <td class = "d-flex col-6">
@@ -537,9 +623,9 @@
                                
                         </div>            
 
-                    </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
+                </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
 
-                </div>
+                
 
 
                 {# Lien retour #}
