@@ -78,3 +78,9 @@ footer {
 .delete-button {
     color: red;
 }
+
+.delete-skill {
+    color: rgb(119, 3, 3);
+    margin-left: 0.4rem;
+    margin-right: -0.4rem;
+}

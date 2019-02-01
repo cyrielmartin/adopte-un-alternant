@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="col-12 ">
+<div class="col-12">
     <p><a href="{{path('home')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
     
     <div class="row col-12 col-md-11 mx-auto p-lg-0 d-flex justify-content-between">
@@ -188,10 +188,10 @@
                             </table>                             
                         </div>                     
                     </div> {# fin site web, statut recherche ou adopté &mobilities & boutons modif #}
-            </div> {# Fin carte visite #}
+                </div> {# Fin carte visite #}
 
             {# Accordéon Ils ont vu votre profil #}
-            <div class="card accordion col-12 col-lg-12 p-0 " id="accordionExample">
+            <div class="card accordion col-12 col-lg-12 p-0" id="accordionExample">
                 <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                 Ils ont vu votre profil !
                 </div>
@@ -222,6 +222,31 @@
                 </div>
 
             </div>
+
+           {# Compétences #}
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0 text-center text-secondary">
+                        Compétences
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class ="d-flex justify-content-center">
+                                    <a href="{{ path("skill_edit", {"id": candidateInformation.id}) }}"><button type="button" class="btn btn-outline-success btn-sm">Modifier ses compétences <i class="fas fa-plus-circle"></i></button></a>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="row justify-content-around">
+                        {% for skill in candidateInformation.skills %}
+                        <button type="button" class="btn btn-warning">{{ skill.name }}<a href=""><i class="far fa-times-circle delete-skill"></i></a></button>
+                        {% endfor %}
+                    </div>
+                </div>                        
+            </div> {# Fin carte compétences #}
 
             {# Alternance recherchée #}
             <div class="card">
@@ -294,61 +319,60 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
-                            <thead>{# titre de colonnes #}
+                            <thead>
                                 <tr class ="d-flex justify-content-center">
                                     <a href="{{ path("formation_add") }}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une formation <i class="fas fa-plus-circle"></i></button></a>
                                 </tr>
-                            </thead>{# fin titre de colonnes #}
+                            </thead>
                         </table>
                     </div>
-                {% for formationInfo in formationsInfo %}
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>{# titre de colonnes #}
-                            <tr class ="d-flex justify-content-center">
-                                <th scope="col" class="text-secondary col-4">
-                                {{ formationInfo.awardName}}
-                                </th>
-                                <th class="text-info col-7">
-                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                        <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                    </a>
-                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
-                                    </a>
-                                </th>          
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
-                                <th scope="row" class ="d-flex col-4">Niveau scolaire
-                                </th>                                                    
-                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
-                                </td>                                                       
-                            </tr>
-                            <tr class ="d-flex justify-content-center"> {#Nom de l'école#}
-                                <th scope="row" class ="d-flex col-4">École
-                                </th>                                         
-                                <td class ="d-flex col-7">{{ formationInfo.school.name}}
-                                </td>       
-                            </tr>
-                            <tr class ="d-flex justify-content-center">{#Date obtention diplôme OU formation toujours en cours#}
-                                <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
-                                </th>                                          
-                                {% if formationInfo.status == 0 %}
-                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                {% elseif formationInfo.status == 1 %}
-                                <td class ="d-flex col-7">en cours</td>
-                                {% elseif formationInfo.status == 2 %}
-                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
-                                {% endif %}
-                            </tr>
-                        </tbody>
-                    </table>
-                
-                </div>
+                    {% for formationInfo in formationsInfo %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>{# titre de colonnes #}
+                                <tr class ="d-flex justify-content-center">
+                                    <th scope="col" class="text-secondary col-4">
+                                    {{ formationInfo.awardName}}
+                                    </th>
+                                    <th class="text-info col-7">
+                                        <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                        </a>
+                                        <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                        </a>
+                                    </th>          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
+                                    <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                    </th>                                                    
+                                    <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
+                                    </td>                                                       
+                                </tr>
+                                <tr class ="d-flex justify-content-center"> {# Nom de l'école #}
+                                    <th scope="row" class ="d-flex col-4">École
+                                    </th>                                         
+                                    <td class ="d-flex col-7">{{ formationInfo.school.name}}
+                                    </td>       
+                                </tr>
+                                <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
+                                    <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
+                                    </th>                                          
+                                    {% if formationInfo.status == 0 %}
+                                    <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                    {% elseif formationInfo.status == 1 %}
+                                    <td class ="d-flex col-7">en cours</td>
+                                    {% elseif formationInfo.status == 2 %}
+                                    <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
+                                    {% endif %}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 {% endfor %}
             </div> {# Fin carte formation #}
-        
+
             {# Expériences #}
             <div class="card">
                 <div class="card-header">
@@ -356,114 +380,58 @@
                         Expériences
                     </h2>
                 </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr class ="d-flex justify-content-center">
-                                        <a href="{{ path("experience_add") }}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une expérience <i class="fas fa-plus-circle"></i></button></a>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-
-                        {% for experienceInfo in experiencesInfo %}
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>{# titre de colonnes #}
-                                        <tr class ="d-flex justify-content-center ">
-                                            <th scope="col" class="d-flex col-3 ">Période</th>
-                                            <th scope="col" class="d-flex col-3 ">Entreprise</th>
-                                            <th scope="col" class="d-flex col-4 ">Description</th>
-                                            <th scope="col" class="d-flex col-1 "></th>
-                                        </tr>
-                                    </thead>{# fin titre de colonnes #}
-                                    <tbody>{# corps tableau exp #}
-                                        <tr class ="d-flex justify-content-center">
-                                            <td class="d-flex col-3 ">
-                                            Du {{ experienceInfo.startedAt|date("m/d/Y")}}
-                                            {% if experienceInfo.endedAt == null %}
-                                            à aujourd'hui
-                                            {% else %}
-                                            au {{ experienceInfo.endedAt|date("m/d/Y")}}
-                                            {% endif %}
-                                            </td>
-                                            <td class="d-flex col-3">
-                                                <span class="badge badge-pill badge-info">{{ experienceInfo.companyName}}</span>
-                                            </td>
-                                            <td class="d-flex col-4">{{ experienceInfo.description}}</td>
-
-                                            <td class="d-flex col-1">
-                                                <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                </a>
-                                                <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}">
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                </a>
-                                            </td>
-                                        </tr>                                              
-                                    </tbody>{# fin corps tableau exp #}
-                                </table>
-                            </div>
-                        {% endfor %}
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class ="d-flex justify-content-center">
+                                    <a href="{{ path("experience_add")}}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter une expérience <i class="fas fa-plus-circle"></i></button></a>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
-
+                    {% for experienceInfo in experiencesInfo %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr class ="d-flex justify-content-center">
+                                    <th scope="col" class="col-4">
+                                        <span class="badge badge-pill badge-info">{{ experienceInfo.companyName}}</span>
+                                    </th>
+                                    <th class="text-info col-7">
+                                        <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
+                                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                        </a>
+                                        <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                        </a>
+                                    </th>          
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class ="d-flex justify-content-center">
+                                    <th scope="col" class="col-4">Période</th>
+                                    <td class ="d-flex col-7">
+                                        Du {{ experienceInfo.startedAt|date("m/d/Y")}}
+                                        {% if experienceInfo.endedAt == null %}
+                                        à aujourd'hui
+                                        {% else %}
+                                        au {{ experienceInfo.endedAt|date("m/d/Y")}}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr class ="d-flex justify-content-center">
+                                    <th scope="row" class ="d-flex col-4">Description</th>            
+                                    <td class ="d-flex col-7">{{ experienceInfo.description}}</td>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endfor %}
             </div> {# Fin carte exp #}
 
-            <div class="card"> {# Carte compétences si pas de compétence seulement la possibilité d'ajouter #}
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Compétences
-                        </h2>
-                    </div>
+            {# Atouts et centres d'intérêt V2 #}
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                                <table class="table">
-                                    <thead>{# titre de colonnes #}
-                                        <tr class = "d-flex justify-content-center">
-                                            <th scope="col" class="text-info d-flex col-6">
-                                            Ajouter une compétence
-                                            </th>
-                                            <th class = "d-flex col-5">
-                                                {# <a href= "{{ path("skill_add") }}"> #}
-                                                    <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
-                                                </a>
-                                            </th>
-                                                                                        
-                                        </tr>
-                                    </thead>{# fin titre de colonnes #}
-                                </table>
-                            </div>
-                        {# {{ dump(candidateInformation.skills)}} #}
-                            
-                            {% for skill in candidateInformation.skills %}
-                                <p> {{ skill.name }}</p>
-                            {% endfor %}
-    
-                            <div class="table-responsive">
-                                <table class="table ">                           
-                                    <tr class = "d-flex justify-content-center">
-                                        <td class = "d-flex col-6">
-                                        {# {{skillInfo.name}} #}
-                                        </td>
-                                        {# <td class = "d-flex col-5">
-                                            <a href= "{{ path("skill_edit", {"id": skillInfo.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            </a>
-                                            <a href= "{{ path("skill_delete", {"id": skillInfo.id }) }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                            </a> #}
-                                        </td>
-                                    </tr>                           
-                                </table>
-                            </div>
-
-                    </div>                        
-
-            </div> {# Fin carte compétences #}
-
-            <div class="card"> {# carte Atouts et centres d'intérêts si pas de donnée seulement la possibilité d'ajouter#}
+            {# <div class="card">
                     <div class="card-header">
                         <h2 class="h5 mb-0 text-center text-secondary">
                             Atouts et centres d'intérêts
@@ -473,7 +441,7 @@
 
                         <div class="table-responsive">
                             <table class="table">
-                                <thead>{# titre de colonnes #}
+                                <thead>
                                     <tr class = "d-flex justify-content-center">
                                         <th scope="col" class="text-info d-flex col-6">
                                         Ajouter un atout ou un centre d'intérêt
@@ -484,19 +452,19 @@
                                             </a>
                                         </th>
                                     </tr>
-                                </thead>{# fin titre de colonnes #}
+                                </thead>
                             </table>
                         </div>
                         <div class="table-responsive">
                             <table class="table">
-                                <thead>{# titre de colonnes #}
+                                <thead>
                                     <tr class = "d-flex justify-content-center">
                                         <th class = "d-flex col-6" scope="col">Atouts</th>
                                         <th class = "d-flex col-5"></th>
                                     </tr>
-                                </thead>{# fin titre de colonnes #}
+                                </thead>
                             </table>
-                        </div>                                 
+                        </div>                                  
                                             
                         {% for additionalInfo in additionalsInfo %}
                             {% if additionalInfo.typeInfo == 'assert' %}
@@ -524,12 +492,12 @@
 
                         <div class="table-responsive">
                             <table class="table">
-                                <thead>{# titre de colonnes #}
+                                <thead>
                                     <tr class = "d-flex justify-content-center">
                                         <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
                                         <th class = "d-flex col-5"></th>
                                     </tr>
-                                </thead>{# fin titre de colonnes #}
+                                </thead>
                             </table>
                         </div>    
 
@@ -537,7 +505,7 @@
                             {% if additionalInfo.typeInfo == 'interest' %}
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <tbody>{# corps tableau centres d'intérêts#}                                  
+                                        <tbody>                                
                                             <tr class = "d-flex justify-content-center">
                                                 <td class = "d-flex col-6">
                                                 {{additionalInfo.content}}
@@ -560,23 +528,10 @@
                             
                     </div>            
 
-            </div> {# Fin carte Savoirs-faire et centres d'intérêts #}
+            </div>  #}
 
-            
-
-
-            {# Lien retour #}
-            <p>
-
-            </p>
         </div>
-
-
     </div>
-
-    </div>
-<p><a href="{{path('home')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
-
-
+<p><a href="{{path('home')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
     {% endblock %}
