@@ -144,7 +144,7 @@ class ApprenticeshipController extends AbstractController
         $em->remove($apprenticeship);
         $em->flush();
 
-        $this->addFlash('success', 'Votre alternance a bien été supprimé.');
+        $this->addFlash('notice', 'Votre alternance a bien été supprimé.');
 
         return $this->redirectToRoute('candidate_profile');
     }

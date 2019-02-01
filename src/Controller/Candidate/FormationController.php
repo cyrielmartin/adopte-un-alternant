@@ -149,7 +149,7 @@ class FormationController extends AbstractController
         $em->remove($formation);
         $em->flush();
 
-        $this->addFlash('success', 'La formation a bien été supprimé.');
+        $this->addFlash('notice', 'La formation a bien été supprimé.');
  
         return $this->redirectToRoute('candidate_profile');
     }

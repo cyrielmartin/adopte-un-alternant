@@ -137,7 +137,7 @@ class ExperienceController extends AbstractController
         // je le supprime
         $em->remove($formation);
         $em->flush();
-        $this->addFlash('success', 'Votre expérience a bien été supprimée.');
+        $this->addFlash('notice', 'Votre expérience a bien été supprimée.');
         return $this->redirectToRoute('candidate_profile');
     }
 }
