@@ -90,7 +90,6 @@ class ExperienceController extends AbstractController
      * @Route("/{id}/modifier", name="edit")
      */
     public function edit(Request $request, $id, EntityManagerInterface $em)
-
     {
         $user = $this->getUser();
 
@@ -105,14 +104,14 @@ class ExperienceController extends AbstractController
         // je récupère l'expérience qui doit être mise à jours
         $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
         $experience = $experienceRepo->findOneBy(['visitCard' => $visitCard->getId(), 'id' => $id]);
+<<<<<<< HEAD
         //dd($experience);
+=======
+>>>>>>> 2ee86cb3dc66ae31ec7a9d41e67e6d61941f7456
 
         // si cette expérience appartient bien au candidat connecté
-
         if(!empty($experience))
         {
-            
-
             $form = $this->createForm(ExperienceType::class, $experience);
             $form->handleRequest($request);
 
@@ -135,22 +134,17 @@ class ExperienceController extends AbstractController
                     $endedDate=null;
                     $experience->setEndedAt($endedDate);
                 }
-    
-                //$em = $this->getDoctrine()->getManager();
-    
+            
                 // enregistrement en bdd
-                //$em->persist($experience);
                 $em->flush();
-    
                 
                 return $this->redirectToRoute('candidate_profile');
             }
-
         }
         // si cette formation n'appartient pas au user connecté
         else
         {
-            $this->addFlash('danger', 'Une erreur est survenue lors de la modification.');
+            $this->addFlash('danger', 'Une erreur est survenue');
             
             return $this->redirectToRoute('candidate_profile');
             
