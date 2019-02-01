@@ -104,7 +104,7 @@ class ExperienceController extends AbstractController
 
         // je récupère l'expérience qui doit être mise à jours
         $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
-        $experience = $experienceRepo->findOneBy(['visitCard' => $visitCard->getId()]);
+        $experience = $experienceRepo->findOneBy(['visitCard' => $visitCard->getId(), 'id' => $id]);
         //dd($experience);
 
         // si cette expérience appartient bien au candidat connecté
@@ -120,8 +120,9 @@ class ExperienceController extends AbstractController
             if ($form->isSubmitted() && $form->isValid())
             { 
                 //$experience = $form->getData();
-                $experience->setVisitCard($visitCard);
+                //$experience->setVisitCard($visitCard);
                 $status=$experience->getStatus();
+                //dd($status);
     
                 //dd($status);
                 if ($status == false){
