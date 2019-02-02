@@ -134,13 +134,17 @@ class WebsiteController extends AbstractController
          // je récupère le site qui doit être supprimé
          $websiteRepo = $this->getDoctrine()->getRepository(Website::class);
          $websiteToDelete = $websiteRepo->findOneById(['id' => $id]);
-         $websiteToDeleteVisitCard=$websiteToDelete->getVisitCard();
 
+         // je récupére la carte de visite du site à supprimer
+         $websiteToDeleteVisitCard=$websiteToDelete->getVisitCard();
+        
+         //je récupère l'id de la carte de visite du site à supprimer
          $websiteToDeleteVisitCardId= $websiteToDeleteVisitCard ->getId();
          //dump($websiteToDeleteVisitCardId);
          //dump($websiteToDeleteVisitCard);
          //dd($websiteToDelete);
          
+         //Si l'ID la carte de visit du candidat correspond à l'ID de la carte de visit du site à supprimer lors...
          if($visitCardId === $websiteToDeleteVisitCardId)
          {
              $em = $this->getDoctrine()->getManager();
