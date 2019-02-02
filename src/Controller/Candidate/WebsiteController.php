@@ -124,20 +124,28 @@ class WebsiteController extends AbstractController
          // je récupère sa fiche candidat
          $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
          $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+         //dump($candidate);
          // je récupère la carte de visite du candidat
          $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
          $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
-         
-         // je récupère l'expérience qui doit être supprimée
+         $visitCardId =$visitCard->getId();
+         //dump($visitCard);
+         //dump($visitCardId);
+         // je récupère le site qui doit être supprimé
          $websiteRepo = $this->getDoctrine()->getRepository(Website::class);
-         $website = $websiteRepo->findOneById(['id' => $id, 'visitCard' => $visitCard->getId()]);
+         $websiteToDelete = $websiteRepo->findOneById(['id' => $id]);
+         $websiteToDeleteVisitCard=$websiteToDelete->getVisitCard();
+
+         $websiteToDeleteVisitCardId= $websiteToDeleteVisitCard ->getId();
+         //dump($websiteToDeleteVisitCardId);
+         //dump($websiteToDeleteVisitCard);
+         //dd($websiteToDelete);
          
-         
-         if(!empty($website))
+         if($visitCardId === $websiteToDeleteVisitCardId)
          {
              $em = $this->getDoctrine()->getManager();
              // je la supprime
-             $em->remove($website);
+             $em->remove($websiteToDelete);
              $em->flush();
  
              $this->addFlash('success', 'Votre site a bien été supprimée.');
