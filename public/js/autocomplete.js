@@ -22,6 +22,11 @@ var search = {
             source: '/autocomplete/search/school',
             //minLength : 3
         });
+
+        $('#mobility_townName').autocomplete({
+            source: '/autocomplete/search/town',
+            minLength : 3
+        });
     }
 };
 $(search.init)

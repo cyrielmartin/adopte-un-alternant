@@ -21,9 +21,7 @@ class MobilityManager
         // je récupère le nom de la ville donnée par le candidat
         $townName = $mobility->getTownName();
         // je remplace tout les accents et caractère particulier potentiel
-        $townName = self::replace_accent($townName);
-        // je remplace aussi les espaces par des tirets
-        $townName = str_replace(' ', '-', $townName);
+        $townName = self::replaceAccent($townName);
         // je prépare mon url
         $apiGeo = 'https://geo.api.gouv.fr/communes?nom='. $townName .'&fields=departement&boost=population';
         // ouverture de connexion à curl
@@ -54,10 +52,11 @@ class MobilityManager
     }
 
     /** 
-     * Cette méthode permet de remplacer tout les types d'accent et de
-     * caractère tel que les ç dans une chaîne de caractère donnée
+     * Cette méthode permet de remplacer les espaces par des tiret ainsi que 
+     * tout les types d'accent et de caractère tel que ç,ø... dans une chaîne 
+     * de caractère donnée.
     */
-    public static function replace_accent($str)
+    public static function replaceAccent($str)
     {
         // transformer les caractères accentués en entités HTML
         $str = htmlentities($str, ENT_NOQUOTES, 'utf-8');
@@ -71,6 +70,8 @@ class MobilityManager
         $str = preg_replace('#&([A-za-z]{2})(?:lig);#', '\1', $str);
         // Supprimer tout le reste
         $str = preg_replace('#&[^;]+;#', '', $str);
+        // je remplace aussi les espaces par des tirets
+        $str = str_replace(' ', '-', $str);
      
         return $str;
     }

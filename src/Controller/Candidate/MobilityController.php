@@ -23,6 +23,23 @@ class MobilityController extends AbstractController
      */
     public function add(Request $request, EntityManagerInterface $em)
     {
+        // je récupère le user
+        $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $em->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère la carte de visite du candidat
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        // je compte le nombre de ville enregistré
+        $maxMob = $visitCard->getMobilities()->count();
+        // s'il en a 3 ou plus
+        if ($maxMob >= 3)
+        {
+            $this->addFlash('warning', 'Vous ne pouvez pas avoir plus de 3 villes');
+            return $this->redirectToRoute('candidate_profile');
+        }
+
         $mobility = new Mobility();
 
         $form = $this->createForm(MobilityType::class, $mobility);
@@ -31,10 +48,8 @@ class MobilityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) 
         {
             $mobility = $form->getData();
-            
             // je vérifie que la ville existe
             $town = MobilityManager::isRealTown($mobility);
-
             // si la clef fail existe, l'api n'a renvoyé aucun résultat
             // c'est donc un message d'erreur qui a été retourné
             if(isset($town['fail']))
@@ -45,16 +60,7 @@ class MobilityController extends AbstractController
             // sinon l'api a renvoyé un résultat
             // $town['success'] contient le tableau de réponse renvoyé par l'api
             $mobility = MobilityManager::recoverMobility($town, $em);
-
-            // je récupère le user
-            $user = $this->getUser();
-            // je récupère sa fiche candidat
-            $candidateRepo = $em->getRepository(IsCandidate::class);
-            $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
-            // je récupère la carte de visite du candidat
-            $visitCardRepo = $em->getRepository(VisitCard::class);
-            $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
-            
+            // je lie ma mobilité et ma carte de viste 
             $visitCard->addMobility($mobility);
             $em->persist($visitCard);
             $em->flush();
