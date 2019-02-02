@@ -175,6 +175,7 @@ class ExperienceController extends AbstractController
         $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
         $experienceToDelete = $experienceRepo->findOneById(['id' => $id, 'visitCard' => $visitCard->getId()]);
         
+        
         // je récupére la carte de visite de l'expérience à supprimer
         $experienceToDeleteVisitCard=$experienceToDelete->getVisitCard();
 
