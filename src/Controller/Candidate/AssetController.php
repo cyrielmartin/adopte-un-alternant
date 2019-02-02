@@ -36,9 +36,9 @@ class AssetController extends AbstractController
         //$asserts = $visitCard ->getAdditionals();
         $additionalRepo = $this->getDoctrine()->getRepository(Additional::class);
         $asserts = $additionalRepo ->findBy(['visitCard' => $visitCardId, 'typeInfo'=>'assert']);
-        dump($asserts);
+        //dump($asserts);
         $nbAsserts=count($asserts);
-        dump($nbAsserts);
+        //dump($nbAsserts);
 
         if($nbAsserts < 5){
         

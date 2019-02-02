@@ -21,7 +21,7 @@ class AssetType extends AbstractType
         $builder
             //->add('typeInfo')
             ->add('content', TextType::class, [
-                'label' => 'Atout',
+                'label' => false,
               
                     ]);
                     
