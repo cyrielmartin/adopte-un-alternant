@@ -169,17 +169,23 @@ class ExperienceController extends AbstractController
         // je récupère la carte de visite du candidat
         $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
         $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
+        $visitCardId =$visitCard->getId();
         
         // je récupère l'expérience qui doit être supprimée
         $experienceRepo = $this->getDoctrine()->getRepository(Experience::class);
-        $experience = $experienceRepo->findOneById(['id' => $id, 'visitCard' => $visitCard->getId()]);
+        $experienceToDelete = $experienceRepo->findOneById(['id' => $id, 'visitCard' => $visitCard->getId()]);
         
+        // je récupére la carte de visite de l'expérience à supprimer
+        $experienceToDeleteVisitCard=$experienceToDelete->getVisitCard();
+
+        //je récupère l'id de la carte de visite de l'expérience à supprimer
+        $experienceToDeleteVisitCardId= $experienceToDeleteVisitCard ->getId();
         
-        if(!empty($experience))
+        if($visitCardId === $experienceToDeleteVisitCardId)
         {
             $em = $this->getDoctrine()->getManager();
             // je la supprime
-            $em->remove($experience);
+            $em->remove($experienceToDelete);
             $em->flush();
 
             $this->addFlash('success', 'Votre expérience a bien été supprimée.');
