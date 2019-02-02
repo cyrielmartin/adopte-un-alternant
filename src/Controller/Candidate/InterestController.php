@@ -73,7 +73,7 @@ class InterestController extends AbstractController
             }
             
         }else {
-            $this->addFlash('danger', 'vous avez déjà 5 atouts, vous ne pouvez pas en ajouter d\'avantage');
+            $this->addFlash('danger', 'vous avez déjà 5 centres d\'intérêt, vous ne pouvez pas en ajouter d\'avantage');
             return $this->redirectToRoute('candidate_profile');
         }
         
