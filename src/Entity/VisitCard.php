@@ -252,6 +252,9 @@ class VisitCard
     {
         return $this->additionals;
     }
+    
+
+    
 
     public function addAdditional(Additional $additional): self
     {

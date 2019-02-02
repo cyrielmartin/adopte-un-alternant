@@ -12,8 +12,22 @@ class WebsiteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('link')
+            ->add('name', TextType::class, [
+                'label' => 'Atout',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un site'
+                    ]),
+                ],
+            ])
+            ->add('link',TextType::class, [
+                'label' => 'Atout',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir un site'
+                    ]),
+                ],
+            ])
             //->add('visitCard')
         ;
     }
