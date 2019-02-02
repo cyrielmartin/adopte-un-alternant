@@ -24,14 +24,14 @@ class Mobility
     private $townName;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", inversedBy="mobilities")
-     */
-    private $visitCards;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Department", inversedBy="mobilities")
      */
     private $department;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\VisitCard", mappedBy="mobilities")
+     */
+    private $visitCards;
 
     public function __construct()
     {
@@ -55,32 +55,6 @@ class Mobility
         return $this;
     }
 
-    /**
-     * @return Collection|VisitCard[]
-     */
-    public function getVisitCards(): Collection
-    {
-        return $this->visitCards;
-    }
-
-    public function addVisitCard(VisitCard $visitCard): self
-    {
-        if (!$this->visitCards->contains($visitCard)) {
-            $this->visitCards[] = $visitCard;
-        }
-
-        return $this;
-    }
-
-    public function removeVisitCard(VisitCard $visitCard): self
-    {
-        if ($this->visitCards->contains($visitCard)) {
-            $this->visitCards->removeElement($visitCard);
-        }
-
-        return $this;
-    }
-
     public function getDepartment(): ?Department
     {
         return $this->department;
@@ -95,5 +69,33 @@ class Mobility
     
     public function __toString(){
         return $this->town_name;
+    }
+
+    /**
+     * @return Collection|VisitCard[]
+     */
+    public function getVisitCards(): Collection
+    {
+        return $this->visitCards;
+    }
+
+    public function addVisitCard(VisitCard $visitCard): self
+    {
+        if (!$this->visitCards->contains($visitCard)) {
+            $this->visitCards[] = $visitCard;
+            $visitCard->addMobility($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisitCard(VisitCard $visitCard): self
+    {
+        if ($this->visitCards->contains($visitCard)) {
+            $this->visitCards->removeElement($visitCard);
+            $visitCard->removeMobility($this);
+        }
+
+        return $this;
     }
 }

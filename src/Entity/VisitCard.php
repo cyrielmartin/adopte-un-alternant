@@ -45,11 +45,6 @@ class VisitCard
     private $experiences;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Mobility", mappedBy="visitCards")
-     */
-    private $mobilities;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Website", mappedBy="visitCard")
      */
     private $websites;
@@ -73,14 +68,19 @@ class VisitCard
      */
     private $skills;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Mobility", inversedBy="visitCards")
+     */
+    private $mobilities;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
         $this->experiences = new ArrayCollection();
-        $this->mobilities = new ArrayCollection();
         $this->websites = new ArrayCollection();
         $this->additionals = new ArrayCollection();
         $this->skills = new ArrayCollection();
+        $this->mobilities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,34 +187,6 @@ class VisitCard
     }
 
     /**
-     * @return Collection|Mobility[]
-     */
-    public function getMobilities(): Collection
-    {
-        return $this->mobilities;
-    }
-
-    public function addMobility(Mobility $mobility): self
-    {
-        if (!$this->mobilities->contains($mobility)) {
-            $this->mobilities[] = $mobility;
-            $mobility->addVisitCard($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMobility(Mobility $mobility): self
-    {
-        if ($this->mobilities->contains($mobility)) {
-            $this->mobilities->removeElement($mobility);
-            $mobility->removeVisitCard($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Website[]
      */
     public function getWebsites(): Collection
@@ -314,6 +286,32 @@ class VisitCard
     {
         if ($this->skills->contains($skill)) {
             $this->skills->removeElement($skill);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Mobility[]
+     */
+    public function getMobilities(): Collection
+    {
+        return $this->mobilities;
+    }
+
+    public function addMobility(Mobility $mobility): self
+    {
+        if (!$this->mobilities->contains($mobility)) {
+            $this->mobilities[] = $mobility;
+        }
+
+        return $this;
+    }
+
+    public function removeMobility(Mobility $mobility): self
+    {
+        if ($this->mobilities->contains($mobility)) {
+            $this->mobilities->removeElement($mobility);
         }
 
         return $this;
