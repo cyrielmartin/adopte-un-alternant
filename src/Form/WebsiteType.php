@@ -5,7 +5,9 @@ namespace App\Form;
 use App\Entity\Website;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class WebsiteType extends AbstractType
 {
@@ -13,18 +15,18 @@ class WebsiteType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Atout',
+                'label' => 'Nom du site',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un site'
+                        'message' => 'Veuillez saisir ce champs'
                     ]),
                 ],
             ])
             ->add('link',TextType::class, [
-                'label' => 'Atout',
+                'label' => 'URL',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir un site'
+                        'message' => 'Veuillez saisir ce champs'
                     ]),
                 ],
             ])
