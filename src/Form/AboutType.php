@@ -28,7 +28,7 @@ class AboutType extends AbstractType
                     'maxMessage' => 'Votre texte ne peut pas excéder {{ limit }} mots',
                 ]),
                 ],
-            'help' => 'Ce que vous écrivez ici est accessible depuis votre profil public',
+            'help' => 'Ce que vous écrivez ici est visible depuis votre profil public',
         ]);
     }
 
