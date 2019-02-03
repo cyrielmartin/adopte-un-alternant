@@ -27,7 +27,7 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function show(EntityManagerInterface $emIsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
+    public function show(EntityManagerInterface $em, IsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
     {
 
         // Affiche le profil du user candidat à l'alternance
