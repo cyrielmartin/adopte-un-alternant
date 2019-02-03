@@ -12,11 +12,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-
+/**
+ * @Route("/candidat", name="candidates_")
+ */
 class CandidateController extends AbstractController
 {
     /**
-     * @Route("/candidats", name="candidates_list")
+     * @Route("/liste", name="list")
      */
     public function showList(Request $request, EntityManagerInterface $em)
     {
@@ -70,6 +72,16 @@ class CandidateController extends AbstractController
             'visitCards'=>$visitCards,
             'articles'=>$articles,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+    * @Route("/{id}/profil", name="one")
+    */
+    public function showOne()
+    {
+        return $this->render('candidate/one.html.twig', [
+            'controller_name' => 'CandidateController, showOne()',
         ]);
     }
 
