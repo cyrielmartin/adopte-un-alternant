@@ -171,6 +171,6 @@ class Formation
 
     public function __toString()
     {
-        return $this->award_name;
+        return $this->awardName;
     }
 }
