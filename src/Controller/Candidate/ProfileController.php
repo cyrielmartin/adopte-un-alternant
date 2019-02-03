@@ -72,7 +72,7 @@ class ProfileController extends AbstractController
         {
             if($formation->getStatus() === 2)
             {
-                $apprenticeshipsInfo = $formation;
+                $apprenticeshipsInfo = $isApprenticeshipRepo->findOneBy(['formation' => $formation->getId()]);
             }
         }
 
