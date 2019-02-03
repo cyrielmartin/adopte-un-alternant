@@ -235,9 +235,14 @@
                 </div>
                 <div class="card-body">
                     <div class="row justify-content-around">
-                        {% for skill in candidateInformation.skills %}
-                        <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
-                        {% endfor %}
+
+                    {% if candidateInformation.skills is empty %}
+                    {{ "Vous n'avez ajouté aucune compétence." }}
+                    {% else %}
+                    {% for skill in candidateInformation.skills %}
+                    <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
+                    {% endfor %}
+                    {% endif %}
                     </div>
                 </div>                        
             </div> {# Fin carte compétences #}
