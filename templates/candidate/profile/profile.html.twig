@@ -269,10 +269,9 @@
 
                 {# Si alternance recherchée (statut 2), pas de bouton Ajouter #}
                 <div class="card-body">
-                {% if formationsInfo is empty %}
-                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune recherche d'alternance." }}</div>
-                {% else %}
-                {% for formationInfo in formationsInfo %}   
+                <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune recherche d'alternance." }}</div>
+                {% for formationInfo in formationsInfo %} 
+                    {% if formationInfo.status == 2 %}  
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -313,9 +312,10 @@
                             </tbody>
                         </table>
                     </div>
+                    {% endif %}
+                    
                 </div>             
                 {% endfor %}
-                {% endif %}
             </div> {# Fin Alternance recherchée #}
 
             {# Formation #}
