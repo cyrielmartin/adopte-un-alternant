@@ -11,6 +11,7 @@ use App\Entity\Formation;
 use App\Entity\VisitCard;
 use App\Entity\Additional;
 use App\Entity\Experience;
+use App\Entity\IsApprenticeship;
 use App\Form\UserEditType;
 use App\Entity\IsCandidate;
 use App\Entity\IsRecruiter;
@@ -32,6 +33,7 @@ class ProfileController extends AbstractController
     {
         $isCandidateRepo = $em->getRepository(IsCandidate::class);
         $isRecruiterRepo = $em->getRepository(IsRecruiter::class);
+        $isApprenticeshipRepo = $em->getRepository(IsApprenticeship::class);
         $visitCardRepo = $em->getRepository(VisitCard::class);
         $webSiteRepo = $em->getRepository(Website::class);
         $formationRepo = $em->getRepository(Formation::class);
@@ -64,6 +66,16 @@ class ProfileController extends AbstractController
 
         $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
 
+        $apprenticeshipsInfo = null;
+
+        foreach($formationsInfo as $formation)
+        {
+            if($formation->getStatus() === 2)
+            {
+                $apprenticeshipsInfo = $formation;
+            }
+        }
+
         $experiencesInfo =$experienceRepo->findByVisitCard($visitCardId);
 
 
@@ -80,13 +92,13 @@ class ProfileController extends AbstractController
             'candidateInformation' => $candidateInformation,
             'webSites'=>$webSites,
             'formationsInfo'=>$formationsInfo,
+            'apprenticeshipsInfo' => $apprenticeshipsInfo,
             'experiencesInfo'=>$experiencesInfo,
             'skillsInfo'=>$skillsInfo,
             'additionalsInfo'=>$additionalsInfo,
             'mobilitiesInfo'=>$mobilitiesInfo,
             'visitCardId'=>$visitCardId,
-            'viewsInfo'=>$viewsInfo
-
+            'viewsInfo'=>$viewsInfo,
         ]);
     }
 

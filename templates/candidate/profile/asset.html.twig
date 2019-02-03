@@ -5,33 +5,27 @@
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
 {% endblock %}
-
 {% block body %}
-<div class="container">
-    
-    <div class="h5 my-4 text-center">{{ tab_type }} un atout</div>
-    
-    <div class="col-12 col-mg-6 col-lg-5 mx-auto my-3">
-    
-        <div class="my-3">
+<div class="col-10 col-md-7 mx-auto my-4">
+   <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-        
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<h1>{{ tab_type }} un atout</h1>
 
-           
-                {{ form_widget(form) }}
-                <button type="submit" class="btn btn-secondary mb-2 p-2 col-8 d-block mx-auto">
-                    Enregistrer
-                </button>
-                
-            {{ form_end(form) }}
-            
-
-            
-            
-        </div>
-    </div>
-
+{# Formulaire #}
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-secondary mb-2">Valider</button>    
+{{ form_end(form) }}
 </div>
+{% endblock %}
 
+{% block footer %}
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
 {% endblock %}

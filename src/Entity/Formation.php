@@ -168,4 +168,9 @@ class Formation
         // pour faire plaisir au formulaire
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->award_name;
+    }
 }

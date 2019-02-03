@@ -56,4 +56,9 @@ class IsApprenticeship
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->academicPace;
+    }
 }
