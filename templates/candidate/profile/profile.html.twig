@@ -199,7 +199,7 @@
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
                         {% for viewInfo in viewsInfo %}
-                            <h3><span class="badge badge-pill badge-info">{{ viewInfo.companyName}}</span></h3>                         
+                            <h3><span class="badge badge-pill badge-info">{{ viewInfo.companyName}}</span></h3>     
                         {% endfor %}
                     </div>
                 </div>
@@ -237,11 +237,11 @@
                     <div class="row justify-content-around">
 
                     {% if candidateInformation.skills is empty %}
-                    {{ "Vous n'avez ajouté aucune compétence." }}
+                    <div class="small text-muted">{{ "Vous n'avez ajouté aucune compétence." }}</div>
                     {% else %}
-                    {% for skill in candidateInformation.skills %}
-                    <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
-                    {% endfor %}
+                        {% for skill in candidateInformation.skills %}
+                        <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
+                        {% endfor %}
                     {% endif %}
                     </div>
                 </div>                        
@@ -252,6 +252,10 @@
                 <div class="card-header">
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Alternance recherchée
+                        {% if formationsInfo is empty %}
+                            <a href= "{{ path("apprenticeship_add") }}">
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                        {% endif %}
                         {% for formationInfo in formationsInfo %} 
                             {% if formationInfo.status == 0 %}
                             <a href= "{{ path("apprenticeship_add") }}">
@@ -265,6 +269,9 @@
 
                 {# Si alternance recherchée (statut 2), pas de bouton Ajouter #}
                 <div class="card-body">
+                {% if formationsInfo is empty %}
+                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune recherche d'alternance." }}</div>
+                {% else %}
                 {% for formationInfo in formationsInfo %}   
                     <div class="table-responsive">
                         <table class="table">
@@ -308,6 +315,7 @@
                     </div>
                 </div>             
                 {% endfor %}
+                {% endif %}
             </div> {# Fin Alternance recherchée #}
 
             {# Formation #}
@@ -316,58 +324,64 @@
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Formations
                         <a href= "{{ path("formation_add") }}">
-                            <button class="btn btn-light " id="" type="button"> <i class="far fa-plus-square"></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></i></button>
                         </a>
                     </h2>
                 </div>
+                <div class="card-body">
+                {% if formationsInfo is empty %}
+                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune formation." }}</div>
+                {% else %}
                     {% for formationInfo in formationsInfo %}
-                     {% if formationInfo.status == 2 %}
-                     {% else %}
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>{# titre de colonnes #}
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="col" class="text-secondary col-4">
-                                    {{ formationInfo.awardName}}
-                                    </th>
-                                    <th class="text-info col-7">
-                                        <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
-                                        </a>
-                                    </th>          
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
-                                    <th scope="row" class ="d-flex col-4">Niveau scolaire
-                                    </th>                                                    
-                                    <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
-                                    </td>                                                       
-                                </tr>
-                                <tr class ="d-flex justify-content-center"> {# Nom de l'école #}
-                                    <th scope="row" class ="d-flex col-4">École
-                                    </th>                                         
-                                    <td class ="d-flex col-7">{{ formationInfo.school.name}}
-                                    </td>       
-                                </tr>
-                                <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
-                                    <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
-                                    </th>                                          
-                                    {% if formationInfo.status == 0 %}
-                                    <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                    {% elseif formationInfo.status == 1 %}
-                                    <td class ="d-flex col-7">en cours</td>
-                                    {% elseif formationInfo.status == 2 %}
-                                    <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
-                                    {% endif %}
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    {% endif %}
-                {% endfor %}
+                        {% if formationInfo.status == 2 %}
+                        {% else %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>{# titre de colonnes #}
+                                        <tr class ="d-flex justify-content-center">
+                                            <th scope="col" class="text-secondary col-4">
+                                            {{ formationInfo.awardName}}
+                                            </th>
+                                            <th class="text-info col-7">
+                                                <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                    <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                </a>
+                                                <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                                </a>
+                                            </th>          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
+                                            <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                            </th>                                                    
+                                            <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
+                                            </td>                                                       
+                                        </tr>
+                                        <tr class ="d-flex justify-content-center"> {# Nom de l'école #}
+                                            <th scope="row" class ="d-flex col-4">École
+                                            </th>                                         
+                                            <td class ="d-flex col-7">{{ formationInfo.school.name}}
+                                            </td>       
+                                        </tr>
+                                        <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
+                                            <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
+                                            </th>                                          
+                                            {% if formationInfo.status == 0 %}
+                                            <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                            {% elseif formationInfo.status == 1 %}
+                                            <td class ="d-flex col-7">en cours</td>
+                                            {% elseif formationInfo.status == 2 %}
+                                            <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
+                                            {% endif %}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                </div>
             </div> {# Fin carte formation #}
 
             {# Expériences #}
@@ -376,11 +390,14 @@
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Expériences
                         <a href= "{{ path("experience_add")}}">
-                            <button class="btn btn-light " id="" type="button"> <i class="far fa-plus-square"></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
                         </a>
                     </h2>
                 </div>
                 <div class="card-body">
+                {% if experiencesInfo is empty %}
+                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune expérience." }}</div>
+                {% else %}
                     {% for experienceInfo in experiencesInfo %}
                     <div class="table-responsive">
                         <table class="table">
@@ -418,109 +435,63 @@
                         </table>
                     </div>
                     {% endfor %}
+                {% endif %}
             </div> {# Fin carte exp #}
 
-            {# Atouts et centres d'intérêt V2 #}
+           {# Atouts #}
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0 text-center text-secondary">
+                        Atouts
+                        <a href= "{{ path("asset_add") }}">
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                        </a>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-around">
 
-            {# <div class="card">
-                    <div class="card-header">
-                        <h2 class="h5 mb-0 text-center text-secondary">
-                            Atouts et centres d'intérêts
-                        </h2>
-                    </div>
-                    <div class="card-body">
-
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr class = "d-flex justify-content-center">
-                                        <th scope="col" class="text-info d-flex col-6">
-                                        Ajouter un atout ou un centre d'intérêt
-                                        </th>
-                                        <th scope="col" class="d-flex col-5">
-                                            <a href= "{{ path("asset_add") }}">
-                                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus"></i></button>
-                                            </a>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr class = "d-flex justify-content-center">
-                                        <th class = "d-flex col-6" scope="col">Atouts</th>
-                                        <th class = "d-flex col-5"></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>                                  
-                                            
+                    {% if additionalsInfo is empty %}
+                    <div class="small text-muted">{{ "Vous n'avez ajouté aucun atout." }}</div>
+                    {% else %}
                         {% for additionalInfo in additionalsInfo %}
                             {% if additionalInfo.typeInfo == 'assert' %}
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr class = "d-flex justify-content-center">
-                                                <td class = "d-flex col-6">
-                                                {{additionalInfo.content}}
-                                                </td>
-                                                <td class = "d-flex col-5">
-                                                    <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                    </a>
-                                                    <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                    </a>
-                                                </td>                                            
-                                            </tbody> 
-                                    </table>
-                                </div>    
-                            
-                            {% endif %}                                                                            
+                            <button type="button" class="btn btn-info"> {{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                            {% endif %}
                         {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>                        
+            </div> {# Fin carte atouts #}
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr class = "d-flex justify-content-center">
-                                        <th class = "d-flex col-6" scope="col">Centres d'intérêts</th>
-                                        <th class = "d-flex col-5"></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>    
+           {# Centres d'intérêt #}
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0 text-center text-secondary">
+                        Centres d'intéret
+                        <a href= "">
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                        </a>
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="row justify-content-around">
 
+                    {% if additionalsInfo is empty %}
+                        <div class="small text-muted">{{ "Vous n'avez ajouté aucun centre d'intérêt." }}</div>
+                    {% else %}
                         {% for additionalInfo in additionalsInfo %}
                             {% if additionalInfo.typeInfo == 'interest' %}
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tbody>                                
-                                            <tr class = "d-flex justify-content-center">
-                                                <td class = "d-flex col-6">
-                                                {{additionalInfo.content}}
-                                                </td>
-                                                <td class = "d-flex col-5">
-                                                    <a href= "{{ path("asset_edit", {"id": additionalInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                    </a>
-                                                    <a href= "{{ path("asset_delete", {"id": additionalInfo.id }) }}">
-                                                        <button class="btn btn-light " id="" type="button"> <i class="fas fa-window-close"></i></button>
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>                                              
-                            {% else %}
-                            {% endif %}                                     
+                            <button type="button" class="btn btn-info">{{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                            {% endif %}
                         {% endfor %}
-                            
-                    </div>            
+                    {% endif %}
+                    </div>
+                </div>                        
+            </div> {# Fin carte centre d'intérêt #}
 
-            </div>  #}
-
+                </div>            
+            </div> 
         </div>
     </div>
 </div>

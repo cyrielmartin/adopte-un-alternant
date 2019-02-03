@@ -84,3 +84,15 @@ footer {
     margin-left: 0.4rem;
     margin-right: -0.4rem;
 }
+
+.delete-asset {
+    color: rgb(190, 5, 5);
+    margin-left: 0.4rem;
+    margin-right: -0.4rem;
+}
+
+.edit-asset {
+    color: black;
+    margin-left: 0.4rem;
+    margin-right : -0.5rem;
+}
