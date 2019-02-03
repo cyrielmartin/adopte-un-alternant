@@ -74,16 +74,6 @@ class MobilityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/modifier", name="edit")
-     */
-    public function edit()
-    {
-        return $this->render('candidate/profile/mobility.html.twig', [
-            'tab_type' => 'Modifier',
-        ]);
-    }
-
-    /**
      * @Route("/{id}/supprimer", name="delete")
      */
     public function delete($id)

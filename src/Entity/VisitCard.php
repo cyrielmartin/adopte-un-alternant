@@ -93,7 +93,7 @@ class VisitCard
         return $this->about;
     }
 
-    public function setAbout(string $about): self
+    public function setAbout($about): self
     {
         $this->about = $about;
 

@@ -168,9 +168,6 @@
                                         <td >
                                             {% for mobilityInfo in mobilitiesInfo %}
                                                 <p class ="mb-1">
-                                                    <a href= "{{ path("mobility_edit", {"id": mobilityInfo.id }) }}">
-                                                        <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                    </a>
                                                     <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
                                                     </a>
                                                 </p>
