@@ -33,7 +33,7 @@ class PresentationController extends AbstractController
                 'notice',
                 'La carte de visite a bien été modifiée'
             );
-            return $this->redirectToRoute('presentation', ['id' => 2]);
+            return $this->redirectToRoute('candidate_profile');
         }
 
         $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);

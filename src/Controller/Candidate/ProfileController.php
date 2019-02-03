@@ -27,8 +27,9 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function show(IsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
+    public function show(EntityManagerInterface $emIsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
     {
+
         // Affiche le profil du user candidat à l'alternance
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
         $user = $this->getUser();
@@ -41,38 +42,28 @@ class ProfileController extends AbstractController
 
         //création d'un requête join dans le fichier isRecruiterRepo pour récupérer les nombres de vue du candidat et les recruteurs ayant consulté le profil du candidat par Id candidat
         $viewsInfo = $isRecruiterRepo ->findViewProfil($candidateId);
-        //dd($viewsInfo);
 
         $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
-        //dd ($candidateInformation);
-
-
 
         //récupération de l'Id de la visitCard pour accéder aux metatables
         $visitCardId = $candidateInformation->getId();
        
         $webSites = $webSiteRepo->findByVisitCard($visitCardId);
-        //dd ($webSites);
        
         $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
-        //dd ($formationsInfo);
+
+        $formationsInfo=$formationRepo->findByVisitCard($visitCardId);
 
         $experiencesInfo =$experienceRepo->findByVisitCard($visitCardId);
 
 
         //création d'un requête join dans le fichier skill repo pour récupérer les compétences par Id de visitCard
         $skillsInfo = $skillRepo ->findByVisitCard($visitCardId);
-        //dd ($skillsInfo);
 
         $additionalsInfo = $additionalRepo ->findByVisitCard($visitCardId);
-        //dd($additionalsInfo);
 
         //création d'un requête join dans le fichier mobilityRepo pour récupérer les mobilités du candidat par Id de visitCard
         $mobilitiesInfo = $mobilityRepo ->findByVisitCard($visitCardId);
-        //dump ($mobilitiesInfo);
-
-     
-        
 
         return $this->render('candidate/profile/profile.html.twig', [
             'candidateDatas' =>  $candidateDatas,
