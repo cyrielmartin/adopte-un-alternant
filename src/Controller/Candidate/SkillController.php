@@ -25,21 +25,21 @@ class SkillController extends AbstractController
 
     public function edit(VisitCard $visitCard, Request $request, EntityManagerInterface $em)
     {
-    $form = $this->createForm(VisitCardSkillType::class, $visitCard);
-    $form->handleRequest($request);
+        $form = $this->createForm(VisitCardSkillType::class, $visitCard);
+        $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        $em->persist($visitCard);
-        $em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($visitCard);
+            $em->flush();
 
-        $this->addFlash(
+            $this->addFlash(
             'notice',
             'Les compétences ont bien été modifiées'
         );
-        return $this->redirectToRoute('candidate_profile');
-    }
+            return $this->redirectToRoute('candidate_profile');
+        }
 
-    return $this->render('candidate/profile/skill.html.twig', [
+        return $this->render('candidate/profile/skill.html.twig', [
         'form' => $form->createView(),
     ]);
     }
@@ -55,26 +55,24 @@ class SkillController extends AbstractController
         // je récupère sa fiche candidat
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
-        // je récupère la carte de visite du candidat
+        // je récupère sa carte de visite
         $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
         $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
-        // je récupère la compétence du candidat connecté, qui doit être supprimé
+        // je récupère la compétence via son id
         $skillRepo = $this->getDoctrine()->getRepository(Skill::class);
-      
-        $skill = $skillRepo->findOneBy(['id' => $id, 'visitCard' => $visitCard->getId()]);
+        $skill = $skillRepo->find($id);
         
-        // si cette compétence appartient bien au candidat connecté
-        if(!empty($skill))
-        {
-            $em = $this->getDoctrine()->getManager();
-            // je le supprime
-            $em->remove($skill);
-            $em->flush();
+        // si cette compétence existe
+        if (!empty($skill)) {
+            // je supprime la relation avec celle-ci de la carte de visite du candidat
+            $visitCard->removeSkill($skill);
 
-            $this->addFlash('success', 'Votre compétence a bien été supprimée.');
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+            $this->addFlash('success', 'La compétence a bien été supprimée.');
         }
-        else
-        {
+        // si la compétence n'existe pas
+        else {
             $this->addFlash('danger', 'Une erreur est survenue lors de la suppression.');
         }
         
