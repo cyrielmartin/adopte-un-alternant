@@ -59,7 +59,7 @@ class MobilityRepository extends ServiceEntityRepository
            ->join('mobility.visitCards', 'visitCard')
            ->addSelect('visitCard')
            ->where('visitCard.id = :visitcardId')
-            ->setParameter('visitcardId', $visitCardId);
+           ->setParameter('visitcardId', $visitCardId);
        ;
 
        return $qb->getQuery()->getResult();

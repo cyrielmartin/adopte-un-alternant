@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\UserType;
-use App\Repository\RoleRepository;
+use App\Entity\VisitCard;
+use App\Entity\IsCandidate;
+use App\Entity\IsRecruiter;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,7 +18,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use phpDocumentor\Reflection\Types\Boolean;
 
 class UserController extends AbstractController
 {
@@ -60,50 +63,89 @@ class UserController extends AbstractController
     /**
      * @Route("/inscription", name="signup", methods={"GET","POST"})
      */
-    public function signup(\Swift_Mailer $mailer, Request $request, RoleRepository $roleRepo, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em, TokenGeneratorInterface $tokenGenerator)
+    public function signup(\Swift_Mailer $mailer, Request $request, UserPasswordEncoderInterface $passwordEncoder, TokenGeneratorInterface $tokenGenerator)
     {
+        $em = $this->getDoctrine()->getManager();
+        
         $user = new User();
-        $role = $roleRepo->findOneBy(['code'=>'ROLE_CANDIDATE']);
-        $user->setRole($role);
         $user->setStatus(0);
 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-                $user = $form->getData();
-                $user->setPassword($passwordEncoder->encodePassword(
-                $user,
-                $user->getPassword()
-            ));
-                $token = $tokenGenerator->generateToken();
-                $user->setToken($token);
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            $token = $tokenGenerator->generateToken();
+            
+            $user = $form->getData();
+            $user
+                ->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $user->getPassword()
+                    ))
+                ->setToken($token);
 
-                $em->persist($user);
-                $em->flush();
+            // j'ajoute le user en base et le refresh pour mettre à jour l'objet avec son id
+            $em->persist($user);
+            $em->flush($user);
+            $em->refresh($user);
 
-                $url = $this->generateUrl('account_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+            $role = $user->getRole()->getCode();
 
-                $message = (new \Swift_Message('Validez votre inscription'))
-            ->setFrom('adoptealternant@gmail.com')
-            ->setTo($user->getEmail())
-            ->setBody(
+            if($role === 'ROLE_RECRUITER')
+            {
+                // je créer un objet is recruiter et l'affilie au user de type recruteur
+                $isRecruiter = new IsRecruiter();
+                $isRecruiter->setUser($user);
+                $em->persist($isRecruiter);
+            }
+            else if($role === 'ROLE_CANDIDATE')
+            {
+                // je créer un objet is candidate et l'affilie au user de type candidat
+                $isCandidate = new IsCandidate();
+                $isCandidate->setUser($user);
+                
+                // je l'enregistre et refresh pour mettre à jour l'objet avec son id
+                $em->persist($isCandidate);
+                $em->flush($isCandidate);
+                $em->refresh($isCandidate);
+                
+                // je créer un objet carte de visite et l'affilie au candidat
+                $visitCard = new VisitCard();
+                $visitCard
+                    ->setIsCandidate($isCandidate)
+                    ->setAdopted(0)
+                    ->setVisibilityChoice(0)
+                    ->setAbout('Cette section n\'a pas encore été renseignée.');
+                
+                $em->persist($visitCard);
+            }
+            // j'envoie tout en base
+            $em->flush();
+
+            $url = $this->generateUrl('account_confirm', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $message = (new \Swift_Message('Validez votre inscription'))
+                ->setFrom('adoptealternant@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
                 $this->renderView(
-                    'emails/registration.html.twig',
-                    ['user'=>$user,
-                    'url'=>$url
+                    'emails/registration.html.twig',[
+                        'user'=>$user,
+                        'url'=>$url
                     ]
                 ),
                 'text/html'
             );
-                $mailer->send($message);
-                $this->addFlash(
+
+            $mailer->send($message);
+            $this->addFlash(
                 'notice',
                 'Un email vient de vous être envoyé. Veuillez cliquer sur le lien qu\'il contient pour finaliser votre inscription.'
             );
 
-                return $this->redirectToRoute('login');
-
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/signup.html.twig', [
