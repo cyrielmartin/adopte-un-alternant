@@ -4,16 +4,17 @@ namespace App\Controller\Candidate;
 namespace App\Controller\Candidate;
 
 use App\Entity\User;
+use App\Entity\Skill;
+use App\Entity\Website;
+use App\Entity\Mobility;
+use App\Entity\Formation;
+use App\Entity\VisitCard;
+use App\Entity\Additional;
+use App\Entity\Experience;
 use App\Form\UserEditType;
-use App\Repository\SkillRepository;
-use App\Repository\WebsiteRepository;
-use App\Repository\MobilityRepository;
-use App\Repository\FormationRepository;
-use App\Repository\VisitCardRepository;
-use App\Repository\AdditionalRepository;
-use App\Repository\ExperienceRepository;
-use App\Repository\IsCandidateRepository;
-use App\Repository\IsRecruiterRepository;
+use App\Entity\IsCandidate;
+use App\Entity\IsRecruiter;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,8 +28,17 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profile", name="profile")
      */
-    public function show(EntityManagerInterface $em, IsCandidateRepository $isCandidateRepo, IsRecruiterRepository $isRecruiterRepo, VisitCardRepository $visitCardRepo, WebsiteRepository $webSiteRepo, FormationRepository $formationRepo, ExperienceRepository $experienceRepo, SkillRepository $skillRepo, AdditionalRepository $additionalRepo, MobilityRepository $mobilityRepo)
+    public function show(EntityManagerInterface $em)
     {
+        $isCandidateRepo = $em->getRepository(IsCandidate::class);
+        $isRecruiterRepo = $em->getRepository(IsRecruiter::class);
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        $webSiteRepo = $em->getRepository(Website::class);
+        $formationRepo = $em->getRepository(Formation::class);
+        $experienceRepo = $em->getRepository(Experience::class);
+        $skillRepo = $em->getRepository(Skill::class);
+        $additionalRepo = $em->getRepository(Additional::class);
+        $mobilityRepo = $em->getRepository(Mobility::class);
 
         // Affiche le profil du user candidat à l'alternance
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
