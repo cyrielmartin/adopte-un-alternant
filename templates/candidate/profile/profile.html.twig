@@ -31,7 +31,6 @@
             {# Carte de visite #}
             <div class="card">
                 <div class="card d-flex flex-row flex-wrap justify-content-around">
-
                     {# image profil & bouton modif #}
                     <div class="d-flex flex-column">
                         <div class="p-2">
@@ -189,7 +188,7 @@
                         </div>                     
                     </div> {# fin site web, statut recherche ou adopté &mobilities & boutons modif #}
                 </div> {# Fin carte visite #}
-
+            </div>
             {# Accordéon Ils ont vu votre profil #}
             <div class="card accordion col-12 col-lg-12 p-0" id="accordionExample">
                 <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -220,7 +219,6 @@
                         {{ candidateInformation.about}}
                     </p>
                 </div>
-
             </div>
 
            {# Compétences #}
@@ -254,68 +252,69 @@
                         Alternance recherchée
                         {% if formationsInfo is empty %}
                             <a href= "{{ path("apprenticeship_add") }}">
-                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                                <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                            </a>
                         {% endif %}
                         {% for formationInfo in formationsInfo %} 
                             {% if formationInfo.status == 0 %}
                             <a href= "{{ path("apprenticeship_add") }}">
                                 <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                            </a>
                             {% elseif formationInfo.status == 2 %}
                             {% endif %}  
                         {% endfor %}  
-                        </a>
+                        
                     </h2>
                 </div>
 
                 {# Si alternance recherchée (statut 2), pas de bouton Ajouter #}
                 <div class="card-body">
-                <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune recherche d'alternance." }}</div>
-                {% for formationInfo in formationsInfo %} 
-                    {% if formationInfo.status == 2 %}  
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="col" class="text-secondary d-flex col-4">
-                                    Mon souhait d'alternance 
-                                    </th>
-                                    <th scope="col" class="text-info d-flex col-7">
-                                        <a href= "{{ path("apprenticeship_edit", {"id": formationInfo.id }) }}">
-                                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <a href= "{{ path("apprenticeship_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
-                                        </a>                      
-                                    </th>                           
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">A partir du </th> 
-                                        <td class ="d-flex col-7">{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
-                                </tr>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">Jusqu'au </th> 
-                                        <td class ="d-flex col-7">{{ formationInfo.endedAt|date("m/d/Y")}}</td>
-                                </tr>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">Avec l'école</th> 
-                                        <td class ="d-flex col-7">{{ formationInfo.school.name}}</td>
-                                </tr>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
-                                        <td class ="d-flex col-7">{{ formationInfo.awardName}}</td>
-                                </tr>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">De niveau</th> 
-                                        <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}</td>
-                                </tr>                                           
-                            </tbody>
-                        </table>
-                    </div>
-                    {% endif %}
-                    
-                </div>             
-                {% endfor %}
+                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune recherche d'alternance." }}
+                    {% for formationInfo in formationsInfo %} 
+                        {% if formationInfo.status == 2 %}  
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="col" class="text-secondary d-flex col-4">
+                                        Mon souhait d'alternance 
+                                        </th>
+                                        <th scope="col" class="text-info d-flex col-7">
+                                            <a href= "{{ path("apprenticeship_edit", {"id": formationInfo.id }) }}">
+                                                <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
+                                            <a href= "{{ path("apprenticeship_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                            </a>                      
+                                        </th>                           
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="row" class ="d-flex col-4">A partir du </th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
+                                    </tr>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="row" class ="d-flex col-4">Jusqu'au </th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.endedAt|date("m/d/Y")}}</td>
+                                    </tr>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="row" class ="d-flex col-4">Avec l'école</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.school.name}}</td>
+                                    </tr>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.awardName}}</td>
+                                    </tr>
+                                    <tr class ="d-flex justify-content-center">
+                                        <th scope="row" class ="d-flex col-4">De niveau</th> 
+                                            <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}</td>
+                                    </tr>                                           
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endif %}
+                    </div>             
+                    {% endfor %}
             </div> {# Fin Alternance recherchée #}
 
             {# Formation #}
@@ -489,10 +488,6 @@
                     </div>
                 </div>                        
             </div> {# Fin carte centre d'intérêt #}
-
-                </div>            
-            </div> 
-        </div>
     </div>
 </div>
 <p><a href="{{path('home')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
