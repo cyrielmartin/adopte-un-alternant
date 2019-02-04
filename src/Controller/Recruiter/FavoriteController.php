@@ -34,17 +34,22 @@ class FavoriteController extends AbstractController
         dump($user);
         // je récupère sa fiche recruteur
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
-        $recruteur= $recruiterRepo->findOneBy(['user' => $user->getId()]);
+        $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
+
+        // je récupère sa fiche candidat à ajouter aux favoris
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['id' => $id]);
         
-        //dd($recruteur);
+        dump($recruter);
+        //dd($candidate);
 
         //$favoriteCandidate = new IsRecruiter();
 
-        $form = $this->createForm(RecruiterFavoriteCandidateType::class, $recruteur);
-        $form->handleRequest($request);
+        //$form = $this->createForm(RecruiterFavoriteCandidateType::class, $recruteur);
+        //$form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) 
-        {
+        //if ($form->isSubmitted() && $form->isValid()) 
+        //{
             //$favoriteCandidate = $form->getData();
             //dd($favoriteCandidate);
 
@@ -62,10 +67,10 @@ class FavoriteController extends AbstractController
             //// $town['success'] contient le tableau de réponse renvoyé par l'api
             //$mobility = MobilityManager::recoverMobility($town, $em);
             // je lie ma mobilité et ma carte de viste 
-            $recruter->addIsCandidate($id);
+            $recruter->addIsCandidate($candidate);
             $em->persist($recruter);
             $em->flush();
-        }
+        //}
 
         return $this->redirectToRoute('candidates_one', ['id' => $id]);
     }
