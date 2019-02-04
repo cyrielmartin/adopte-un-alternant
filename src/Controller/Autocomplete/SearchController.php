@@ -84,7 +84,7 @@ class SearchController extends AbstractController
         // Je récupère la saisi utilisateur envoyé en ajax via jquery ui
         $search = $request->query->get('term');
         // je remplace les accens et espaces
-        $search = RecruiterMobilityManager::replaceAccent($search);
+        //$search = RecruiterMobilityManager::replaceAccent($search);
         // je prépare mon url
         $apiGeo = 'https://geo.api.gouv.fr/communes?nom='. $search .'&fields=departement&boost=population';
         //var_dump($apiGeo);
