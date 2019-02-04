@@ -1,20 +1,182 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}Mon profil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="col-12">
+    <p><a href="{{path('home')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+    
+    <div class="row col-12 col-md-11 mx-auto">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/src/Controller/Recruiter/ProfileController.php'|file_link(0) }}">src/Controller/Recruiter/ProfileController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/var/www/html/Projet_TP/Candidats-alternance-O-clock/templates/recruiter/profile/profile.html.twig'|file_link(0) }}">templates/recruiter/profile/profile.html.twig</a></code></li>
-    </ul>
+        {# Messages flash #}
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}   
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}   
+
+        <div class="col-12 col-md-10 mx-auto">
+
+            {# Carte de visite #}
+            <div class="card">
+                <div class="card d-flex flex-row flex-wrap justify-content-around">
+                    {# nom/prénom/mail/tel/ & bouton modif #}   
+                    <div class="d-flex flex-column ">
+                        <div class="p-2 table-responsive">
+                            <table class="table">
+                                {# titre de colonne Infos persos #}
+                                <thead>       
+                                    <th scope="col" class="font-weight-bold h5">
+                                    Informations Personnelles
+                                        <a href= "{{ path("recruiter_informations") }}">
+                                            <button class="btn btn-light btn-sm" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                        </a>
+                                    </th>
+                                </thead>
+
+                                {# Contenu colonne Infos persos #}
+                                <tbody>
+                                    <tr>
+                                        <th>{{ app.user.lastname }} {{ app.user.firstname }}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ app.user.email }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>                        
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column ">
+                        <div class="p-2 table-responsive">
+                            <table class="table">
+                                {# titre de colonne entreprise #}
+                                <thead>
+                                    <tr>          
+                                        <th scope="col" class="font-weight-bold h5">
+                                        Vous et votre entreprise
+                                            <a href= "{{ path("recruiter_company_informations", {"id": recruiter.id }) }}">
+                                                <button class="btn btn-light btn-sm" id="" type="button"> <i class="fas fa-edit"></i></button>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                
+                                {# Contenu colonne info de l'entreprise #}
+                                <tbody>                              
+                                    <tr>
+                                        <td>
+                                            <span class="font-weight-bold">Nom de l'entreprise : </span>
+                                            {{ recruiter.companyName }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="font-weight-bold">Ville de l'entreprise : </span>
+                                            {{ recruiter.companyLocation }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="font-weight-bold">Votre téléphone :</span>
+                                            {{ recruiter.phoneNumber }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table> 
+                        </div>
+                    </div>
+                </div> {# Fin carte entreprise #}
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="h5 mb-0 text-center text-secondary">
+                        Vos candidats favoris
+                        <a href= "{{ path("candidates_list") }}">
+                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                        </a>
+                    </h2>
+                </div>
+
+                <div class="card-body">
+                    {% if favorites is empty %}
+                        <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucun candidat en favoris." }}</div>
+                        <a href= "{{ path("candidates_list") }}">
+                                <button class="btn btn-light btn-sm " id="" type="button"><i class="fas fa-plus-circle"></i></button>
+                        </a>
+                    {% else %}
+                        {% for favorite in favorites %}
+                            {% if favorite.formationInfo is not empty %}
+        
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-secondary d-flex col-4">
+                                                    <div class="d-flex flex-column text-center">
+                                                        <img src="{{ asset('uploads/images/'~ (favorite.candidate.picture ?:'default-candidate.png')) }}"
+                                                        style="width: 70px;height:70px;" class="mb-2 rounded-circle" />
+                                                        {% if favorite.visitCard.visibilityChoice == 0 %}
+                                                            {{ favorite.candidate.user.firstname }} {{ favorite.candidate.user.lastname }}
+                                                        {% elseif favorite.visitCard.visibilityChoice == 1 %}
+                                                            {{ favorite.candidate.user.firstname }}
+                                                        {% else %}
+                                                            {{ favorite.candidate.user.lastname }}
+                                                        {% endif %}
+                                                    </div>
+                                                </th>
+                                                <th scope="col" class="text-info d-flex col-7 align-items-center">
+                                                    <a href= "{{ path("candidates_one", {"id": favorite.candidate.id }) }}"><button class="btn  btn-outline-primary btn-sm mr-2" id="" type="button">Voir le profil complet <i class="fas fa-external-link-alt"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("favorite_delete", {"id": favorite.candidate.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
+                                                    </a>                       
+                                                </th>                           
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">A partir du </th> 
+                                                    <td class ="d-flex col-7">{{ favorite.formationInfo.startedAt|date("m/d/Y")}}</td>                                                      
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Jusqu'au </th> 
+                                                    <td class ="d-flex col-7">{{ favorite.formationInfo.endedAt|date("m/d/Y")}}</td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Avec l'école</th> 
+                                                    <td class ="d-flex col-7">{{ favorite.formationInfo.school.name }}</td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Pour obtenir le diplôme</th> 
+                                                    <td class ="d-flex col-7">{{ favorite.formationInfo.awardName }}</td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">De niveau</th> 
+                                                    <td class ="d-flex col-7">{{ favorite.formationInfo.awardLevel.name }}</td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Avec un rythme de</th> 
+                                                    <td class ="d-flex col-7">{{ favorite.apprenticeshipInfo.academicPace }}</td>
+                                            </tr>                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div> {# Fin candidats favoris #}
+            </div> 
+        </div>
+    </div>
 </div>
 {% endblock %}

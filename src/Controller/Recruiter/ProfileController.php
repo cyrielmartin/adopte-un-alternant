@@ -2,8 +2,12 @@
 
 namespace App\Controller\Recruiter;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\VisitCard;
+use App\Entity\IsRecruiter;
+use App\Entity\IsApprenticeship;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/recruteur", name="recruiter_")
@@ -13,8 +17,48 @@ class ProfileController extends AbstractController
     /**
      * @Route("/profil", name="profile")
      */
-    public function show()
+    public function show(EntityManagerInterface $em)
     {
+        // récupération user
+        $user = $this->getUser();
+        // récupération info recruteur complémentaire
+        $recruiterRepo = $em->getRepository(IsRecruiter::class);
+        $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+        // récupération des favoris du recruteur
+        $favorites = $recruiter->getIsCandidates();
+
+        $visitCardRepo = $em->getRepository(VisitCard::class);
+        
+        $favoritesData = array();
+
+        // pour chaque favoris (isCandidate)
+        foreach ($favorites as $favorite)
+        {
+            // je récupère la carte de visite du candidat
+            $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $favorite->getId()]);
+            // ses formations
+            $formations = $visitCard->getFormations();
+
+            // je parcours les formations à la recherche de l'alternance recherché
+            foreach($formations as $formation)
+            {
+                if($formation->getStatus() === 2)
+                {
+                    // que je récupère dans $apprenticeship
+                    $apprenticeship = $formation;
+                }
+            }
+        
+            $apprenticeRepo = $em->getRepository(IsApprenticeship::class);
+            
+            // je rassemble les information concernant le candidat et l'alternance qu'il recherche
+            $favoritesData[] = [
+                'candidate' => $favorite,
+                'visitCard' => $visitCard, 
+                'formationInfo' => $apprenticeship,
+                'apprenticeshipInfo' => $apprenticeRepo->findOneBy(['formation' => $apprenticeship->getId()]),
+            ];
+        }
         /** 
          * Page profil du recruteur, affichant : 
          * - Info perso : nom prénom mail (mdp)
@@ -25,7 +69,8 @@ class ProfileController extends AbstractController
          * - Liste des candidats favoris ( avec lien vers leur profil )
         */
         return $this->render('recruiter/profile/profile.html.twig', [
-            'controller_name' => 'ProfileController',
+            'recruiter' => $recruiter,
+            'favorites' => $favoritesData,
         ]);
     }
 
