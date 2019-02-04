@@ -6,8 +6,10 @@ use App\Form\UserEditType;
 use App\Entity\IsRecruiter;
 use App\Form\RecruiterInfoType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Controller\Manager\MobilityManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Controller\Manager\RecruiterMobilityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -97,8 +99,27 @@ class ProfileController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid())
         { 
-                    
-            // enregistrement en bdd
+            $mobility = $form->getData();
+            dump($mobility);
+
+            // je vérifie que la ville existe
+            $town = RecruiterMobilityManager::isRealTown($mobility);
+            //$townName=$town['nom'];
+            //sdump($townName);
+            dump($town);
+
+            // si la clef fail existe, l'api n'a renvoyé aucun résultat
+            // c'est donc un message d'erreur qui a été retourné
+            if(isset($town['fail']))
+            {
+                $this->addFlash('danger', $town['fail']);
+                return $this->redirectToRoute('recruiter_company_informations');
+            }
+            // sinon l'api a renvoyé un résultat
+            // $town['success'] contient le tableau de réponse renvoyé par l'api
+            //$mobility = RecruiterMobilityManager::recoverMobility($town, $em);
+            $recruiter->setCompanyLocation($town['nom']);
+            
             $em->flush();
             $this->addFlash(
                 'notice',

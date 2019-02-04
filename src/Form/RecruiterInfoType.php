@@ -5,7 +5,11 @@ namespace App\Form;
 use App\Entity\IsRecruiter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
 class RecruiterInfoType extends AbstractType
 {
@@ -32,11 +36,11 @@ class RecruiterInfoType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('emailCustom', TextType::class, [
-                'label' => 'Nom de la ville',
+            ->add('emailCustom', EmailType::class, [
+                'label' => 'email',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir une ville'
+                        'message' => 'Veuillez saisir une adresse email'
                     ]),
                 ],
             ])
