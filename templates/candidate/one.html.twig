@@ -32,20 +32,28 @@
             <div class="card">
                 <div class="card d-flex flex-row flex-wrap justify-content-around">
                     {# image profil & bouton modif #}
-                    <div class="d-flex flex-column">
+                    <div class="text-center">
                         <div class="p-2">
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
-                    </div>
+                        <div class="p-2">
+                            <p class ="text-center">
+                                <a href="{{path('favorite_add', {'id': candidateDatas.id })}}"><button type="button" class="btn btn-warning">Ce candidat m'intéresse <i class="far fa-heart"></i></button></a>
+                            </p>
+                            <p class ="text-center">
+                                <a href="{{path('email_edit')}}"><button type="button" class="btn btn-success">Contacter ce candidat <i class="far fa-envelope"></i></button></a>
+                            </p>
+                        </div>
 
-                    {# nom/prénom/mail/tel/ & bouton modif #}   
+
+
+
+                    </div>
+                    {# Identité, email, tel, site internet #}
                     <div class="d-flex flex-column ">
                         <div class="p-2 table-responsive">
                             <table class="table">
-                                
-
-                                {# Contenu colonne Infos persos #}
                                 <tbody>
                                     <tr>
                                         <th>
@@ -76,7 +84,7 @@
                             </table>                      
                         </div>
                     </div>
-                        
+                    {# En recherche ou pas, lieux de recherche #}
                     <div class="d-flex flex-column"> 
                         <div class="p-2 table-responsive">
                             <table class="table">
@@ -120,7 +128,7 @@
                 </div>
             </div>
 
-            {# A propos de moi #}
+            {# A propos #}
             <div class="card">
                 <div class="card-header">
                         <h2 class="h5 mb-0 text-center text-secondary">
