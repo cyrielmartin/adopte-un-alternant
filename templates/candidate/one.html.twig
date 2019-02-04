@@ -37,7 +37,7 @@
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
-                        {% if is_granted('ROLE_RECRUITER') %}
+                        {# {% if is_granted('ROLE_RECRUITER') %} #}
                         <div class="p-2">
                             <p class ="text-center">
                                 <a href="{{path('favorite_add', {'id': candidateDatas.id })}}"><button type="button" class="btn btn-warning">Ce candidat m'intéresse <i class="far fa-heart"></i></button></a>
@@ -46,7 +46,7 @@
                                 <a href="{{path('email_edit')}}"><button type="button" class="btn btn-success">Contacter ce candidat <i class="far fa-envelope"></i></button></a>
                             </p>
                         </div>
-                        {% endif %}
+                        {# {% endif %} #}
                     </div>
                     {# Identité, email, tel, site internet #}
                     <div class="d-flex flex-column ">
@@ -55,17 +55,18 @@
                                 <tbody>
                                     <tr>
                                         <th>
+                        
                                         {% if candidateInformation.visibilityChoice == 0 %}
-                                            {{ app.user.firstname }} {{ app.user.lastname }}
+                                            {{ candidateDatas.user.firstname }} {{ candidateDatas.user.lastname }}
                                         {% elseif candidateInformation.visibilityChoice == 2 %}
-                                            {{ app.user.firstname }}
+                                            {{ candidateDatas.user.firstname }}
                                         {% else %}
-                                            {{ app.user.lastname }}
+                                            {{ candidateDatas.user.lastname }}
                                         {% endif %} 
                                         </th>
                                     </tr>
                                     <tr>
-                                        <td>{{ app.user.email }}</td>
+                                        <td>{{ candidateDatas.user.email }}</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -185,7 +186,7 @@
                                             <a href= "{{ path("apprenticeship_edit", {"id": apprenticeshipsInfo.formation.id }) }}">
                                                 <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
-                                            <a href= "{{ path("apprenticeship_delete", {"id": apprenticeshipsInfo.formation.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                            <a href= "{{ path("apprenticeship_delete", {"id": apprenticeshipsInfo.formation.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                             </a>                      
                                         </th>                           
                                     </tr>

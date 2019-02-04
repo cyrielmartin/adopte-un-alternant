@@ -87,7 +87,7 @@ class CandidateController extends AbstractController
     /**
     * @Route("/{id}/profil", name="one")
     */
-    public function showOne(EntityManagerInterface $em)
+    public function showOne(EntityManagerInterface $em, $id)
     {
         $isCandidateRepo = $em->getRepository(IsCandidate::class);
         $isRecruiterRepo = $em->getRepository(IsRecruiter::class);
@@ -100,12 +100,10 @@ class CandidateController extends AbstractController
         $additionalRepo = $em->getRepository(Additional::class);
         $mobilityRepo = $em->getRepository(Mobility::class);
 
-        // Affiche le profil du user candidat à l'alternance
+        // Affiche le profil "public" (visible par les entreprises et les autres candidats)candidat à l'alternance
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
-        $user = $this->getUser();
-        $userId= $user->getId();
         
-        $candidateDatas= $isCandidateRepo->findOneByuser($userId);
+        $candidateDatas= $isCandidateRepo->find($id);
 
         //récupération de l'Id pour accéder aux visitCards
         $candidateId=$candidateDatas->getId();
@@ -113,7 +111,7 @@ class CandidateController extends AbstractController
         //création d'un requête join dans le fichier isRecruiterRepo pour récupérer les nombres de vue du candidat et les recruteurs ayant consulté le profil du candidat par Id candidat
         $viewsInfo = $isRecruiterRepo ->findViewProfil($candidateId);
 
-        $candidateInformation = $visitCardRepo->findOneByIsCandidate($candidateId);
+        $candidateInformation = $visitCardRepo->findOneBy(['isCandidate' => $candidateId]);
 
         //récupération de l'Id de la visitCard pour accéder aux metatables
         $visitCardId = $candidateInformation->getId();
