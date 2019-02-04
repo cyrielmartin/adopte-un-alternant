@@ -37,6 +37,7 @@
                             <img src="{{ asset('uploads/images/'~ (candidateDatas.picture ?:'default-candidate.png')) }}"
                                 style="width: 100px;height:100px;" class="mb-2 rounded-circle" />
                         </div>
+                        {% if is_granted('ROLE_RECRUITER') %}
                         <div class="p-2">
                             <p class ="text-center">
                                 <a href="{{path('favorite_add', {'id': candidateDatas.id })}}"><button type="button" class="btn btn-warning">Ce candidat m'intéresse <i class="far fa-heart"></i></button></a>
@@ -45,10 +46,7 @@
                                 <a href="{{path('email_edit')}}"><button type="button" class="btn btn-success">Contacter ce candidat <i class="far fa-envelope"></i></button></a>
                             </p>
                         </div>
-
-
-
-
+                        {% endif %}
                     </div>
                     {# Identité, email, tel, site internet #}
                     <div class="d-flex flex-column ">
