@@ -18,6 +18,7 @@ class VisitCardSkillType extends AbstractType
             ->add('skill', EntityType::class , [
                 'class' => Skill::class,
                 'label' => false,
+                'help' => 'Vous pouvez sélectionner jusqu\'à 5 compétences',
                 'expanded' => true,
                 'multiple' => true,
             ]);
