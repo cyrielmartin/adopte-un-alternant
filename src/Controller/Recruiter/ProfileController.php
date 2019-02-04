@@ -3,6 +3,9 @@
 namespace App\Controller\Recruiter;
 
 use App\Form\UserEditType;
+use App\Entity\IsRecruiter;
+use App\Form\RecruiterInfoType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,13 +78,39 @@ class ProfileController extends AbstractController
     /**
     * @Route("/information-entreprise", name="company_informations")
     */
-    public function recruiterInfoEdit()
+    public function recruiterInfoEdit(Request $request, EntityManagerInterface $em)
     {
         /** 
          * Page de modification des infos recruteur : nom entreprise , localité de l'entreprise, téléphone 
         */
+        $user = $this->getUser();
+        //dump($user);
+
+        // je récupère sa fiche isRecruiter
+        $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
+        $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+        //dump($recruiter);
+
+       
+        $form = $this->createForm(RecruiterInfoType::class, $recruiter);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid())
+        { 
+                    
+            // enregistrement en bdd
+            $em->flush();
+            $this->addFlash(
+                'notice',
+                'Votre fiche a bien été modifiée'
+            );
+            
+            return $this->redirectToRoute('recruiter_profile');
+        }
+
+
         return $this->render('recruiter/profile/recruiter_info.html.twig', [
-            'controller_name' => 'ProfileController',
+            'form'=>$form->createView(),
         ]);
     }
 }
