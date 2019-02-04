@@ -65,7 +65,7 @@
                                 {# Contenu colonne Infos persos #}
                                 <tbody>
                                     <tr>
-                                        <th>{{ app.user.lastname }} {{ app.user.firstname }}</th>
+                                        <th>{{ app.user.firstname }} {{ app.user.lastname }}</th>
                                     </tr>
                                     <tr>
                                         <td>{{ app.user.email }}</td>
@@ -93,7 +93,7 @@
                                         <td>
                                             <span class="font-weight-bold">Visible par les recruteurs :</span>
                                                 {% if candidateInformation.visibilityChoice == 0 %}
-                                                    nom et prénom
+                                                    prénom et nom
                                                 {% elseif candidateInformation.visibilityChoice == 2 %}
                                                     prénom uniquement
                                                 {% else %}
@@ -117,7 +117,9 @@
                         <div class="p-2 table-responsive">
                             <table class="table">
                                 <tbody>
+                        
                                     {% for webSite in webSites %}
+                                  
                                     <tr>
                                         <td>  <a href="{{webSite.link}}">{{webSite.name}}</a>
                                             <a href= "{{ path("website_edit", {"id": webSite.id }) }}">

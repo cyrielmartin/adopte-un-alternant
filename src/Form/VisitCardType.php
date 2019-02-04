@@ -20,8 +20,8 @@ class VisitCardType extends AbstractType
                 'label' => 'Sur votre profil public, que souhaitez-vous afficher ?',
                 'help' => 'Les entreprises identifiées ont accès à l\'ensemble de vos informations',
                 'choices' => [
-                    'Prénom et nom' => 1,
-                    'Nom uniquement' => 0,
+                    'Prénom et nom' => 0,
+                    'Nom uniquement' => 1,
                     'Prénom uniquement' => 2,
                 ],
                 'expanded' => true,

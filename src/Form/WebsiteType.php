@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class WebsiteType extends AbstractType
@@ -18,15 +19,15 @@ class WebsiteType extends AbstractType
                 'label' => 'Nom du site',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir ce champs'
+                        'message' => 'Veuillez saisir le nom du site'
                     ]),
                 ],
             ])
-            ->add('link',TextType::class, [
+            ->add('link',UrlType::class, [
                 'label' => 'URL',
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez saisir ce champs'
+                        'message' => 'Veuillez saisir l\'URL du site'
                     ]),
                 ],
             ])

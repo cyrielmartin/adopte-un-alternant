@@ -182,12 +182,7 @@
                                         <th scope="col" class="text-secondary d-flex col-4">
                                             Souhait d'alternance du candidat 
                                         </th>
-                                        <th scope="col" class="text-info d-flex col-7">
-                                            <a href= "{{ path("apprenticeship_edit", {"id": apprenticeshipsInfo.formation.id }) }}">
-                                                <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                            </a>
-                                            <a href= "{{ path("apprenticeship_delete", {"id": apprenticeshipsInfo.formation.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
-                                            </a>                      
+                                        <th scope="col" class="text-info d-flex col-7">  
                                         </th>                           
                                     </tr>
                                 </thead>
@@ -243,8 +238,11 @@
                                         <tr class ="d-flex justify-content-center">
                                             <th scope="col" class="text-secondary col-4">
                                             {{ formationInfo.awardName}}
-                                            </th>        
+                                            </th>
+                                            <th class="text-info col-7">
+                                            </th>          
                                         </tr>
+
                                     </thead>
                                     <tbody>
                                         <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
@@ -297,7 +295,9 @@
                                 <tr class ="d-flex justify-content-center">
                                     <th scope="col" class="col-4">
                                         <span class="badge badge-pill badge-info">{{ experienceInfo.companyName}}</span>
-                                    </th>          
+                                    </th>  
+                                    <th class="text-info col-7">
+                                    </th>           
                                 </tr>
                             </thead>
                             <tbody>

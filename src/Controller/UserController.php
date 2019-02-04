@@ -111,7 +111,7 @@ class UserController extends AbstractController
                 $em->flush($isCandidate);
                 $em->refresh($isCandidate);
                 
-                // je créer un objet carte de visite et l'affilie au candidat
+                // je crée un objet carte de visite et l'affilie au candidat
                 $visitCard = new VisitCard();
                 $visitCard
                     ->setIsCandidate($isCandidate)
