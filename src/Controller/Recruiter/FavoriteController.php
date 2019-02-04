@@ -27,11 +27,11 @@ class FavoriteController extends AbstractController
          * Penser à vérifier que l'id est bien l'id d'un candidat existant avant de faire toute action
          * si id non existant : return $this->redirectToRoute('candidates_list');
          * */ 
-        dump($id);
+        
 
         $user = $this->getUser();
         
-        dump($user);
+       
         // je récupère sa fiche recruteur
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
         $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
@@ -40,54 +40,79 @@ class FavoriteController extends AbstractController
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['id' => $id]);
         
-        dump($recruter);
-        //dd($candidate);
-
-        //$favoriteCandidate = new IsRecruiter();
-
-        //$form = $this->createForm(RecruiterFavoriteCandidateType::class, $recruteur);
-        //$form->handleRequest($request);
-
-        //if ($form->isSubmitted() && $form->isValid()) 
-        //{
-            //$favoriteCandidate = $form->getData();
-            //dd($favoriteCandidate);
-
-            // je vérifie que la ville existe
-            //$town = MobilityManager::isRealTown($mobility);
-            
-            // si la clef fail existe, l'api n'a renvoyé aucun résultat
-            // c'est donc un message d'erreur qui a été retourné
-            //if(isset($town['fail']))
-            //{
-            //    $this->addFlash('danger', $town['fail']);
-            //    return $this->redirectToRoute('mobility_add');
-            //}
-            //// sinon l'api a renvoyé un résultat
-            //// $town['success'] contient le tableau de réponse renvoyé par l'api
-            //$mobility = MobilityManager::recoverMobility($town, $em);
-            // je lie ma mobilité et ma carte de viste 
+        //si le candidate existe alors
+        if(!empty($candidate))
+        {
             $recruter->addIsCandidate($candidate);
             $em->persist($recruter);
             $em->flush();
-        //}
+
+            $this->addFlash(
+                'notice',
+                'Ce candidat a bien été ajouté à vos favoris'
+            );
+      
 
         return $this->redirectToRoute('candidates_one', ['id' => $id]);
+        }
+
+        // si le candidat n'existe pas alors
+        else
+        {
+            $this->addFlash(
+                'danger',
+                'Une erreur est survenue'
+            );
+            return $this->redirectToRoute('candidates_list');
+        }
+            
     }
 
     /**
      * @Route("/{id}/supprimer", name="delete")
      */
-    public function delete()
+    public function delete($id, Request $request, EntityManagerInterface $em)
     {
         /** 
          * Penser à vérifier que l'id est bien l'id d'un candidat existant avant de faire toute action
         */
-        return $this->redirectToRoute('recruiter_profile');
+        $user = $this->getUser();
+        
+       
+        // je récupère sa fiche recruteur
+        $recruiterRepo = $em->getRepository(IsRecruiter::class);
+        $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
+
+        // je récupère sa fiche candidat à ajouter aux favoris
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['id' => $id]);
+        
+        //si le candidate existe alors
+        if(!empty($candidate)){
+            $recruter->removeIsCandidate($candidate);
+            $em->persist($recruter);
+            $em->flush();
+
+            $this->addFlash(
+                'notice',
+                'Ce candidat a bien été supprimé de vos favoris'
+            );
+      
+
+            return $this->redirectToRoute('recruiter_profile');
+        }
+        // si le candidat n'existe pas alors
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue');
+            return $this->redirectToRoute('recruiter_profile');
+        }
+            
     }
 
+
     /** 
-    * Pas de méthode edit : le recruteur veux (add) ou ne veux pas (delete) un candidat,
+    * Pas de méthode edit : le recruteur veut (add) ou ne veut pas (delete) un candidat,
     * il n'y a rien à modifier à proprement parler.
     */
 }
