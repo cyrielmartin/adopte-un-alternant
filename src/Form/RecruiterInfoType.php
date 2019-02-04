@@ -12,10 +12,34 @@ class RecruiterInfoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('companyName')
-            ->add('phoneNumber')
-            ->add('companyLocation')
-            ->add('emailCustom')
+            ->add('companyName', TextType::class, [
+                'label' => 'Nom de l\'entreprise :',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir une entreprise'
+                    ])
+                ]
+            ])
+            ->add('phoneNumber', TelType::class, [
+                'label' => 'Numéro de téléphone',
+                'help' => 'Facultatif',
+            ])
+            ->add('companyLocation', TextType::class, [
+                'label' => 'Nom de la ville',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir une ville'
+                    ]),
+                ],
+            ])
+            ->add('emailCustom', TextType::class, [
+                'label' => 'Nom de la ville',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez saisir une ville'
+                    ]),
+                ],
+            ])
             //->add('user')
             //->add('isCandidates')
         ;

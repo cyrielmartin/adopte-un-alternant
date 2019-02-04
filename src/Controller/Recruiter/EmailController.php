@@ -5,6 +5,7 @@ namespace App\Controller\Recruiter;
 use App\Entity\IsCandidate;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -31,14 +32,20 @@ class EmailController extends AbstractController
         // je récupère la fiche  candidat du candidat que le recruteur cherche à contacter
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['id' => $id]);
-        dd($candidate);
+        //dd($candidate);
 
 
         $name =$email= $objet=NULL;
 
         $form =$this->createFormBuilder()
-            ->add('objet')
-            ->add('text')
+            ->add('objet', TextType::class, [
+                'placeholder' => 'Votre profil nous intéresse',
+                
+            ])
+            ->add('text', TextType::class, [
+                'placeholder' => 'Nous souhaierions entrer en contact avec vous pour éventuellement développer des projets avec vous',
+                
+            ])
             ->getForm();
         
         $form->handleRequest($request);
@@ -66,6 +73,7 @@ class EmailController extends AbstractController
             'name'=>$name,
             'email'=>$email,
             'objet'=>$objet,
+            'candidate'=>$candidate
 
             ]);
     }
