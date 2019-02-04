@@ -2,8 +2,11 @@
 
 namespace App\Controller\Recruiter;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\UserEditType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/recruteur", name="recruiter_")
@@ -32,13 +35,40 @@ class ProfileController extends AbstractController
     /**
      * @Route("/information-personnelle", name="informations")
      */
-    public function userInfoEdit()
+    public function userInfoEdit(Request $request, UserPasswordEncoderInterface $encoder)
     {
         /** 
          * Page de modification des infos personnelles : nom prénom mail (mdp)
         */
+
+        // je récupère mon user en session
+        $user = $this->getUser();
+        // ainsi que son ancien mot de passe
+        $oldPass = $user->getPassword();
+        $form = $this->createForm(UserEditType::class, $user);
+        
+        $form->handleRequest($request);
+     
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
+            // si le form contient un mdp vite, je garde l'ancien
+            if (empty($user->getPassword()) || is_null($user->getPassword()))
+            {
+                $encodedPass = $oldPass;
+            } 
+            // sinon je l'encode
+            else 
+            {
+                $encodedPass = $encoder->encodePassword($user, $user->getPassword());
+            }
+            $user->setPassword($encodedPass);
+            $user->setUpdatedAt(new \DateTime());
+            $this->getDoctrine()->getManager()->flush();
+            
+            return $this->redirectToRoute('recruiter_profile');
+        }
         return $this->render('recruiter/profile/user_info.html.twig', [
-            'controller_name' => 'ProfileController',
+            'form' => $form->createView(),
         ]);
     }
 
