@@ -21,8 +21,9 @@ class PresentationController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit(User $user, IsCandidate $isCandidate, VisitCard $visitCard, Request $request, EntityManagerInterface $em)
+    public function edit(IsCandidate $isCandidate, VisitCard $visitCard, Request $request, EntityManagerInterface $em)
     {
+        $user = $this->getUser();
         $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
         $isCandidateForm->handleRequest($request);
         if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
