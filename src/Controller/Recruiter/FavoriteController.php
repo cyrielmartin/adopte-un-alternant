@@ -36,9 +36,9 @@ class FavoriteController extends AbstractController
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
         $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
 
-        // je récupère sa fiche candidat à ajouter aux favoris
+        // je récupère la fiche candidat à ajouter aux favoris
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
-        $candidate = $candidateRepo->findOneBy(['id' => $id]);
+        $candidate = $candidateRepo->findOneBy(['user' => $id]);
         
         //si le candidate existe alors
         if(!empty($candidate))
@@ -83,9 +83,9 @@ class FavoriteController extends AbstractController
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
         $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
 
-        // je récupère sa fiche candidat à ajouter aux favoris
+        // je récupère la fiche candidat à ajouter aux favoris
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
-        $candidate = $candidateRepo->findOneBy(['id' => $id]);
+        $candidate = $candidateRepo->findOneBy(['user' => $id]);
         
         //si le candidate existe alors
         if(!empty($candidate)){

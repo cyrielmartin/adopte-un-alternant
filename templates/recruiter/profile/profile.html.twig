@@ -138,7 +138,7 @@
                                                 <th scope="col" class="text-info d-flex col-7 align-items-center">
                                                     <a href= "{{ path("candidates_one", {"id": favorite.candidate.id }) }}"><button class="btn  btn-outline-primary btn-sm mr-2" id="" type="button">Voir son profil complet <i class="fas fa-external-link-alt"></i></button>
                                                     </a>
-                                                    <a href= "{{ path("favorite_delete", {"id": favorite.candidate.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
+                                                    <a href= "{{ path("favorite_delete", {"id": favorite.candidate.user.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                                     </a>                       
                                                 </th>                           
                                             </tr>
