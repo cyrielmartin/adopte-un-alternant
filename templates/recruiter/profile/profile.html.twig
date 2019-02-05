@@ -63,7 +63,7 @@
                                 <thead>
                                     <tr>          
                                         <th scope="col" class="font-weight-bold h5">
-                                        Vous et votre entreprise
+                                        Votre entreprise et vous
                                             <a href= "{{ path("recruiter_company_informations", {"id": recruiter.id }) }}">
                                                 <button class="btn btn-light btn-sm" id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
@@ -121,7 +121,7 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                            <tr class ="d-flex justify-content-center">
+                                            <tr class ="d-flex justify-content-center border-top">
                                                 <th scope="col" class="text-secondary d-flex col-4">
                                                     <div class="d-flex flex-column text-center">
                                                         <img src="{{ asset('uploads/images/'~ (favorite.candidate.picture ?:'default-candidate.png')) }}"
@@ -136,7 +136,7 @@
                                                     </div>
                                                 </th>
                                                 <th scope="col" class="text-info d-flex col-7 align-items-center">
-                                                    <a href= "{{ path("candidates_one", {"id": favorite.candidate.id }) }}"><button class="btn  btn-outline-primary btn-sm mr-2" id="" type="button">Voir le profil complet <i class="fas fa-external-link-alt"></i></button>
+                                                    <a href= "{{ path("candidates_one", {"id": favorite.candidate.id }) }}"><button class="btn  btn-outline-primary btn-sm mr-2" id="" type="button">Voir son profil complet <i class="fas fa-external-link-alt"></i></button>
                                                     </a>
                                                     <a href= "{{ path("favorite_delete", {"id": favorite.candidate.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                                     </a>                       
