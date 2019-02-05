@@ -116,8 +116,7 @@ class UserController extends AbstractController
                 $visitCard
                     ->setIsCandidate($isCandidate)
                     ->setAdopted(0)
-                    ->setVisibilityChoice(0)
-                    ->setAbout('Cette section n\'a pas encore été renseignée.');
+                    ->setVisibilityChoice(0);
                 
                 $em->persist($visitCard);
             }

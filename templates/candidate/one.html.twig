@@ -136,7 +136,11 @@
                 </div>
                 <div class="card-body">
                     <p class="text-justify">
-                        {{ candidateInformation.about}}
+                        {% if candidateInformation.about is empty %}
+                            <div class="small text-muted">{{ "Le candidat n'a ajouté aucune présentation." }}</div>
+                        {% else %}
+                            {{ candidateInformation.about}}
+                        {% endif %}
                     </p>
                 </div>
             </div>
