@@ -26,10 +26,13 @@ class ExperienceController extends AbstractController
     public function add(Request $request)
     {
         $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
 
-         // récupération de la carte de visite du candidat connecté
-         $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
-         $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
+        // récupération de la carte de visite du candidat connecté
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
 
         $experience = new Experience();
         
