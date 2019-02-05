@@ -38,7 +38,7 @@
                     {% for visitCard in visitCards %}
                         <div class="border-bottom border-secondaryt mb-4">
                             <div class="text-center">
-                                <p> <span class="badge badge-dark p-2">
+                                <p> <h5><span class="badge badge-dark p-2">
                                     {% if visitCard.visibilityChoice == 0 %}
                                         {{ visitCard.isCandidate.user.firstname }} {{ visitCard.isCandidate.user.lastname }}
                                     {% elseif visitCard.visibilityChoice == 2 %}
@@ -46,20 +46,20 @@
                                     {% else %}
                                         {{ visitCard.isCandidate.user.lastname }}
                                     {% endif %}
-                                    </span>
+                                    </span></h5>
                                 </p>
                                 <img 
                                     src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" 
                                     style="width: 80px;height:80px;"
                                     class="mb-2"
                                 />
-                                <p>
+                                <p><h5>
                                 {% if visitCard.adopted == 1 %}
                                     <span class="badge badge-pill badge-success"> Adopté </span>
                                 {% else %}
                                     <div class="badge badge-pill badge-warning"> En recherche </div>
                                 {% endif %}
-                                </p>
+                                </p></h5>
                             </div>
                             <p>
                                 {{ visitCard.about }}
