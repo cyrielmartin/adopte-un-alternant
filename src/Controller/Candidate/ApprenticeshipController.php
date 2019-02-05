@@ -25,10 +25,13 @@ class ApprenticeshipController extends AbstractController
     public function add(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
 
         // récupération de la carte de visite du candidat connecté
         $visitCardRepo = $em->getRepository(VisitCard::class);
-        $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
 
         // je vérifie si le candidat à déjà enregistré une recherche d'alternance
         $formationRepo = $em->getRepository(Formation::class);
