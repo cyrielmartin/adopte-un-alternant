@@ -155,7 +155,7 @@
                     <div class="small text-muted">{{ "Le candidat n'a ajouté aucune compétence." }}</div>
                     {% else %}
                         {% for skill in candidateInformation.skills %}
-                        <button type="button" class="btn btn-warning">{{ skill.name }}</button>
+                        <div class="badge badge-warning p-2">{{ skill.name }}</div>
                         {% endfor %}
                     {% endif %}
                     </div>
@@ -338,7 +338,7 @@
                     {% else %}
                         {% for additionalInfo in additionalsInfo %}
                             {% if additionalInfo.typeInfo == 'assert' %}
-                            <button type="button" class="btn btn-info"> {{additionalInfo.content}}</button>
+                            <div class="badge badge-info p-2"> {{additionalInfo.content}}</div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
@@ -361,7 +361,7 @@
                     {% else %}
                         {% for additionalInfo in additionalsInfo %}
                             {% if additionalInfo.typeInfo == 'interest' %}
-                            <button type="button" class="btn btn-info">{{additionalInfo.content}}</button>
+                            <div class="badge badge-info p-2">{{additionalInfo.content}}</div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}
