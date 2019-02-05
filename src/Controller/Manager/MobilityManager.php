@@ -105,7 +105,7 @@ class MobilityManager
             $mobility = new Mobility();
             $mobility->setTownName($townName);
             
-            // je récupère sont code de département
+            // je récupère son code de département
             $dptCode = $town['departement']['code'];
             // je récupère l'objet département associé à ce code en base
             $dptRepo = $em->getRepository(Department::class);

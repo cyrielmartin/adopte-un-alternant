@@ -36,14 +36,6 @@ class RecruiterInfoType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('emailCustom', EmailType::class, [
-                'label' => 'email',
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez saisir une adresse email'
-                    ]),
-                ],
-            ])
             //->add('user')
             //->add('isCandidates')
         ;
