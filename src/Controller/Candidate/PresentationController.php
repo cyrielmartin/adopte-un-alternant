@@ -21,11 +21,19 @@ class PresentationController extends AbstractController
     /**
      * @Route("/{id}/modifier", name="edit")
      */
-    public function edit(IsCandidate $isCandidate, VisitCard $visitCard, Request $request, EntityManagerInterface $em)
+    public function edit(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
+        // je récupère sa fiche candidat
+        $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+        $isCandidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+        // je récupère sa carte de visite 
+        $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
+        $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $isCandidate->getId()]);
+        
         $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
         $isCandidateForm->handleRequest($request);
+        
         if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
             $em->persist($isCandidate);
             $em->flush();
