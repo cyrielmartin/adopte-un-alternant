@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Email;
 use App\Form\EmailType;
 use App\Entity\IsCandidate;
+use App\Entity\IsRecruiter;
 use App\Repository\UserRepository;
 use App\Notification\ContactNotification;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,84 +37,80 @@ class EmailController extends AbstractController
         $user = $this->getUser();
         $userName=$user->getLastName();
         $userEmail=$user->getEmail();
+       // dump($user);
         //dd($userName);
         //dd($userEmail);
+        // je récupere la fiche recruteur afin d'accéder aux informations de l'entreprise
+        $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
+        $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+        $recruiterFirm=$recruiter->getCompanyName();
+        //dd($recruiter);
 
         // je récupère la fiche  candidat du candidat que le recruteur cherche à contacter
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['user' => $id]);
-        $candidateUserId=$candidate->getUser('id');
-        $userRepo= $this->getDoctrine()->getRepository(User::class);
-        $candidateUserInfo=$userRepo->findOneBy(['id'=>$id]);
+        //dd($candidate);
         
-        $candidateEmail=$candidateUserInfo->getEmail();
-        dump($candidateEmail);
-        dump($candidateUserInfo);
-        //dd($candidateUserId);
         
-
+        if(!empty ($candidate))
+        {
+            $userRepo= $this->getDoctrine()->getRepository(User::class);
+            $candidateUserInfo=$userRepo->findOneBy(['id'=>$id]);
+            
+            $candidateEmail=$candidateUserInfo->getEmail();
+            //dump($candidateEmail);
         /** 
          * Création d'un formulaire de contact pour envoyer un mail au candidat sélectionné
          * Création d'un nouvel objet Email.php
          * (entité custom créée stocker les mails mais qui n'existe pas en BDD donc je n'ai pas fais php bin/console make:entity)
         */
-        $email = New Email();
-        
+            $email = New Email();
+            
 
-        $form = $this->createForm(EmailType::class, $email);
-        $email->setRecruiter($userName);
-        $email->setRecruiterEmail($userEmail);
-        $email->setCandidateEmail($candidateEmail);
-        //dd($email);
-        $form->handleRequest($request);
-        //$message=[];
-        if ($form->isSubmitted() && $form->isValid()) 
+            $form = $this->createForm(EmailType::class, $email);
+            $email->setRecruiter($userName);
+            $email->setRecruiterEmail($userEmail);
+            $email->setCandidateEmail($candidateEmail);
+            $email->setCompanyName($recruiterFirm);
+            //dd($email);
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) 
+            {
+                $email=$form->getData();
+                //dd($email);
+                
+                
+                $message = (new \Swift_Message($email->getRecruiter().' veut entrer en contact avec vous'))
+                //
+                        ->setFrom('adoptealternant@gmail.com')
+                        ->setTo($email->getCandidateEmail())
+                        ->setReplyTo($email->getRecruiterEmail())
+                        ->setBody($this->renderView('recruiter/profile/email_send.html.twig',[
+                            'email'=>$email,
+                        ]), 'text/html');
+                        
+                $mailer->send($message);
+                        
+
+                $this->addFlash('notice', 'Votre email a bien été envoyé');
+                        
+
+                return $this->redirectToRoute('candidates_one', ['id' => $id]);
+                        
+                //dd($email);                  
+                        
+            } 
+        } 
+        else
         {
-            $email=$form->getData();
-            //dd($email);
-            // création d'une classe pour grer l'envoie de mail (dans App\notification)
-            $this->addFlash('success', 'Votre email a bien été envoyé');
-            //$notification->notify($email);
-            $message = (new \Swift_Message($email->getRecruiter().' veut entrer en contact avec vous'))
-            //
-                    ->setFrom('adoptealternant@gmail.com')
-                    ->setTo($email->getCandidateEmail())
-                    ->setReplyTo($email->getRecruiterEmail())
-                    ->setBody($this->renderView('recruiter/profile/email_send.html.twig',[
-                        'email'=>$email,
-                    ]), 'text/html');
-            
-            $mailer->send($message);
-            
-            
-
-            return $this->redirectToRoute('candidates_one', ['id' => $id]);
-            
-            //dd($email);
-
-            
-            
-       
-        //$message = (new \Swift_Message($user->getLastName().' veut entrer en contact avec vous'))
-        //->setFrom($user->getemail())
-        //->setTo('aude.millequant@wanadoo.fr')
-        //->setReplyTo($user->getemail())
-        //->setBody(
-        //    $this->renderView(
-        //         
-        //     'recruiter/profile/email.html.twig',
-        //       ['email' => $email,
-        //       ]
-        //    ),
-        //    'text/html'
-        //);
-        //$mailer->send($message);
-//
-        
-//
+            $this->addFlash('danger', 'Une erreur est survenue.');
             return $this->redirectToRoute('candidates_list');
+
         }
 
+       
+        
         
         //return $this->redirectToRoute('candidates_one', ['id' => $id]);
 

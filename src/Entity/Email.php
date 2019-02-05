@@ -36,6 +36,12 @@ class Email{
      */ 
     
     private $candidateEmail;
+
+    /**
+     * @var User
+     */ 
+    
+    private $companyName;
    
 
 
@@ -135,6 +141,26 @@ class Email{
     public function setCandidateEmail(?string $candidateEmail): Email
     {
         $this->candidateEmail = $candidateEmail;
+
+        return $this;
+    }
+
+     /**
+     * Get the value of subject
+     */ 
+    public function getCompanyName(): ?string
+    {
+        return $this->companyName;
+    }
+
+    /**
+     * Set the value of subject
+     *
+     * @return  Email
+     */ 
+    public function setCompanyName(?string $companyName): Email
+    {
+        $this->companyName = $companyName;
 
         return $this;
     }

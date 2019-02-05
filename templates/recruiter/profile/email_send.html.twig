@@ -1,41 +1,20 @@
+<h3>
+    Prise de contact par {{email.recruiter}} recruteur au sein de l'entreprise {{email.companyName}}
+</h3>
+
+<p>{{email.subject|nl2br}}</p>
 
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
-{% endblock %}
-
-{% block body %}
+<p>{{email.text|nl2br}}</p>
 
 
-    <div class="table-responsive">
-        <table class="table">
-            
-            <thead>
-                <th scope="col" class="font-weight-bold h5">
-                    Prise de contact par {{email.recruiter}} 
-                </th>
-                
-            </thead>
+<p>
+    Vous pouvez contacter ce recruteur sur l'adresse suivante
+    <a href="{{email.recruiterEmail}}">{{email.recruiterEmail}}
+    </a>
+</p>
+<p>Ou en répondant directement à ce mail</p>
 
-            {# Contenu colonne Infos persos #}
-            <tbody>
-                <tr>
-                    <th>{{email.subject|nl2br}}</th>
-                </tr>
-                <tr>
-                
-                    <td>{{email.text|nl2br}}</td>
-                </tr>
-                <tr>
+<p>Cordialement</p>
 
-                    <td>Vous pouvez contacter ce recruteur par mail à l'adresse suivante <a href="{{email.recruiterEmail}}">{{email.recruiterEmail}} </a></td>
-                    <td>Ou par retour de mail</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-
-
-{% endblock %}
+<p>L'équipe AdopteUnAlternant</p>
