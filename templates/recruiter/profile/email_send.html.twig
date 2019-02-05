@@ -1,0 +1,41 @@
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="table-responsive">
+        <table class="table">
+            
+            <thead>
+                <th scope="col" class="font-weight-bold h5">
+                    Prise de contact par {{email.recruiter}} 
+                </th>
+                
+            </thead>
+
+            {# Contenu colonne Infos persos #}
+            <tbody>
+                <tr>
+                    <th>{{email.subject|nl2br}}</th>
+                </tr>
+                <tr>
+                
+                    <td>{{email.text|nl2br}}</td>
+                </tr>
+                <tr>
+
+                    <td>Vous pouvez contacter ce recruteur par mail à l'adresse suivante <a href="{{email.recruiterEmail}}">{{email.recruiterEmail}} </a></td>
+                    <td>Ou par retour de mail</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+{% endblock %}
