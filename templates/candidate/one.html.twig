@@ -135,9 +135,9 @@
                         </h2>
                 </div>
                 <div class="card-body">
-                    <p class="text-center">
+                    <p class="text-justify">
                         {% if candidateInformation.about is empty %}
-                            <div class="small text-muted">{{ "Le candidat n'a ajouté aucune présentation." }}</div>
+                            <div class="small text-muted text-center">{{ "Le candidat n'a ajouté aucune présentation." }}</div>
                         {% else %}
                             {{ candidateInformation.about}}
                         {% endif %}
