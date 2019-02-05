@@ -61,8 +61,9 @@
                                 {% endif %}
                                 </p></h5>
                             </div>
-                            <p>
+                            <p> <div class="text-profile">
                                 {{ visitCard.about }}
+                                </div>
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                     <a class="btn btn-outline-primary btn-sm" href="{{path('candidates_one', {'id': visitCard.isCandidate.user.id })}}" role="button">Voir son profil complet <i class="fas fa-external-link-alt"></i></a>
                                 {% else %}

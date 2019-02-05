@@ -96,3 +96,8 @@ footer {
     margin-left: 0.4rem;
     margin-right : -0.5rem;
 }
+
+.text-profile {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+}
