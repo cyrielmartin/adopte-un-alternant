@@ -27,6 +27,8 @@ var search = {
             source: '/autocomplete/search/town',
             minLength : 3
         });
+
+        
     }
 };
 $(search.init)

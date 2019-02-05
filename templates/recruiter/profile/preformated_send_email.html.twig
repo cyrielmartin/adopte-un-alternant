@@ -1,17 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier mes informations{% endblock %}
+{% block title %}  envoyer un message {% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
+{% endblock %}
 
 {% block body %}
 <div class="col-10 col-md-7 mx-auto my-4">
    <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-<h1>Modifier mes informations personnelles</h1>
+<h1> envoyer un message à {{candidate.user.firstname}} {{candidate.user.lastname}} </h1>
 
-{# Formulaire #}
+<h1> de la part de {{app.user.firstname}} {{app.user.Lastname}} </h1>
+
+
+
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form) }}
         <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+    </button>
 {{ form_end(form) }}
-    </div>
+</div>
 {% endblock %}
