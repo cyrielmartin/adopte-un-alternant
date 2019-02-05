@@ -189,20 +189,22 @@
                 </div> {# Fin carte visite #}
             </div>
             {# Accordéon Ils ont vu votre profil #}
-            <div class="card accordion col-12 col-lg-12 p-0" id="accordionExample">
-                <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Ils ont vu votre profil !
-                </div>
+            {% if viewsInfo is not empty %}
+                <div class="card accordion col-12 col-lg-12 p-0" id="accordionExample">
+                    <div class="card-header col-12 h5 mb-0 text-white text-center profil" id="headingOne" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Ces entreprises vous ont repérés !
+                    </div>
 
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
-                        {% for viewInfo in viewsInfo %}
-                            <h3><span class="badge badge-pill badge-info">{{ viewInfo.companyName}}</span></h3>     
-                        {% endfor %}
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body d-md-flex flex-row flex-wrap justify-content-around">
+                            {% for viewInfo in viewsInfo %}
+                                <h3><span class="badge badge-pill badge-info">{{ viewInfo.companyName}}</span></h3>     
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            {% endif %}
+            
             {# A propos de moi #}
             <div class="card">
                 <div class="card-header">
