@@ -23,9 +23,9 @@ class AboutType extends AbstractType
                 ]),
                 new Length([
                     'min' => 10,
-                    'minMessage' => 'Votre texte doit comporter au moins {{ limit }} mots',
+                    'minMessage' => 'Votre texte doit comporter au moins {{ limit }} charactères',
                     'max' => 1000,
-                    'maxMessage' => 'Votre texte ne peut pas excéder {{ limit }} mots',
+                    'maxMessage' => 'Votre texte ne peut pas excéder {{ limit }} charactères',
                 ]),
                 ],
             'help' => 'Ce que vous écrivez ici est visible depuis votre profil public',

@@ -65,7 +65,7 @@
                                 {# Contenu colonne Infos persos #}
                                 <tbody>
                                     <tr>
-                                        <th>{{ app.user.lastname }} {{ app.user.firstname }}</th>
+                                        <th>{{ app.user.firstname }} {{ app.user.lastname }}</th>
                                     </tr>
                                     <tr>
                                         <td>{{ app.user.email }}</td>
@@ -93,7 +93,7 @@
                                         <td>
                                             <span class="font-weight-bold">Visible par les recruteurs :</span>
                                                 {% if candidateInformation.visibilityChoice == 0 %}
-                                                    nom et prénom
+                                                    prénom et nom
                                                 {% elseif candidateInformation.visibilityChoice == 2 %}
                                                     prénom uniquement
                                                 {% else %}
@@ -117,14 +117,16 @@
                         <div class="p-2 table-responsive">
                             <table class="table">
                                 <tbody>
+                        
                                     {% for webSite in webSites %}
+                                  
                                     <tr>
                                         <td>  <a href="{{webSite.link}}">{{webSite.name}}</a>
                                             <a href= "{{ path("website_edit", {"id": webSite.id }) }}">
                                                 <button class="btn btn-light btn-sm" id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
                                             <a href= "{{ path("website_delete", {"id": webSite.id }) }}">
-                                                <button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                                <button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                             </a>
                                         </td>
                                     </tr>
@@ -168,7 +170,7 @@
                                         <td >
                                             {% for mobilityInfo in mobilitiesInfo %}
                                                 <p class ="mb-1">
-                                                    <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                                    <a href= "{{ path("mobility_delete", {"id": mobilityInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                                     </a>
                                                 </p>
                                             {% endfor %}
@@ -271,7 +273,7 @@
                                             <a href= "{{ path("apprenticeship_edit", {"id": apprenticeshipsInfo.formation.id }) }}">
                                                 <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
                                             </a>
-                                            <a href= "{{ path("apprenticeship_delete", {"id": apprenticeshipsInfo.formation.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                            <a href= "{{ path("apprenticeship_delete", {"id": apprenticeshipsInfo.formation.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                             </a>                      
                                         </th>                           
                                     </tr>
@@ -314,7 +316,7 @@
                     <h2 class="h5 mb-0 text-center text-secondary">
                         Formations
                         <a href= "{{ path("formation_add") }}">
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></i></button>
+                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
                         </a>
                     </h2>
                 </div>
@@ -336,7 +338,7 @@
                                                 <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
                                                     <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
                                                 </a>
-                                                <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                                <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                                 </a>
                                             </th>          
                                         </tr>
@@ -400,7 +402,7 @@
                                         <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
                                             <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
                                         </a>
-                                        <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></i></button>
+                                        <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
                                         </a>
                                     </th>          
                                 </tr>

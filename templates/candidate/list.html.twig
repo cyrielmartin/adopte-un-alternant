@@ -36,9 +36,9 @@
                     {% endif %}
 
                     {% for visitCard in visitCards %}
-                        <div>
-                            <div class=" text-center">
-                                <p> 
+                        <div class="border-bottom border-secondaryt mb-4">
+                            <div class="text-center">
+                                <p> <span class="badge badge-dark p-2">
                                     {% if visitCard.visibilityChoice == 0 %}
                                         {{ visitCard.isCandidate.user.firstname }} {{ visitCard.isCandidate.user.lastname }}
                                     {% elseif visitCard.visibilityChoice == 2 %}
@@ -46,23 +46,29 @@
                                     {% else %}
                                         {{ visitCard.isCandidate.user.lastname }}
                                     {% endif %}
+                                    </span>
                                 </p>
                                 <img 
                                     src="{{ asset('uploads/images/'~ (visitCard.isCandidate.picture ?: 'default-candidate.png')) }}" 
                                     style="width: 80px;height:80px;"
                                     class="mb-2"
                                 />
-                                
+                                <p>
                                 {% if visitCard.adopted == 1 %}
-                                    <div class="text-success"> Adopté </div>
+                                    <span class="badge badge-pill badge-success"> Adopté </span>
                                 {% else %}
-                                    <div class="text-danger"> En recherche </div>
+                                    <div class="badge badge-pill badge-warning"> En recherche </div>
                                 {% endif %}
+                                </p>
                             </div>
                             <p>
                                 {{ visitCard.about }}
-                            </p>
-                            
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <a class="btn btn-outline-primary btn-sm" href="{{path('candidates_one', {'id': visitCard.isCandidate.user.id })}}" role="button">Voir son profil complet <i class="fas fa-external-link-alt"></i></a>
+                                {% else %}
+                                    <a class="btn btn-outline-primary btn-sm" href="{{path('login')}}" role="button">Connectez-vous pour voir son profil complet <i class="fas fa-external-link-alt"></i></a>
+                                {% endif %}
+                           </p>
                         </div>
                     {% endfor %}
                     </div>
