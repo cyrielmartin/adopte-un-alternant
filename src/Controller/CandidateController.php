@@ -103,7 +103,7 @@ class CandidateController extends AbstractController
         // Affiche le profil "public" (visible par les entreprises et les autres candidats)candidat à l'alternance
         // Pas de form ici ( seulement de la récupèration d'info pour affichage )
         
-        $candidateDatas= $isCandidateRepo->find($id);
+        $candidateDatas= $isCandidateRepo->findOneBy(['user' => $id]);
 
         //récupération de l'Id pour accéder aux visitCards
         $candidateId=$candidateDatas->getId();
