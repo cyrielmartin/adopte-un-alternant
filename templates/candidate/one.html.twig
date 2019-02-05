@@ -155,7 +155,7 @@
                     <div class="small text-muted">{{ "Le candidat n'a ajouté aucune compétence." }}</div>
                     {% else %}
                         {% for skill in candidateInformation.skills %}
-                        <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
+                        <button type="button" class="btn btn-warning">{{ skill.name }}</button>
                         {% endfor %}
                     {% endif %}
                     </div>
