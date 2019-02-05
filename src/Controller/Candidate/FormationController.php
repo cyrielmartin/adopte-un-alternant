@@ -61,10 +61,14 @@ class FormationController extends AbstractController
                 // status -> formation toujours en cours
                 $formation->setStatus(1);
             }
+
+            // je récupère sa fiche candidat
+            $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+            $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
             
             // récupération de la carte de visite du candidat connecté
             $visitCardRepo = $em->getRepository(VisitCard::class);
-            $visitCard = $visitCardRepo->findOneBy(['id' => $user->getId()]);
+            $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $candidate->getId()]);
 
             // enregistrement en bdd
             $formation->setVisitCard($visitCard);
