@@ -14,9 +14,14 @@ class AboutType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
         $builder
         ->add('about', TextareaType::class, [
             'label' => 'À propos de vous',
+            'attr' => [
+                'cols' => '5',
+                'rows' => '5',
+            ],
             'constraints' => [
                 new NotBlank([
                     'message' => 'Ce champs ne peut pas être vide'
