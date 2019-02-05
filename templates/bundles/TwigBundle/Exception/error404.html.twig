@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>404</h1>
+<div class="col-12 col-md-5 mx-auto my-4 home-choice">
+    <h1>Oups...</h1>
 
     <p>
-        The requested page couldn't be located. Checkout for any URL
-        misspelling or <a href="{{ path('home') }}">return to the homepage</a>.
+    Désolé ! La page demandée n'existe pas ou a été déplacée. <a href="{{ path('home') }}">Cliquez ici</a> pour retourner à la page d'accueil du site.
     </p>
+</div>
 {% endblock %}
