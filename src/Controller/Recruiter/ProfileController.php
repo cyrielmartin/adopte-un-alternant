@@ -2,17 +2,18 @@
 
 namespace App\Controller\Recruiter;
 
+use App\Entity\Mobility;
 use App\Entity\VisitCard;
+use App\Form\UserEditType;
 use App\Entity\IsRecruiter;
+use App\Form\RecruiterInfoType;
 use App\Entity\IsApprenticeship;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\UserEditType;
-use App\Form\RecruiterInfoType;
 use App\Controller\Manager\MobilityManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Controller\Manager\RecruiterMobilityManager;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -134,14 +135,19 @@ class ProfileController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid())
         { 
-            $mobility = $form->getData();
-            dump($mobility);
+            // je récupère les infos du recruteur
+            $recruiter = $form->getData();
+            // le nom de la ville de l'entreprise
+            $townName = $recruiter->getCompanyLocation();
+            // je formate le nom de la ville
+            $townName = MobilityManager::replaceAccent($townName);
+            // je créer un objet mobility et lui donne le nom de la ville
+            $mobility = new Mobility();
+            $mobility->setTownName($townName);
 
-            // je vérifie que la ville existe
-            $town = RecruiterMobilityManager::isRealTown($mobility);
-            //$townName=$town['nom'];
-            //sdump($townName);
-            dump($town);
+            // je vérifie que la ville existe 
+            // (la méthode isRealTown attend un objet mobility en paramètre)
+            $town = MobilityManager::isRealTown($mobility);
 
             // si la clef fail existe, l'api n'a renvoyé aucun résultat
             // c'est donc un message d'erreur qui a été retourné
@@ -152,7 +158,9 @@ class ProfileController extends AbstractController
             }
             // sinon l'api a renvoyé un résultat
             // $town['success'] contient le tableau de réponse renvoyé par l'api
-            //$mobility = RecruiterMobilityManager::recoverMobility($town, $em);
+            // j'envoi le tableau réponse à recoverMobility() pour l'enregistrer en base au cas ou elle n'existerais pas
+            MobilityManager::recoverMobility($town, $em);
+            // j'ajoute la ville dans mon objet recruiter
             $recruiter->setCompanyLocation($town['nom']);
             
             $em->flush();

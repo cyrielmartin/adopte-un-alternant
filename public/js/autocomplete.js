@@ -27,7 +27,11 @@ var search = {
             source: '/autocomplete/search/town',
             minLength : 3
         });
-
+        
+        $('#recruiter_info_companyLocation').autocomplete({
+            source: '/autocomplete/search/town',
+            minLength : 3
+        });
         
     }
 };
