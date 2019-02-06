@@ -9,6 +9,23 @@
 {% block body %}
 
 <div class="col-12 p-0 my-3">
+
+    {# Messages flash #}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}   
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-danger flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}   
     
     <p class="ml-3 ml-md-5">
         <a href="{{path('home')}}" class="btn btn-dark ml-lg-4">
