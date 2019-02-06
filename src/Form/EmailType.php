@@ -16,15 +16,15 @@ class EmailType extends AbstractType
         $builder
         ->add('subject', TextType::class, [
             'data' => 'Votre profil nous intéresse',
-            'label'=>'objet',
-            'help'=> 'vous pouvez modifier l\'objet du mail ou l\'envoyer ainsi'
+            'label'=>'Objet',
+            'help'=> 'Vous pouvez modifier l\'objet du mail ou l\'envoyer ainsi.'
             
         ])
         ->add('text', TextareaType::class, [
-            'data' => 'Nous souhaiterions entrer en contact avec vous pour échanger en vue d\'une éventuelle collaboration',
+            'data' => 'Bonjour, nous souhaiterions entrer en contact avec vous pour échanger en vue d\'une éventuelle alternance dans notre structure.',
             'attr' => ['cols' => '5', 'rows' => '5'],
-            'label'=>'message',
-            'help'=> 'vous pouvez modifier le contenu de ce message ou l\'envoyer ainsi'
+            'label'=>'Message',
+            'help'=> 'Vous pouvez modifier le contenu de ce message ou l\'envoyer ainsi.'
             
         ]);
         
