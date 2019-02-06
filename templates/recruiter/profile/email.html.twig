@@ -1,9 +1,24 @@
-<h3>Validez votre inscription</h3>
+{% extends 'base.html.twig' %}
 
-<p>Bienvenue sur AdopteUnAlternant.com {{ app.user.firstname}} !</p>
+{% block title %}  envoyer un message {% endblock %}
 
-<p>Pour valider votre inscription, veuillez cliquer .</p>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/autocomplete.css') }}">
+{% endblock %}
 
-<p>Merci !</p>
+{% block body %}
+<div class="col-10 col-md-7 mx-auto my-4">
+   <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
-<p>L'équipe d'AdopteUnAlternant.com</p>
+
+
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_row(form.subject) }}
+
+    {{ form_row(form.text) }}
+    {{ form_rest(form) }}
+        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
+    </button>
+{{ form_end(form) }}
+</div>
+{% endblock %}

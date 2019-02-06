@@ -2,10 +2,17 @@
 
 namespace App\Controller\Recruiter;
 
+use App\Entity\User;
+use App\Entity\Email;
+use App\Form\EmailType;
 use App\Entity\IsCandidate;
+use App\Entity\IsRecruiter;
+use App\Repository\UserRepository;
+use App\Notification\ContactNotification;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -28,76 +35,85 @@ class EmailController extends AbstractController
          * */ 
 
         $user = $this->getUser();
+        $userName=$user->getLastName();
+        $userEmail=$user->getEmail();
+      
+        // je récupere la fiche recruteur afin d'accéder aux informations de l'entreprise
+        $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
+        $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+        $recruiterFirm=$recruiter->getCompanyName();
+        
 
         // je récupère la fiche  candidat du candidat que le recruteur cherche à contacter
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
-        $candidate = $candidateRepo->findOneBy(['id' => $id]);
-        //dd($candidate);
-
-
-        $name =$email= $objet=NULL;
-
-        $form =$this->createFormBuilder()
-            ->add('objet', TextType::class, [
-                'placeholder' => 'Votre profil nous intéresse',
-                
-            ])
-            ->add('text', TextType::class, [
-                'placeholder' => 'Nous souhaierions entrer en contact avec vous pour éventuellement développer des projets avec vous',
-                
-            ])
-            ->getForm();
+        $candidate = $candidateRepo->findOneBy(['user' => $id]);
         
-        $form->handleRequest($request);
+        
+        
+        if(!empty ($candidate))
+        {
+            $userRepo= $this->getDoctrine()->getRepository(User::class);
+            $candidateUserInfo=$userRepo->findOneBy(['id'=>$id]);
+            
+            $candidateEmail=$candidateUserInfo->getEmail();
+            
+        /** 
+         * Création d'un formulaire de contact pour envoyer un mail au candidat sélectionné
+         * Création d'un nouvel objet Email.php
+         * (entité custom créée stocker les mails mais qui n'existe pas en BDD donc je n'ai pas fais php bin/console make:entity)
+        */
+            $email = New Email();
+            
 
+            $form = $this->createForm(EmailType::class, $email);
+            $email->setRecruiter($userName);
+            $email->setRecruiterEmail($userEmail);
+            $email->setCandidateEmail($candidateEmail);
+            $email->setCompanyName($recruiterFirm);
+            
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid()) 
+            {
+                $email=$form->getData();
+                
+                
+                
+                $message = (new \Swift_Message($email->getRecruiter().' veut entrer en contact avec vous'))
+                        ->setFrom('adoptealternant@gmail.com')
+                        ->setTo($email->getCandidateEmail())
+                        ->setReplyTo($email->getRecruiterEmail())
+                        ->setBody($this->renderView('recruiter/profile/email_send.html.twig',[
+                            'email'=>$email,
+                        ]), 'text/html');
+                        
+                $mailer->send($message);
+                        
 
-        //$message = (new \Swift_Message($user->getLastName().' veut entrer en contact avec vous'))
-        //->setFrom($user->getemail())
-        //->setTo('aude.millequant@wanadoo.fr')
-        //->setBody(
-        //    $this->renderView(
-        //        // templates/emails/registration.html.twig
-        //        'recruiter/profile/preformated_send_email.html.twig',
-        //        ['name' => $id,
-        //        'user'=>$user,]
-        //    ),
-        //    'text/html'
-        //);
-//
-        //$mailer->send($message);
-//
-        //return $this->redirectToRoute('candidates_one', ['id' => $id]);
+                $this->addFlash('notice', 'Votre email a bien été envoyé');
+                        
 
-        return $this->render('recruiter/profile/preformated_send_email.html.twig', [
+                return $this->redirectToRoute('candidates_one', ['id' => $id]);
+                        
+                               
+                        
+            } 
+        } 
+        else
+        {
+            $this->addFlash('danger', 'Une erreur est survenue.');
+            return $this->redirectToRoute('candidates_list');
+
+        }
+
+       
+
+        return $this->render('recruiter/profile/email.html.twig', [
             'form' => $form->createView(),
-            'name'=>$name,
-            'email'=>$email,
-            'objet'=>$objet,
-            'candidate'=>$candidate
+            
 
             ]);
     }
 
-    /**
-    * @Route("/personnaliser", name="edit")
-    */
-    public function edit( \Swift_Mailer $mailer)
-    {
-        /** 
-         * Permet de personnaliser le mail du recruteur connecté
-         * Pas besoin de récupérer l'id du mail, il fait partie de la fiche isRecruiter et il n'en possède qu'un seul
-        */
-
-
-        
-
-        return $this->render('recruiter/profile/email.html.twig', [
-            
-        ]);
-    }
-
-    /** 
-    * Pas de méthode add : le recruteur n'a qu'un seul et unique "format" de mail à envoyer au candidat
-    * Pas de méthode delete : il doit toujours y avoir un mail à envoyer, si ce n'est pas un mail custom alors ça sera un mail par défaut.
-    */
+   
 }
