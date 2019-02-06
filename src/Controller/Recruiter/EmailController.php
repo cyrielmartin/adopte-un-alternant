@@ -37,19 +37,17 @@ class EmailController extends AbstractController
         $user = $this->getUser();
         $userName=$user->getLastName();
         $userEmail=$user->getEmail();
-       // dump($user);
-        //dd($userName);
-        //dd($userEmail);
+      
         // je récupere la fiche recruteur afin d'accéder aux informations de l'entreprise
         $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
         $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
         $recruiterFirm=$recruiter->getCompanyName();
-        //dd($recruiter);
+        
 
         // je récupère la fiche  candidat du candidat que le recruteur cherche à contacter
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['user' => $id]);
-        //dd($candidate);
+        
         
         
         if(!empty ($candidate))
@@ -58,7 +56,7 @@ class EmailController extends AbstractController
             $candidateUserInfo=$userRepo->findOneBy(['id'=>$id]);
             
             $candidateEmail=$candidateUserInfo->getEmail();
-            //dump($candidateEmail);
+            
         /** 
          * Création d'un formulaire de contact pour envoyer un mail au candidat sélectionné
          * Création d'un nouvel objet Email.php
@@ -72,17 +70,16 @@ class EmailController extends AbstractController
             $email->setRecruiterEmail($userEmail);
             $email->setCandidateEmail($candidateEmail);
             $email->setCompanyName($recruiterFirm);
-            //dd($email);
+            
             $form->handleRequest($request);
             
             if ($form->isSubmitted() && $form->isValid()) 
             {
                 $email=$form->getData();
-                //dd($email);
+                
                 
                 
                 $message = (new \Swift_Message($email->getRecruiter().' veut entrer en contact avec vous'))
-                //
                         ->setFrom('adoptealternant@gmail.com')
                         ->setTo($email->getCandidateEmail())
                         ->setReplyTo($email->getRecruiterEmail())
@@ -98,7 +95,7 @@ class EmailController extends AbstractController
 
                 return $this->redirectToRoute('candidates_one', ['id' => $id]);
                         
-                //dd($email);                  
+                               
                         
             } 
         } 
@@ -110,9 +107,6 @@ class EmailController extends AbstractController
         }
 
        
-        
-        
-        //return $this->redirectToRoute('candidates_one', ['id' => $id]);
 
         return $this->render('recruiter/profile/email.html.twig', [
             'form' => $form->createView(),
@@ -121,26 +115,5 @@ class EmailController extends AbstractController
             ]);
     }
 
-    /**
-    * @Route("/personnaliser", name="edit")
-    */
-    public function edit( \Swift_Mailer $mailer)
-    {
-        /** 
-         * Permet de personnaliser le mail du recruteur connecté
-         * Pas besoin de récupérer l'id du mail, il fait partie de la fiche isRecruiter et il n'en possède qu'un seul
-        */
-
-
-        
-
-        return $this->render('recruiter/profile/email.html.twig', [
-            
-        ]);
-    }
-
-    /** 
-    * Pas de méthode add : le recruteur n'a qu'un seul et unique "format" de mail à envoyer au candidat
-    * Pas de méthode delete : il doit toujours y avoir un mail à envoyer, si ce n'est pas un mail custom alors ça sera un mail par défaut.
-    */
+   
 }
