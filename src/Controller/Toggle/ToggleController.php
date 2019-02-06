@@ -20,6 +20,9 @@ class ToggleController extends AbstractController
      */
     public function apprenticeship(Request $request, EntityManagerInterface $em)
     {
+        // une personne non connecté et qui n'est pas candidat ne peux pas accéder à cette méthode
+        $this->denyAccessUnlessGranted('ROLE_CANDIDATE', null, 'Unable to access this page!');
+        
         $user = $this->getUser();
 
         // je récupère sa fiche candidat
