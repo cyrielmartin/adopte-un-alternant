@@ -109,7 +109,7 @@ class CandidateController extends AbstractController
         $candidateId=$candidateDatas->getId();
 
         //création d'un requête join dans le fichier isRecruiterRepo pour récupérer les nombres de vue du candidat et les recruteurs ayant consulté le profil du candidat par Id candidat
-        $viewsInfo = $isRecruiterRepo ->findViewProfil($candidateId);
+        $viewsInfo = $isRecruiterRepo->findViewProfil($candidateId);
 
         $candidateInformation = $visitCardRepo->findOneBy(['isCandidate' => $candidateId]);
 
