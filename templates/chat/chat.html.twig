@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+  <div class="container">
+  <h1>TChat</h1>
+  <div id="ws-content-receiver"></div>
+<input type="text" id="ws-content-to-send" />
+<button id="ws-send-content">Send</button>
+{% endblock %}
+{% block javascripts %}
+  <script type="text/javascript">
+  var wsUrl = '{{ ws_url }}';
+  </script>
+<script type="text/javascript" src="{{ asset('js/sf-websocket.js') }}"></script>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 {% block title %}Mon profil{% endblock %}
 
+
 {% block body %}
 
 <div class="col-12">
@@ -137,11 +138,18 @@
                                         </td> 
                                     </tr>
                                     <tr>
-                                        {% if candidateInformation.adopted == 1 %}
+                                            
+                                        {#{% if candidateInformation.adopted == 1 %}
                                             <th> <span class="badge badge-pill badge-success">Adopté !</span>
                                         {% else %}
                                             <th> <span class="badge badge-pill badge-warning">En recherche d'alternance</span>
                                         {% endif %}
+                                            </th>#}
+                                            <th>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                                                        <label class="custom-control-label" for="customSwitch1">Toggle this switch element</label>
+                                                </div>
                                             </th>
                                             <td>                                   
                                                 <a href= "{{ path("adopted_edit", {"id": visitCardId }) }}">
