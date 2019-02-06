@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email déjà utilisé")
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id()
@@ -246,5 +247,18 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // pour faire plaisir à l'interface
+    }
+
+    public function isEqualTo(UserInterface $user) : bool
+    {
+        if (!$user instanceof self) {
+            return false;
+        }
+        
+        if ($this->getId() !== $user->getId()) {
+            return false;
+        }
+        
+        return true;
     }
 }
