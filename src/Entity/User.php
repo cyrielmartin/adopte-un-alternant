@@ -249,12 +249,15 @@ class User implements UserInterface, EquatableInterface
         // pour faire plaisir à l'interface
     }
 
+    // Permet d'éviter que l'utilisateur soit déconnecté lorsqu'il modifie ses infos personnelles
     public function isEqualTo(UserInterface $user) : bool
     {
+        // si l'objet user n'est pas une instance de user
         if (!$user instanceof self) {
             return false;
         }
         
+        // si l'id de l'instance en cours n'est pas le même que celui de l'instance donné en paramètre
         if ($this->getId() !== $user->getId()) {
             return false;
         }
