@@ -11,7 +11,7 @@ use App\Controller\Manager\RecruiterMobilityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/autocomplete/search", name="autocomplete_search")
+ * @Route("/autocomplete/search", name="autocomplete_search_")
  */
 class SearchController extends AbstractController
 {
