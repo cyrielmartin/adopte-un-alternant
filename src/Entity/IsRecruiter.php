@@ -34,11 +34,6 @@ class IsRecruiter
     private $companyLocation;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $emailCustom;
-
-    /**
      * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      */
     private $user;
@@ -90,18 +85,6 @@ class IsRecruiter
     public function setCompanyLocation(?string $companyLocation): self
     {
         $this->companyLocation = $companyLocation;
-
-        return $this;
-    }
-
-    public function getEmailCustom(): ?string
-    {
-        return $this->emailCustom;
-    }
-
-    public function setEmailCustom(?string $emailCustom): self
-    {
-        $this->emailCustom = $emailCustom;
 
         return $this;
     }

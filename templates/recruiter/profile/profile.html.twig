@@ -171,6 +171,39 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            {% elseif favorite.formationInfo is empty %}
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr class ="d-flex justify-content-center border-top">
+                                            <th scope="col" class="text-secondary d-flex col-4">
+                                                <div class="d-flex flex-column text-center">
+                                                    <img src="{{ asset('uploads/images/'~ (favorite.candidate.picture ?:'default-candidate.png')) }}"
+                                                    style="width: 70px;height:70px;" class="mb-2 rounded-circle" />
+                                                    {% if favorite.visitCard.visibilityChoice == 0 %}
+                                                        {{ favorite.candidate.user.firstname }} {{ favorite.candidate.user.lastname }}
+                                                    {% elseif favorite.visitCard.visibilityChoice == 1 %}
+                                                        {{ favorite.candidate.user.firstname }}
+                                                    {% else %}
+                                                        {{ favorite.candidate.user.lastname }}
+                                                    {% endif %}
+                                                </div>
+                                            </th>
+                                            <th scope="col" class="text-info d-flex col-7 align-items-center">
+                                                <a href= "{{ path("candidates_one", {"id": favorite.candidate.user.id }) }}"><button class="btn  btn-outline-primary btn-sm mr-2" id="" type="button">Voir son profil complet <i class="fas fa-external-link-alt"></i></button>
+                                                </a>
+                                                <a href= "{{ path("favorite_delete", {"id": favorite.candidate.user.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
+                                                </a>                       
+                                            </th>                           
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class ="d-flex justify-content-center">
+                                            <td class ="col-7">Ce candidat à supprimé les informations concernant l'alternance qu'il recherche...</td>                                                      
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             {% endif %}
                         {% endfor %}
                     {% endif %}

@@ -5,9 +5,8 @@ namespace App\Entity;
 use App\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Email{
-
-
+class Email
+{
     /**
      * @var string
      */ 

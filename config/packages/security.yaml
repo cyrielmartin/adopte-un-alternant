@@ -36,5 +36,26 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # Rôle candidat : 
+        - { path: '^/candidat/profil', roles: ROLE_CANDIDATE }
+        - { path: '^/candidat/information-personnelle', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themesanstiret/action
+        - { path: '^/candidat/[a-z]+/[a-z]+', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themeavec-untiret/action
+        - { path: '^/candidat/^([a-z]+)-([a-z]+)$/[a-z]+', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themeavec-deux-tiret/action
+        - { path: '^/candidat/^([a-z]+)-([a-z]+)-([a-z]+)$/[a-z]+', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themesanstiret/id/action
+        - { path: '^/candidat/[a-z]+/[0-9]+/[a-z]+', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themeavec-untiret/id/action
+        - { path: '^/candidat/^([a-z]+)-([a-z]+)$/[0-9]+/[a-z]+', roles: ROLE_CANDIDATE }
+        # pattern : /candidat/themeavec-deux-tiret/id/action
+        - { path: '^/candidat/^([a-z]+)-([a-z]+)-([a-z]+)$/[0-9]+/[a-z]+', roles: ROLE_CANDIDATE }
+        # Rôle recruteur :
+        - { path: '^/recruteur/profil', roles: ROLE_RECRUITER }
+        - { path: '^/recruteur/information-personnelle', roles: ROLE_RECRUITER }
+        - { path: '^/recruteur/information-entreprise', roles: ROLE_RECRUITER }
+        # pattern : /recruteur/themesanstiret/action
+        - { path: '^/recruteur/[a-z]+/[a-z]+', roles: ROLE_RECRUITER }
+        # pattern : /recruteur/themesanstiret/id/action
+        - { path: '^/recruteur/[a-z]+/[0-9]+/[a-z]+', roles: ROLE_RECRUITER }

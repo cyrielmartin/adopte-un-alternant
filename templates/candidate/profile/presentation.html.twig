@@ -22,19 +22,10 @@
         </div>
     {% endfor %}
 
-{# Formulaire isCandidate pour numéro de téléphone  #}
-{{ form_start(isCandidateForm, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(isCandidateForm) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_widget(form) }}
         <button type="submit" class="btn btn-secondary mb-2">Valider</button>
-{{ form_end(isCandidateForm) }}
-
-{# Formulaire VisitCard pour choix d'affichage  #}
-{{ form_start(visitCardForm, {'attr': {'novalidate': 'novalidate'}}) }}
-    {{ form_widget(visitCardForm) }}
-        <button type="submit" class="btn btn-secondary mb-2">Valider</button>
-{{ form_end(visitCardForm) }}
-
-
+    {{ form_end(form) }} 
 
 {% endblock %}
 

@@ -62,8 +62,8 @@ class ProfileController extends AbstractController
             $favoritesData[] = [
                 'candidate' => $favorite,
                 'visitCard' => $visitCard, 
-                'formationInfo' => $apprenticeship,
-                'apprenticeshipInfo' => $apprenticeRepo->findOneBy(['formation' => $apprenticeship->getId()]),
+                'formationInfo' => isset($apprenticeship) ? $apprenticeship : null,
+                'apprenticeshipInfo' => isset($apprenticeship) ? $apprenticeRepo->findOneBy(['formation' => $apprenticeship->getId()]) : null,
             ];
         }
 

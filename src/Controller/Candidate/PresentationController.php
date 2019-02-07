@@ -5,8 +5,8 @@ namespace App\Controller\Candidate;
 use App\Entity\User;
 use App\Entity\VisitCard;
 use App\Entity\IsCandidate;
-use App\Form\VisitCardType;
-use App\Form\IsCandidateType;
+use App\Entity\Presentation;
+use App\Form\PresentationType;
 use App\Form\VisitCardAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,27 +30,26 @@ class PresentationController extends AbstractController
         // je récupère sa carte de visite 
         $visitCardRepo = $this->getDoctrine()->getRepository(VisitCard::class);
         $visitCard = $visitCardRepo->findOneBy(['isCandidate' => $isCandidate->getId()]);
-        
-        $isCandidateForm = $this->createForm(IsCandidateType::class, $isCandidate);
-        $isCandidateForm->handleRequest($request);
-        
-        if ($isCandidateForm->isSubmitted() && $isCandidateForm->isValid()) {
-            $em->persist($isCandidate);
-            $em->flush();
-            
-            $this->addFlash(
-                'notice',
-                'La carte de visite a bien été modifiée'
-            );
-            return $this->redirectToRoute('candidate_profile');
-        }
 
-        $visitCardForm = $this->createForm(VisitCardType::class, $visitCard);
-        $visitCardForm->handleRequest($request);
-        if ($visitCardForm->isSubmitted() && $visitCardForm->isValid()) {
-            $em->persist($visitCard);
-            $em->flush();
+        // j'instancie présentation et lui donne les anciennes info du candidat
+        $presentation = new Presentation();
+        $presentation
+            ->setPhoneNumber($isCandidate->getPhoneNumber())
+            ->setVisibilityChoice($visitCard->getVisibilityChoice());
+        
+        $form = $this->createForm(PresentationType::class, $presentation);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            // je met à jour présentation avec les new valeurs
+            $presentation = $form->getData();
+            // je met à jour mon objet candidat
+            $isCandidate->setPhoneNumber($presentation->getPhoneNumber());
+            // je met à jour la carte de visite
+            $visitCard->setVisibilityChoice($presentation->getVisibilityChoice());
+            // j'envoi le tout en bdd
+            $em->flush();
+            // je préviens l'utilisateur
             $this->addFlash(
                 'notice',
                 'La carte de visite a bien été modifiée'
@@ -59,8 +58,7 @@ class PresentationController extends AbstractController
         }
 
         return $this->render('candidate/profile/presentation.html.twig', [
-            'isCandidateForm' => $isCandidateForm->createView(),
-            'visitCardForm' => $visitCardForm->createView(),
+            'form' => $form->createView(),
         ]);      
     }
 }
