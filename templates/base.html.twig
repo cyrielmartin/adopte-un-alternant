@@ -52,6 +52,8 @@
                         <div class="dropdown-menu">
                                 {% if is_granted('ROLE_CANDIDATE') %}
                                     <a class="dropdown-item" href="{{path('candidate_profile')}}">Mon profil</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{path('message_show_all')}}">Ma messagerie</a>
                                 {% elseif is_granted('ROLE_RECRUITER') %}
                                     <a class="dropdown-item" href="{{path('recruiter_profile')}}">Mon profil</a>
                                 {% endif %}

@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Messagerie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/message.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="container col-9 h-100">
+    
+    {% for message in app.flashes('danger') %}
+        <div class="alert alert-danger flash-message mb-2">
+            {{ message }}
+        </div>
+    {% endfor %}   
+
+    {# row #}
+    <div class="d-md-flex my-3 h-75">
+        {# vos conversation #}
+        <div class="col-md-3 border-right">
+            <h3 class="text-center">Conversations</h3>
+            {% for recruiter in recruiters %}
+            <div class="border-bottom">
+                <a  href="{{ path('message_show_all') }}?recruiter={{recruiter.id}}"
+                    class="d-block text-center py-2
+                    {% if recruiter_select is not empty %}
+                        {% if recruiter.id == recruiter_select %}
+                            bg-primary text-light rounded
+                        {% else %}
+                            text-dark
+                        {% endif %}
+                    {% endif %}
+                    ">
+                    {{ recruiter.user.firstname }} {{ recruiter.user.lastname }}
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        {# affichage de la conversation cliqué #}
+        <div class="col-md-6 my-2 ml-auto">
+            <div class="h-100 message">
+                {% for message in messages %}
+
+                    {% if message.sendBy == false %}
+                        <p class="bg-light rounded col-6 py-2"> 
+                            {{ message.content }}
+                            <span class="d-block text-muted text-right font-italic" style="font-size:0.7rem;">
+                                    le {{ message.sendAt|date("d/m/Y") }}
+                                    à {{ message.sendAt|date("H:m") }}
+                            </span>
+                        </p>
+                    {% else %}
+                        <p class="ml-auto bg-info text-light rounded col-6 py-2"> 
+                            {{ message.content }} 
+                            <span class="d-block text-dark text-right font-italic" style="font-size:0.7rem;">
+                                    le {{ message.sendAt|date("d/m/Y") }}
+                                    à {{ message.sendAt|date("H:m") }}
+                            </span>
+                        </p>
+                    {% endif %}
+                
+                {% endfor %}
+            </div>
+            {% if recruiter_select != 0 %}
+                <div class="mt-auto">
+                    <form method="POST" action="{{ path('message_send', {'id':recruiter_select}) }}">
+                        <div class="form-group">
+                            <textarea name="response" class="form-control" rows="3" placeholder="Votre réponse"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"> Envoyer </button>
+                    </form>
+                </div>
+            {% endif %}
+
+            
+        </div>
+
+    </div> {# Fin row #}
+</div>{# Fin container #}
+
+   
+{% endblock %}

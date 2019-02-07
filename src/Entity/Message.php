@@ -36,6 +36,11 @@ class Message
      */
     private $isCandidate;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $sendBy;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,7 +58,7 @@ class Message
         return $this;
     }
 
-    public function getSendAt(): ?\DateTimeInterface
+    public function getSendAt()
     {
         return $this->sendAt;
     }
@@ -85,6 +90,18 @@ class Message
     public function setIsCandidate(?IsCandidate $isCandidate): self
     {
         $this->isCandidate = $isCandidate;
+
+        return $this;
+    }
+
+    public function getSendBy(): ?bool
+    {
+        return $this->sendBy;
+    }
+
+    public function setSendBy(bool $sendBy): self
+    {
+        $this->sendBy = $sendBy;
 
         return $this;
     }
