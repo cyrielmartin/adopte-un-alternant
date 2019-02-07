@@ -2,6 +2,11 @@
 
 {% block title %}Mon profil{% endblock %}
 
+{% block stylesheets %}
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/toggle.css') }}">
+{% endblock stylesheets %}
+
 {% block body %}
 
 <div class="col-12">
@@ -9,22 +14,22 @@
     
     <div class="row col-12 col-md-11 mx-auto">
 
-    {# Messages flash #}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}   
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}   
+        {# Messages flash #}
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}   
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}   
 
         <div class="col-12 col-md-10 mx-auto">
 
@@ -137,30 +142,24 @@
                                         </td> 
                                     </tr>
                                     <tr>
-                                        {% if candidateInformation.adopted == 1 %}
-                                            <th> <span class="badge badge-pill badge-success">Adopté !</span>
-                                        {% else %}
-                                            <th> <span class="badge badge-pill badge-warning">En recherche d'alternance</span>
-                                        {% endif %}
-                                            </th>
-                                            <td>                                   
-                                                <a href= "{{ path("adopted_edit", {"id": visitCardId }) }}">
-                                                    <button class="btn btn-light btn-sm" id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                </a>
-                                            </td>
-                                    </tr>
-
-                                    {# Si le candidat est adopté, on n'affiche plus ses lieux de recherche #}
-                                    {% if candidateInformation.adopted == 1 %}
-
-                                    {# Si le candidat n'est pas adopté, on affiche ses lieux de recherche #}
-                                    {% else %}
-                                    <tr>
-                                        <th class="text-secondary">Lieux de recherche :
+                                        <th> 
+                                            <span class="mr-2">En recherche d'alternance : </span>
+                                            
                                         </th>
-                                        <td></td>
+                                        <td>
+                                            <input type="checkbox" 
+                                            {% if candidateInformation.adopted is empty %}
+                                            checked
+                                            {% endif %}
+                                            data-toggle="toggle" data-on="Oui" data-off="Non" data-onstyle="success" data-offstyle="danger" >
+                                        </td>
                                     </tr>
-                                    <tr>
+                                    <tr class="mobility {% if candidateInformation.adopted is not empty %}d-none{% endif %}">
+                                        <th class="text-secondary">
+                                            Lieux de recherche :
+                                        </th>
+                                    </tr>
+                                    <tr class="mobility {% if candidateInformation.adopted is not empty %}d-none{% endif %}">
                                         <td >
                                             {% for mobilityInfo in mobilitiesInfo %}
                                                 <p>{{mobilityInfo.townName}}, {{mobilityInfo.department.name}} </p>
@@ -176,12 +175,12 @@
                                             {% endfor %}
                                         </td>                                                       
                                     </tr>
-                                    <tr>
+                                    <tr class="mobility {% if candidateInformation.adopted is not empty %}d-none{% endif %}">
                                         <td>
                                             <a href="{{ path("mobility_add")}}"><button type="button" class="btn btn-outline-success btn-sm">Ajouter un lieu <i class="fas fa-plus-circle"></i></button></a>
                                         </td>
                                     </tr>
-                                    {% endif %}
+                                    
                                 </tbody>
                             </table>                             
                         </div>                     
@@ -313,180 +312,196 @@
                             </table>
                         </div>
                     {% endif %}
-                       
                 </div> {# Fin Alternance recherchée #}
 
-            {# Formation #}
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Formations
-                        <a href= "{{ path("formation_add") }}">
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
-                        </a>
-                    </h2>
-                </div>
-                <div class="card-body">
-                {% if formationsInfo is empty %}
-                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune formation." }}</div>
-                {% else %}
-                    {% for formationInfo in formationsInfo %}
-                        {% if formationInfo.status == 2 %}
+                {# Formation #}
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Formations
+                            <a href= "{{ path("formation_add") }}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                    {% if formationsInfo is empty %}
+                        <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune formation." }}</div>
+                    {% else %}
+                        {% for formationInfo in formationsInfo %}
+                            {% if formationInfo.status == 2 %}
+                            {% else %}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>{# titre de colonnes #}
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="text-secondary col-4">
+                                                {{ formationInfo.awardName}}
+                                                </th>
+                                                <th class="text-info col-7">
+                                                    <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
+                                                        <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
+                                                    </a>
+                                                </th>          
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
+                                                <th scope="row" class ="d-flex col-4">Niveau scolaire
+                                                </th>                                                    
+                                                <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
+                                                </td>                                                       
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center"> {# Nom de l'école #}
+                                                <th scope="row" class ="d-flex col-4">École
+                                                </th>                                         
+                                                <td class ="d-flex col-7">{{ formationInfo.school.name}}
+                                                </td>       
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
+                                                <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
+                                                </th>                                          
+                                                {% if formationInfo.status == 0 %}
+                                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
+                                                {% elseif formationInfo.status == 1 %}
+                                                <td class ="d-flex col-7">en cours</td>
+                                                {% elseif formationInfo.status == 2 %}
+                                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
+                                                {% endif %}
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div> {# Fin carte formation #}
+
+                {# Expériences #}
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="h5 mb-0 text-center text-secondary">
+                            Expériences
+                            <a href= "{{ path("experience_add")}}">
+                                <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                            </a>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        {% if experiencesInfo is empty %}
+                            <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune expérience." }}</div>
                         {% else %}
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>{# titre de colonnes #}
-                                        <tr class ="d-flex justify-content-center">
-                                            <th scope="col" class="text-secondary col-4">
-                                            {{ formationInfo.awardName}}
-                                            </th>
-                                            <th class="text-info col-7">
-                                                <a href= "{{ path("formation_edit", {"id": formationInfo.id }) }}">
-                                                    <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                                </a>
-                                                <a href= "{{ path("formation_delete", {"id": formationInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
-                                                </a>
-                                            </th>          
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class ="d-flex justify-content-center">{#Niveau du diplôme#}
-                                            <th scope="row" class ="d-flex col-4">Niveau scolaire
-                                            </th>                                                    
-                                            <td class ="d-flex col-7">{{ formationInfo.awardLevel.name}}
-                                            </td>                                                       
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center"> {# Nom de l'école #}
-                                            <th scope="row" class ="d-flex col-4">École
-                                            </th>                                         
-                                            <td class ="d-flex col-7">{{ formationInfo.school.name}}
-                                            </td>       
-                                        </tr>
-                                        <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
-                                            <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
-                                            </th>                                          
-                                            {% if formationInfo.status == 0 %}
-                                            <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                            {% elseif formationInfo.status == 1 %}
-                                            <td class ="d-flex col-7">en cours</td>
-                                            {% elseif formationInfo.status == 2 %}
-                                            <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
-                                            {% endif %}
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            {% for experienceInfo in experiencesInfo %}
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="col-4">
+                                                    <span class="badge badge-pill badge-info">{{ experienceInfo.companyName}}</span>
+                                                </th>
+                                                <th class="text-info col-7">
+                                                    <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
+                                                        <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
+                                                    </a>
+                                                    <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
+                                                    </a>
+                                                </th>          
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="col" class="col-4">Période</th>
+                                                <td class ="d-flex col-7">
+                                                    Du {{ experienceInfo.startedAt|date("m/d/Y")}}
+                                                    {% if experienceInfo.endedAt == null %}
+                                                    à aujourd'hui
+                                                    {% else %}
+                                                    au {{ experienceInfo.endedAt|date("m/d/Y")}}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr class ="d-flex justify-content-center">
+                                                <th scope="row" class ="d-flex col-4">Description</th>            
+                                                <td class ="d-flex col-7">{{ experienceInfo.description}}</td>  
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% endfor %}
                         {% endif %}
-                    {% endfor %}
-                {% endif %}
-                </div>
-            </div> {# Fin carte formation #}
-
-            {# Expériences #}
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Expériences
-                        <a href= "{{ path("experience_add")}}">
-                            <button class="btn btn-light " id="" type="button"> <i class="fas fa-plus-circle"></i></button>
-                        </a>
-                    </h2>
-                </div>
-                <div class="card-body">
-                {% if experiencesInfo is empty %}
-                    <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucune expérience." }}</div>
-                {% else %}
-                    {% for experienceInfo in experiencesInfo %}
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="col" class="col-4">
-                                        <span class="badge badge-pill badge-info">{{ experienceInfo.companyName}}</span>
-                                    </th>
-                                    <th class="text-info col-7">
-                                        <a href= "{{ path("experience_edit", {"id": experienceInfo.id }) }}">
-                                            <button class="btn btn-light btn-sm " id="" type="button"> <i class="fas fa-edit"></i></button>
-                                        </a>
-                                        <a href= "{{ path("experience_delete", {"id": experienceInfo.id }) }}"><button class="btn btn-light btn-sm" id="" type="button"><i class="far fa-trash-alt delete-button"></i></button>
-                                        </a>
-                                    </th>          
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="col" class="col-4">Période</th>
-                                    <td class ="d-flex col-7">
-                                        Du {{ experienceInfo.startedAt|date("m/d/Y")}}
-                                        {% if experienceInfo.endedAt == null %}
-                                        à aujourd'hui
-                                        {% else %}
-                                        au {{ experienceInfo.endedAt|date("m/d/Y")}}
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                <tr class ="d-flex justify-content-center">
-                                    <th scope="row" class ="d-flex col-4">Description</th>            
-                                    <td class ="d-flex col-7">{{ experienceInfo.description}}</td>  
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
-                    {% endfor %}
-                {% endif %}
-            </div> {# Fin carte exp #}
 
-           {# Atouts #}
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Atouts
-                        <a href= "{{ path("asset_add") }}">
-                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
-                        </a>
-                    </h2>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-content-around">
+                    {# Atouts #}
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Atouts
+                                <a href= "{{ path("asset_add") }}">
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-around">
 
-                    {% if additionalsInfo is empty %}
-                    <div class="small text-muted">{{ "Vous n'avez ajouté aucun atout." }}</div>
-                    {% else %}
-                        {% for additionalInfo in additionalsInfo %}
-                            {% if additionalInfo.typeInfo == 'assert' %}
-                            <button type="button" class="btn btn-info"> {{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                            {% if additionalsInfo is empty %}
+                            <div class="small text-muted">{{ "Vous n'avez ajouté aucun atout." }}</div>
+                            {% else %}
+                                {% for additionalInfo in additionalsInfo %}
+                                    {% if additionalInfo.typeInfo == 'assert' %}
+                                    <button type="button" class="btn btn-info"> {{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    </div>
-                </div>                        
-            </div> {# Fin carte atouts #}
+                            </div>
+                        </div>                        
+                    </div> {# Fin carte atouts #}
 
-           {# Centres d'intérêt #}
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="h5 mb-0 text-center text-secondary">
-                        Centres d'intéret
-                        <a href= "{{path("interest_add")}}">
-                            <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
-                        </a>
-                    </h2>
-                </div>
-                <div class="card-body">
-                    <div class="row justify-content-around">
+                    {# Centres d'intérêt #}
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="h5 mb-0 text-center text-secondary">
+                                Centres d'intéret
+                                <a href= "{{path("interest_add")}}">
+                                    <button class="btn btn-light" id="" type="button"> <i class="fas fa-plus-circle"></i></button>
+                                </a>
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row justify-content-around">
 
-                    {% if additionalsInfo is empty %}
-                        <div class="small text-muted">{{ "Vous n'avez ajouté aucun centre d'intérêt." }}</div>
-                    {% else %}
-                        {% for additionalInfo in additionalsInfo %}
-                            {% if additionalInfo.typeInfo == 'interest' %}
-                            <button type="button" class="btn btn-info">{{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                            {% if additionalsInfo is empty %}
+                                <div class="small text-muted">{{ "Vous n'avez ajouté aucun centre d'intérêt." }}</div>
+                            {% else %}
+                                {% for additionalInfo in additionalsInfo %}
+                                    {% if additionalInfo.typeInfo == 'interest' %}
+                                    <button type="button" class="btn btn-info">
+                                        {{additionalInfo.content}}
+                                        <a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}">
+                                            <i class="far fa-edit edit-asset btn-sm"></i>
+                                        </a>
+                                        <a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}">
+                                            <i class="far fa-times-circle delete-asset"></i>
+                                        </a>
+                                    </button>
+                                    {% endif %}
+                                {% endfor %}
                             {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                    </div>
-                </div>                        
-            </div> {# Fin carte centre d'intérêt #}
+                            </div>
+                        </div>                        
+                    </div> {# Fin centre interet #}
+                </div> {# Fin carte exp #}
+            </div>
+        </div> 
     </div>
 </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('js/toggle.js') }}"></script>
+{% endblock javascripts %}
