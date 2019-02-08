@@ -60,5 +60,4 @@ security:
         # pattern : /recruteur/themesanstiret/id/action
         - { path: '^/recruteur/[a-z]+/[0-9]+/[a-z]+', roles: ROLE_RECRUITER }
         # Role candidat ET recruteur 
-        - { path: '^/message/afficher', roles: [ROLE_RECRUITER, ROLE_CANDIDATE] }
-        - { path: '^/message/[0-9]+/envoyer', roles: [ROLE_RECRUITER, ROLE_CANDIDATE] }
+        - { path: '^/message/[a-z]+', roles: [ROLE_RECRUITER, ROLE_CANDIDATE] }
