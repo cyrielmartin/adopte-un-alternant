@@ -8,6 +8,7 @@ use App\Entity\IsRecruiter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -19,6 +20,50 @@ class MessageController extends AbstractController
      * @Route("/afficher", name="show")
      */
     public function show(Request $request)
+    {
+        $user = $this->getUser();
+        $role = $user->getRole()->getCode();
+
+        if($role === 'ROLE_CANDIDATE')
+        {
+            // je récupère sa fiche candidat
+            $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+            $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+            $messages = $candidate->getMessages();
+        }
+        else if ($role === 'ROLE_RECRUITER')
+        {
+            // je récupère sa fiche recruteur
+            $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
+            $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+            $messages = $recruiter->getMessages();
+        }
+        
+        foreach($messages as $key => $msg)
+        {
+            if($role === 'ROLE_CANDIDATE')
+            {
+                // je récupère l'id du recruteur 
+                $contactId = $msg->getIsRecruiter()->getId();
+                $contactList[$contactId] = $msg->getIsRecruiter();
+            }
+            else if ($role === 'ROLE_RECRUITER')
+            {
+                // je récupère l'id du candidat
+                $contactId = $msg->getIsCandidate()->getId();
+                $contactList[$contactId] = $msg->getIsCandidate();
+            }
+        }
+
+        return $this->render('message/message.html.twig', [
+            'contacts' => $contactList,
+        ]);
+    }
+
+    /**
+     * @Route("/recover", name="recover")
+     */
+    public function recover(Request $request, EntityManagerInterface $em)
     {
         $user = $this->getUser();
         $role = $user->getRole()->getCode();
@@ -53,6 +98,7 @@ class MessageController extends AbstractController
         {
             // j'enregistre une chaine vide
             $this->get('session')->set('talkTo', '');
+            $response = ['fail','Aucun contact séléctionné'];
         }
 
         $sortMessages = array();
@@ -74,26 +120,31 @@ class MessageController extends AbstractController
 
             if($contactId === $select)
             {
-                $sortMessages[] = $msg;
+                $sortMessages[] = [
+                    'content' => $msg->getContent(),
+                    'sendBy' => $msg->getSendBy(),
+                    'sendAt' => $msg->getSendAt()->format('d/m/Y H:m'),
+                ]; 
             }
         }
-        dump($contactList);
 
-        return $this->render('message/message.html.twig', [
-            'select' => $select,
-            'messages' => $sortMessages,
-            'contacts' => $contactList,
-        ]);
+        $response = ['success', $sortMessages];
+
+        // je retourne les résultat en format json
+        return new JsonResponse($response);
     }
 
+
     /**
-     * @Route("/{id}/envoyer", name="send")
+     * @Route("/send", name="send")
      */
-    public function send(Request $request, $id, EntityManagerInterface $em)
+    public function send(Request $request, EntityManagerInterface $em)
     {
-        // je récupère en session l'id du recruteur précédement enregistré
+        // je récupère en session l'id précédement enregistré
         $talkTo = $this->get('session')->get('talkTo');
-        $id = intval($id);
+        // et l'id envoyé dans la requête
+        $select = $request->request->get('select');
+        $select = intval($select);
         // je récupère le contenu de la réponse
         $response = $request->request->get('response');
         $response = trim(strip_tags($response));
@@ -103,16 +154,19 @@ class MessageController extends AbstractController
         if(empty($talkTo))
         {
             $error = true;
+            $toReturn ='Une erreur est survenue';
         }
         // si la conversation selectionné auparavent n'a rien à voir avec l'id envoyé
-        else if($talkTo !== $id)
+        else if($talkTo !== $select)
         {
             $error = true;
+            $toReturn ='Une erreur est survenue';
         }
         // si le message est vide
         else if (empty($response))
         {
             $error = true;
+            $toReturn = 'Vous ne pouvez pas envoyer de message vide';
         }
         // je continu seulement s'il n'y a pas eu d'erreur
         if (!$error)
@@ -128,12 +182,13 @@ class MessageController extends AbstractController
 
                 // je récupère la fiche recruteur du recruteur à qui envoyer le message
                 $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
-                $recruiter = $recruiterRepo->findOneBy(['id' => $id]);
+                $recruiter = $recruiterRepo->findOneBy(['id' => $select]);
 
                 // si recruteur inexistant
                 if (empty($recruiter))
                 {
                     $error = true;
+                    $toReturn ='Une erreur est survenue';
                 }
             }
             else if ($role === 'ROLE_RECRUITER')
@@ -144,12 +199,13 @@ class MessageController extends AbstractController
                 
                 // je récupère la fiche du candidat connecté
                 $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
-                $candidate = $candidateRepo->findOneBy(['id' => $id]);
+                $candidate = $candidateRepo->findOneBy(['id' => $select]);
 
                 // si candidat inexistant
                 if (empty($candidate))
                 {
                     $error = true;
+                    $toReturn ='Une erreur est survenue';
                 }
             }
 
@@ -179,10 +235,10 @@ class MessageController extends AbstractController
 
         if($error)
         {
-            $this->addFlash('danger', 'Une erreur est survenue lors de l\'envoi.');
-            return $this->redirectToRoute('message_show');
+
+            return new JsonResponse(['fail', $toReturn]);
         }
 
-        return $this->redirectToRoute('message_show', ['select' => $id]);
+        return new JsonResponse(['success']);
     }
 }
