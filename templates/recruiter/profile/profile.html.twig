@@ -114,10 +114,7 @@
 
                 <div class="card-body">
                     {% if favorites is empty %}
-                        <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucun candidat en favoris." }}</div>
-                        <a href= "{{ path("candidates_list") }}">
-                                <button class="btn btn-light btn-sm " id="" type="button"><i class="fas fa-plus-circle"></i></button>
-                        </a>
+                        <div class="small text-muted text-center">{{ "Vous n'avez ajouté aucun candidat en favori." }}</div>
                     {% else %}
                         {% for favorite in favorites %}
                             {% if favorite.formationInfo is not empty %}
@@ -202,8 +199,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class ="d-flex justify-content-center">
-                                            <td class ="col-7">Ce candidat à supprimé les informations concernant l'alternance qu'il recherche...</td>                                                      
+                                        <tr class ="d-flex justify-content-center text-danger">
+                                            <td class ="col-7">Ce candidat n'a pas détaillé sa recherche d'alternance.</td>                                                      
                                         </tr>
                                     </tbody>
                                 </table>

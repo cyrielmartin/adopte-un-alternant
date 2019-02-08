@@ -17,14 +17,14 @@ class EmailType extends AbstractType
         ->add('subject', TextType::class, [
             'data' => 'Votre profil nous intéresse',
             'label'=>'Objet',
-            'help'=> 'Vous pouvez modifier l\'objet du mail ou l\'envoyer ainsi.'
+            'help'=> 'Vous pouvez modifier l\'objet et/ou le corps du mail ou les valider ainsi.'
             
         ])
         ->add('text', TextareaType::class, [
-            'data' => 'Bonjour, nous souhaiterions entrer en contact avec vous pour échanger en vue d\'une éventuelle alternance dans notre structure.',
+            'data' => 'Bonjour, nous souhaiterions entrer en contact avec vous pour échanger en vue d\'une éventuelle alternance. Cordialement.',
             'attr' => ['cols' => '5', 'rows' => '5'],
             'label'=>'Message',
-            'help'=> 'Vous pouvez modifier le contenu de ce message ou l\'envoyer ainsi.'
+            'help' => 'En envoyant ce message, le candidat aura accès à votre adresse email.'
             
         ]);
         

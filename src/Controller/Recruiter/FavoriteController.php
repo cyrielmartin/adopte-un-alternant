@@ -53,7 +53,7 @@ class FavoriteController extends AbstractController
             );
       
 
-        return $this->redirectToRoute('candidates_one', ['id' => $id]);
+        return $this->redirectToRoute('candidates_list');
         }
 
         // si le candidat n'existe pas alors

@@ -93,7 +93,7 @@ class EmailController extends AbstractController
                 $this->addFlash('notice', 'Votre email a bien été envoyé');
                         
 
-                return $this->redirectToRoute('candidates_one', ['id' => $id]);
+                return $this->redirectToRoute('candidates_list');
                         
                                
                         
