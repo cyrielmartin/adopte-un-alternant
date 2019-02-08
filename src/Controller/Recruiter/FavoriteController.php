@@ -98,8 +98,9 @@ class FavoriteController extends AbstractController
                 'Ce candidat a bien été supprimé de vos favoris'
             );
       
-
-            return $this->redirectToRoute('recruiter_profile');
+            // je récupère l'ancienne page et redirige dessus
+            $referer = $request->headers->get('referer');
+            return $this->redirect($referer);
         }
         // si le candidat n'existe pas alors
         else

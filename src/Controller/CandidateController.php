@@ -89,6 +89,9 @@ class CandidateController extends AbstractController
     */
     public function showOne(EntityManagerInterface $em, $id)
     {
+        $user = $this->getUser();
+        $role = $user->getRole()->getCode();
+
         $isCandidateRepo = $em->getRepository(IsCandidate::class);
         $isRecruiterRepo = $em->getRepository(IsRecruiter::class);
         $isApprenticeshipRepo = $em->getRepository(IsApprenticeship::class);
@@ -99,12 +102,23 @@ class CandidateController extends AbstractController
         $skillRepo = $em->getRepository(Skill::class);
         $additionalRepo = $em->getRepository(Additional::class);
         $mobilityRepo = $em->getRepository(Mobility::class);
-
-        // Affiche le profil "public" (visible par les entreprises et les autres candidats)candidat à l'alternance
-        // Pas de form ici ( seulement de la récupèration d'info pour affichage )
         
         $candidateDatas= $isCandidateRepo->findOneBy(['user' => $id]);
 
+        $isFavorite = false;
+
+        if($role === 'ROLE_RECRUITER')
+        {
+            $favorites = $candidateDatas->getIsRecruiters();
+            
+            foreach($favorites as $favorite )
+            {
+                if($favorite->getUser()->getId() == $user->getId() )
+                {
+                    $isFavorite = true ;
+                }
+            }
+        }
         //récupération de l'Id pour accéder aux visitCards
         $candidateId=$candidateDatas->getId();
 
@@ -154,7 +168,7 @@ class CandidateController extends AbstractController
             'additionalsInfo'=>$additionalsInfo,
             'mobilitiesInfo'=>$mobilitiesInfo,
             'visitCardId'=>$visitCardId,
-            'viewsInfo'=>$viewsInfo,
+            'isFavorite' => $isFavorite,
         ]);
     }
 
