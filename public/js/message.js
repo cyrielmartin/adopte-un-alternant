@@ -12,7 +12,6 @@ var msg = {
   {
     // je récupère l'url dynamiquement
     msg.url = $('.container').data('url');
-    console.log(msg.url);
     // récupération de tout les contact
     msg.contactList = $('.contact-list');
     // listener sur tout les contacts
@@ -50,7 +49,7 @@ var msg = {
     // je récupère la data 'id' du contact selectionné
     msg.data = $(select).data('id');
     // je lance un nouvel interval pour récupérer les messages toutes les 3 secondes
-    msg.reload = setInterval(msg.getMessage, 3000)
+    msg.reload = setInterval(msg.getMessage, 5000)
     
     msg.getMessage();
   },
@@ -70,8 +69,8 @@ var msg = {
       if(response[0] === 'success')
       {
         // si le nombre de message reçu est supérieur au nombre 
-        // de message déjà affiché
-        if (response[1].length > msg.countMessage )
+        // de message déjà affiché ou si il n'y a aucun message
+        if (response[1].length > msg.countMessage || response[1].length == 0 )
         {
           // on met à jour l'affichage
           msg.countMessage = response[1].length;
@@ -120,10 +119,9 @@ var msg = {
       }
       
       $(container).append(pClone);
-
-      $('form').removeClass('d-none').addClass('d-md-flex');
     }
-
+    // j'affiche le form
+    $('form').removeClass('d-none').addClass('d-md-flex');
     // je dit que la position de ma scrollbar doit être en bas
     container.scrollTop = container.scrollHeight;
   },

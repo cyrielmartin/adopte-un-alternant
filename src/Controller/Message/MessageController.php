@@ -23,6 +23,7 @@ class MessageController extends AbstractController
     {
         $user = $this->getUser();
         $role = $user->getRole()->getCode();
+        $contactList = array();
 
         if($role === 'ROLE_CANDIDATE')
         {
@@ -37,6 +38,9 @@ class MessageController extends AbstractController
             $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
             $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
             $messages = $recruiter->getMessages();
+            // je récupère le nouveau contact (si début de conversation)
+            $newContact = $request->query->get('new');
+            $newContact = intval($newContact);
         }
         
         foreach($messages as $key => $msg)
@@ -52,6 +56,22 @@ class MessageController extends AbstractController
                 // je récupère l'id du candidat
                 $contactId = $msg->getIsCandidate()->getId();
                 $contactList[$contactId] = $msg->getIsCandidate();
+                // si il y avait déjà une conversation avec le nouveau contact
+                if(!empty($newContact) && $newContact === $contactId)
+                {
+                    // on vide la variable
+                    $newContact = null;
+                }
+            }
+        }
+
+        if ($role === 'ROLE_RECRUITER' && !empty($newContact))
+        {
+            $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+            $newCandidate = $candidateRepo->findOneBy(['id' => $newContact]);
+            if(!empty($newCandidate))
+            {
+                $contactList[$newContact] = $newCandidate;
             }
         }
 

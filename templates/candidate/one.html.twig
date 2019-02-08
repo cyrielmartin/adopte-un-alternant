@@ -43,7 +43,10 @@
                                 <a href="{{path('favorite_add', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-warning">Ce candidat m'intéresse <i class="far fa-heart"></i></button></a>
                             </p>
                             <p class ="text-center">
-                                <a href="{{path('email_send', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-success">Contacter ce candidat <i class="far fa-envelope"></i></button></a>
+                                <a href="{{path('email_send', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-success">Contacter par mail <i class="far fa-envelope"></i></button></a>
+                            </p>
+                            <p class ="text-center">
+                                <a href="{{path('message_show')}}?new={{ candidateDatas.id }}"><button type="button" class="btn btn-info"> Ajouter à mes contact <i class="far fa-comments"></i></button></a>
                             </p>
                         </div>
                         {% endif %}
