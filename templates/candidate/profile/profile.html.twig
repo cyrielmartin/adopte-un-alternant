@@ -242,7 +242,7 @@
                     <div class="small text-muted">{{ "Vous n'avez ajouté aucune compétence." }}</div>
                     {% else %}
                         {% for skill in candidateInformation.skills %}
-                        <button type="button" class="btn btn-warning">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
+                        <button type="button" class="btn btn-warning mb-2">{{ skill.name }}<a href="{{path('skill_delete', {'id': skill.id})}}"><i class="far fa-times-circle delete-skill"></i></a></button>
                         {% endfor %}
                     {% endif %}
                     </div>
@@ -452,7 +452,7 @@
                             {% else %}
                                 {% for additionalInfo in additionalsInfo %}
                                     {% if additionalInfo.typeInfo == 'assert' %}
-                                    <button type="button" class="btn btn-info"> {{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
+                                    <button type="button" class="btn btn-info mb-2"> {{additionalInfo.content}}<a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}"><i class="far fa-edit edit-asset btn-sm"></i></a><a href="{{ path("asset_delete", {"id": additionalInfo.id }) }}"><i class="far fa-times-circle delete-asset"></i></a></button>
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
@@ -478,7 +478,7 @@
                             {% else %}
                                 {% for additionalInfo in additionalsInfo %}
                                     {% if additionalInfo.typeInfo == 'interest' %}
-                                    <button type="button" class="btn btn-info">
+                                    <button type="button" class="btn btn-info mb-2">
                                         {{additionalInfo.content}}
                                         <a href="{{ path("asset_edit", {"id": additionalInfo.id }) }}">
                                             <i class="far fa-edit edit-asset btn-sm"></i>
