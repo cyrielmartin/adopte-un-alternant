@@ -21,19 +21,19 @@
         {# vos conversation #}
         <div class="col-md-3 border-right">
             <h3 class="text-center">Conversations</h3>
-            {% for recruiter in recruiters %}
+            {% for contact in contacts %}
             <div class="border-bottom">
-                <a  href="{{ path('message_show_all') }}?recruiter={{recruiter.id}}"
+                <a  href="{{ path('message_show') }}?select={{contact.id}}"
                     class="d-block text-center py-2
-                    {% if recruiter_select is not empty %}
-                        {% if recruiter.id == recruiter_select %}
+                    {% if select is not empty %}
+                        {% if contact.id == select %}
                             bg-primary text-light rounded
                         {% else %}
                             text-dark
                         {% endif %}
                     {% endif %}
                     ">
-                    {{ recruiter.user.firstname }} {{ recruiter.user.lastname }}
+                    {{ contact.user.firstname }} {{ contact.user.lastname }}
                 </a>
             </div>
             {% endfor %}
@@ -64,9 +64,9 @@
                 
                 {% endfor %}
             </div>
-            {% if recruiter_select != 0 %}
+            {% if select != 0 %}
                 <div class="mt-auto">
-                    <form method="POST" action="{{ path('message_send', {'id':recruiter_select}) }}">
+                    <form method="POST" action="{{ path('message_send', {'id':select}) }}">
                         <div class="form-group">
                             <textarea name="response" class="form-control" rows="3" placeholder="Votre réponse"></textarea>
                         </div>
@@ -74,8 +74,6 @@
                     </form>
                 </div>
             {% endif %}
-
-            
         </div>
 
     </div> {# Fin row #}
