@@ -19,7 +19,8 @@ security:
             provider: db_adopte_un_alternant
             anonymous: true
             form_login: 
-                login_path: login 
+                login_path: login
+                success_handler: redirect.after.login 
                 check_path: login
             logout:
                 path: logout

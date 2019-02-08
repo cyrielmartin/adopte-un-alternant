@@ -7,6 +7,9 @@ parameters:
     locale: 'en'
 
 services:
+    redirect.after.login:
+        class: App\Listener\AfterLoginRedirection
+        arguments: ['@router']
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
