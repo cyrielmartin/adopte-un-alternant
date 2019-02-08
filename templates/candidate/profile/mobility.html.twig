@@ -10,12 +10,11 @@
 <div class="col-10 col-md-7 mx-auto my-4">
 
     <p>
-        <a href="{{path('candidate_profile')}}" class="btn btn-dark">
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-dark">
             <i class="fas fa-arrow-circle-left"></i> 
             Retour
         </a>
     </p>
-
    {% for message in app.flashes('danger') %}
         <div class="alert alert-danger flash-message mb-2 text-center">
             {{ message }}

@@ -10,8 +10,8 @@
 
 <div class="col-12 p-0 my-3">
 
-    <p class="ml-3 ml-md-5">
-        <a href="" class="btn btn-dark ml-lg-4">
+    <p>
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-dark ml-lg-4">
             <i class="fas fa-arrow-circle-left"></i> 
             Retour
         </a>
@@ -73,17 +73,17 @@
             </div> {#  Fin carte 2 #}
 
             {# Inscription #}
-            <a href="{{path('signup')}}"  class="btn btn-light col-3 mx-auto mt-3 d-block " role="button" aria-disabled="true">
+            <a href="{{path('signup')}}"  class="btn btn-dark col-3 mx-auto mt-3 d-block " role="button" aria-disabled="true">
                 Inscrivez-vous
             </a>
 
             {# Lien retour #}
-            <p>
-                <a href="{{path('home')}}" class="btn btn-dark">
-                    <i class="fas fa-arrow-circle-left"></i>
-                        Retour
-                </a>
-            </p>
+    <p>
+        <a href="{{ app.request.headers.get('referer') }}" class="btn btn-dark ml-lg-4">
+            <i class="fas fa-arrow-circle-left"></i> 
+            Retour
+        </a>
+    </p>
 
         </div> {# Fin des articles #}
 

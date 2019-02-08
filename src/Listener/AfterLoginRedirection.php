@@ -8,6 +8,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 
+// Listener permettant de rediriger l'utilisateur après sa connexion sur le bon profil (selon s'il est candidat ou recruteur)
+
 /**
  * Class AfterLoginRedirection
  *
@@ -43,10 +45,10 @@ class AfterLoginRedirection implements AuthenticationSuccessHandlerInterface
         }, $roles);
 
         if (in_array('ROLE_CANDIDATE', $rolesTab, true)) {
-            // c'est un aministrateur : on le rediriger vers l'espace admin
+            // si c'est un candidat : on le redirige vers le profil candidat
             $redirection = new RedirectResponse($this->router->generate('candidate_profile'));
         } else {
-            // c'est un utilisaeur lambda : on le rediriger vers l'accueil
+            // sinon, c'est un recruteur, on le redirige vers le profil recruteur
             $redirection = new RedirectResponse($this->router->generate('recruiter_profile'));
         }
 
