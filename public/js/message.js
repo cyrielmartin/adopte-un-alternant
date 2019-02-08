@@ -1,5 +1,6 @@
 
 var msg = {
+  url: '',
   contactList: '',
   data: '',
   p: '',
@@ -9,6 +10,9 @@ var msg = {
 
   init: function()
   {
+    // je récupère l'url dynamiquement
+    msg.url = $('.container').data('url');
+    console.log(msg.url);
     // récupération de tout les contact
     msg.contactList = $('.contact-list');
     // listener sur tout les contacts
@@ -29,6 +33,8 @@ var msg = {
   {
     // je stopp l'ancien interval actif
     clearInterval(msg.reload);
+    // je reset le nombre de message
+    msg.countMessage = 0;
     // je récupère la cible du clic ( le nom du contact )
     var select = evt.target;
     // pour chaque contact dans la liste
@@ -55,7 +61,7 @@ var msg = {
     // NB : penser à changer l'url pour le serveur
     var jqxhr = $.ajax({
       method: 'GET',
-      url: 'http://127.0.0.1:8001/message/recover',
+      url: 'http://' + msg.url + '/message/recover',
       data: { 
         select: msg.data, 
       }
@@ -139,7 +145,7 @@ var msg = {
     // NB : penser à changer l'url pour le serveur
     var jqxhr = $.ajax({
       method: 'POST',
-      url: 'http://127.0.0.1:8001/message/send',
+      url: 'http://' + msg.url + '/message/send',
       data: { 
         select: msg.data,
         response: msg.response

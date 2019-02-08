@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<div class="container col-12 col-md-9"> 
+<div class="container col-12 col-md-9" data-url="{{ app.request.server.get('HTTP_HOST') }}"> 
 
     {# row #}
     <div class="d-md-flex my-3">
@@ -30,30 +30,19 @@
         {# affichage de la conversation cliqué #}
         <div class="col-md-6 my-2 ml-auto">
             <div class="message">
-                {# {% for message in messages %} #}
-
-                    {# {% if message.sendBy == false %} #}
-                        <p class="rounded col-10 col-md-8 col-lg-6 py-2"> 
-                            {# {{ message.content }} #}
-                            <span class="d-block text-right font-italic" style="font-size:0.7rem;">
-                                    {# le {{ message.sendAt|date("d/m/Y") }}
-                                    à {{ message.sendAt|date("H:m") }} #}
-                            </span>
-                        </p>
-                    {# {% endif %} #}
-                
-                {# {% endfor %} #}
+                <p class="rounded col-10 col-md-8 col-lg-6 py-2"> 
+                    {# {{ message.content }} #}
+                    <span class="d-block text-right font-italic" style="font-size:0.7rem;"></span>
+                </p>
             </div>
-            {# {% if select != 0 %} #}
-                <div class="form">
-                    <form method="POST" class="d-none col-12" {# action="{{ path('message_send', {'id':select}) }}" #}>
-                        <div class="form-group col-12 col-md-9">
-                            <input class="form-control" placeholder="Votre réponse" />
-                        </div>
-                        <button type="submit" class="btn btn-primary col-md-3 h-75"> Envoyer </button>
-                    </form>
-                </div>
-            {# {% endif %} #}
+            <div class="form">
+                <form method="POST" class="d-none col-12">
+                    <div class="form-group col-12 col-md-9">
+                        <input class="form-control" placeholder="Votre réponse" />
+                    </div>
+                    <button type="submit" class="btn btn-primary col-md-3 h-75"> Envoyer </button>
+                </form>
+            </div>
         </div>
 
     </div> {# Fin row #}

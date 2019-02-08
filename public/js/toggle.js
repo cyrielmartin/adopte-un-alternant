@@ -1,9 +1,12 @@
 var toggle =
 {
     status: null,
+    url: '',
 
     init: function()
     {
+        toggle.url = $('.container').data('url');
+        console.log(toggle.url);
         // à chaque clic sur le toggle on appel la fonction catchStatus
         $('.toggle-group').click(toggle.catchStatus);
     },
@@ -32,7 +35,7 @@ var toggle =
         // NB : penser à changer l'url pour le serveur
         var jqxhr = $.ajax({
             method: 'GET',
-            url: 'http://127.0.0.1:8001/toggle/status/apprenticeship',
+            url: 'http://' + toggle.url + '/toggle/status/apprenticeship',
             data: { 
                 status: toggle.status, 
             }
