@@ -44,9 +44,15 @@ class IsRecruiter
      */
     private $isCandidates;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="isRecruiter")
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->isCandidates = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,6 +131,37 @@ class IsRecruiter
         if ($this->isCandidates->contains($isCandidate)) {
             $this->isCandidates->removeElement($isCandidate);
             $isCandidate->removeIsRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setIsRecruiter($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->contains($message)) {
+            $this->messages->removeElement($message);
+            // set the owning side to null (unless already changed)
+            if ($message->getIsRecruiter() === $this) {
+                $message->setIsRecruiter(null);
+            }
         }
 
         return $this;
