@@ -102,7 +102,7 @@ class MessageController extends AbstractController
             // j'enregistre une chaine vide
             $this->get('session')->set('talkTo', '');
             $error = true;
-            $response = ['fail','Aucun contact séléctionné'];
+            $response = ['fail','Aucun contact sélectionné'];
         }
 
         if(!$error)
@@ -178,7 +178,7 @@ class MessageController extends AbstractController
         if(empty($talkTo))
         {
             $error = true;
-            $response = ['fail','Auncun contact n\'a été selectionné'];
+            $response = ['fail','Aucun contact n\'a été sélectionné'];
         }
         // si la conversation selectionné auparavent n'a rien à voir avec l'id envoyé
         else if($talkTo !== $select)

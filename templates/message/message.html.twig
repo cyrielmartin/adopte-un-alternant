@@ -8,7 +8,7 @@
 
 {% block body %}
 
-<div class="container col-12 col-md-9" data-url="{{ app.request.server.get('HTTP_HOST') }}"> 
+<div class="container col-12 col-md-9" data-url="{{ app.request.server.get('SERVER_NAME') }}"> {# HTTP_HOST <-- Local #}
         <p class="mt-3">
             <a href="{{ app.request.headers.get('referer') }}" class="btn btn-dark ml-lg-4">
                 <i class="fas fa-arrow-circle-left"></i> 
@@ -50,7 +50,7 @@
                             Aucun recruteur n'est encore entré en contact avec vous.
                         {% endif %}
                     {% else %}
-                        Selectionner un contact parmis vos conversation pour l'afficher.
+                        Sélectionner un contact parmi vos conversations pour l'afficher.
                     {% endif %}
                     
                 </div>

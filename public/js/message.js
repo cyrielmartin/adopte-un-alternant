@@ -49,7 +49,7 @@ var msg = {
     // je récupère la data 'id' du contact selectionné
     msg.data = $(select).data('id');
     // je lance un nouvel interval pour récupérer les messages toutes les 3 secondes
-    msg.reload = setInterval(msg.getMessage, 5000)
+    msg.reload = setInterval(msg.getMessage, 5000);
     
     msg.getMessage();
   },
@@ -84,7 +84,9 @@ var msg = {
       }
     })
     .fail(function(response) {
-      $('.flash-message').removeClass('d-none').html('Une erreur est survenue');
+      $('.flash-message').removeClass('d-none').html('Une erreur est survenue, veuillez rafraîchir');
+      // je stopp l'intervalle pour ne pas relancer de requête
+      clearInterval(msg.reload);
     });
   },
 
