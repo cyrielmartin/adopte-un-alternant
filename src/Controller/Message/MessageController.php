@@ -85,29 +85,12 @@ class MessageController extends AbstractController
      */
     public function recover(Request $request, EntityManagerInterface $em)
     {
-        $user = $this->getUser();
-        $role = $user->getRole()->getCode();
-
-        if($role === 'ROLE_CANDIDATE')
-        {
-            // je récupère sa fiche candidat
-            $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
-            $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
-            $messages = $candidate->getMessages();
-        }
-        else if ($role === 'ROLE_RECRUITER')
-        {
-            // je récupère sa fiche recruteur
-            $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
-            $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
-            $messages = $recruiter->getMessages();
-        }
-        
+        $error = false;
         // je récupère l'id de la conversation selectionné
         $select = $request->query->get('select');
         // je le transform en int
         $select = intval($select);
-
+    
         // si l'utilisateur a selectionné une conversation
         if(!empty($select))
         {
@@ -118,37 +101,58 @@ class MessageController extends AbstractController
         {
             // j'enregistre une chaine vide
             $this->get('session')->set('talkTo', '');
+            $error = true;
             $response = ['fail','Aucun contact séléctionné'];
         }
 
-        $sortMessages = array();
-        
-        foreach($messages as $key => $msg)
+        if(!$error)
         {
+            $user = $this->getUser();
+            $role = $user->getRole()->getCode();
+
             if($role === 'ROLE_CANDIDATE')
             {
-                // je récupère l'id du recruteur 
-                $contactId = $msg->getIsRecruiter()->getId();
-                $contactList[$contactId] = $msg->getIsRecruiter();
+                // je récupère sa fiche candidat
+                $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
+                $candidate = $candidateRepo->findOneBy(['user' => $user->getId()]);
+                $messages = $candidate->getMessages();
             }
             else if ($role === 'ROLE_RECRUITER')
             {
-                // je récupère l'id du candidat
-                $contactId = $msg->getIsCandidate()->getId();
-                $contactList[$contactId] = $msg->getIsCandidate();
+                // je récupère sa fiche recruteur
+                $recruiterRepo = $this->getDoctrine()->getRepository(IsRecruiter::class);
+                $recruiter = $recruiterRepo->findOneBy(['user' => $user->getId()]);
+                $messages = $recruiter->getMessages();
             }
 
-            if($contactId === $select)
+            $sortMessages = array();
+        
+            foreach($messages as $key => $msg)
             {
-                $sortMessages[] = [
-                    'content' => $msg->getContent(),
-                    'sendBy' => $msg->getSendBy(),
-                    'sendAt' => $msg->getSendAt()->format('d/m/Y H:m'),
-                ]; 
-            }
-        }
+                if($role === 'ROLE_CANDIDATE')
+                {
+                    // je récupère l'id du recruteur 
+                    $contactId = $msg->getIsRecruiter()->getId();
+                    $contactList[$contactId] = $msg->getIsRecruiter();
+                }
+                else if ($role === 'ROLE_RECRUITER')
+                {
+                    // je récupère l'id du candidat
+                    $contactId = $msg->getIsCandidate()->getId();
+                    $contactList[$contactId] = $msg->getIsCandidate();
+                }
 
-        $response = ['success', $sortMessages];
+                if($contactId === $select)
+                {
+                    $sortMessages[] = [
+                        'content' => $msg->getContent(),
+                        'sendBy' => $msg->getSendBy(),
+                        'sendAt' => $msg->getSendAt()->format('d/m/Y H:m'),
+                    ]; 
+                }
+            }
+            $response = ['success', $sortMessages];
+        }
 
         // je retourne les résultat en format json
         return new JsonResponse($response);
@@ -166,27 +170,27 @@ class MessageController extends AbstractController
         $select = $request->request->get('select');
         $select = intval($select);
         // je récupère le contenu de la réponse
-        $response = $request->request->get('response');
-        $response = trim(strip_tags($response));
+        $toSend = $request->request->get('response');
+        $toSend = trim(strip_tags($toSend));
         $error = false;
         
         // si le candidat n'avais selectionné aucune conversation auparavent
         if(empty($talkTo))
         {
             $error = true;
-            $toReturn ='Une erreur est survenue';
+            $response = ['fail','Auncun contact n\'a été selectionné'];
         }
         // si la conversation selectionné auparavent n'a rien à voir avec l'id envoyé
         else if($talkTo !== $select)
         {
             $error = true;
-            $toReturn ='Une erreur est survenue';
+            $response = ['fail','Une erreur est survenue'];
         }
         // si le message est vide
-        else if (empty($response))
+        else if (empty($toSend))
         {
             $error = true;
-            $toReturn = 'Vous ne pouvez pas envoyer de message vide';
+            $response =['fail', 'Vous ne pouvez pas envoyer de message vide'];
         }
         // je continu seulement s'il n'y a pas eu d'erreur
         if (!$error)
@@ -208,7 +212,7 @@ class MessageController extends AbstractController
                 if (empty($recruiter))
                 {
                     $error = true;
-                    $toReturn ='Une erreur est survenue';
+                    $response = ['fail','Une erreur est survenue'];
                 }
             }
             else if ($role === 'ROLE_RECRUITER')
@@ -225,7 +229,7 @@ class MessageController extends AbstractController
                 if (empty($candidate))
                 {
                     $error = true;
-                    $toReturn ='Une erreur est survenue';
+                    $response = ['fail','Une erreur est survenue'];
                 }
             }
 
@@ -236,7 +240,7 @@ class MessageController extends AbstractController
                 $msg
                     ->setIsRecruiter($recruiter)
                     ->setIsCandidate($candidate)
-                    ->setContent($response)
+                    ->setContent($toSend)
                     ->setSendAt(new \DateTime('NOW'));
                 
                 if($role === 'ROLE_CANDIDATE')
@@ -256,7 +260,7 @@ class MessageController extends AbstractController
         if($error)
         {
 
-            return new JsonResponse(['fail', $toReturn]);
+            return new JsonResponse($response);
         }
 
         return new JsonResponse(['success']);

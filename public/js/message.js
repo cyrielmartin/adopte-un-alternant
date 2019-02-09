@@ -68,6 +68,7 @@ var msg = {
     .done(function(response) {;
       if(response[0] === 'success')
       {
+        $('.flash-message').addClass('d-none').html(' ');
         // si le nombre de message reçu est supérieur au nombre 
         // de message déjà affiché ou si il n'y a aucun message
         if (response[1].length > msg.countMessage || response[1].length == 0 )
@@ -77,9 +78,13 @@ var msg = {
           msg.displayMessage(response[1]);
         }
       }
+      else
+      {
+        $('.flash-message').removeClass('d-none').html(response[1]);
+      }
     })
     .fail(function(response) {
-
+      $('.flash-message').removeClass('d-none').html('Une erreur est survenue');
     });
   },
 
@@ -152,8 +157,8 @@ var msg = {
     .done(function(response) {
       if(response[0] === 'success')
       {
-        msg.getMessage();
         $('.flash-message').addClass('d-none').html(' ');
+        msg.getMessage();
       }
       else
       {
@@ -161,7 +166,7 @@ var msg = {
       }
     })
     .fail(function(response) {
-
+      $('.flash-message').removeClass('d-none').html('Une erreur est survenue');
     });
   }
 };
