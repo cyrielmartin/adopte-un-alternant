@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<div class="col-12">
+<div class="col-12 url" data-url="{{ app.request.server.get('HTTP_HOST') }}">
     <p><a href="{{path('candidates_list')}}" class="btn btn-dark ml-5 mt-2"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
     
     <div class="row col-12 col-md-11 mx-auto">
@@ -25,6 +25,8 @@
                 {{ message }}
             </div>
         {% endfor %}   
+        {# Message d'erreur de js #} 
+        <div class="alert alert-danger flash-js mb-2 d-none"></div>
 
         <div class="col-12 col-md-10 mx-auto">
 
@@ -41,16 +43,16 @@
                             <div class="p-2">
                                 <p class ="text-center">
                                     {% if isFavorite == true %}
-                                        <a href="{{path('favorite_delete', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-danger">Ce candidat ne m'intéresse plus <i class="fas fa-heart-broken"></i></button></a>
+                                        <button type="button" class="btn btn-danger favorite" data-isfavorite="1" data-candidate="{{candidateDatas.user.id}}">Ce candidat ne m'intéresse plus <i class="fas fa-heart-broken"></i></button>
                                     {% else %}
-                                        <a href="{{path('favorite_add', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-warning">Ce candidat m'intéresse <i class="far fa-heart"></i></button></a>
+                                        <button type="button" class="btn btn-warning favorite" data-isfavorite="0" data-candidate="{{candidateDatas.user.id}}">Ce candidat m'intéresse <i class="far fa-heart"></i></button>
                                     {% endif %}
                                 </p>
                                 <p class ="text-center">
                                     <a href="{{path('email_send', {'id': candidateDatas.user.id })}}"><button type="button" class="btn btn-success">Contacter par mail <i class="far fa-envelope"></i></button></a>
                                 </p>
                                 <p class ="text-center">
-                                    <a href="{{path('message_show')}}?new={{ candidateDatas.id }}"><button type="button" class="btn btn-info"> Lancer une discussion <i class="far fa-comments"></i></button></a>
+                                    <a href="{{path('message_show')}}?new={{ candidateDatas.user.id }}"><button type="button" class="btn btn-info"> Lancer une discussion <i class="far fa-comments"></i></button></a>
                                 </p>
                             </div>
                         {% endif %}

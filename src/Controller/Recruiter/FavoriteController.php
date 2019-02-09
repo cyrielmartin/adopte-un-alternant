@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RecruiterFavoriteCandidateType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
@@ -16,21 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class FavoriteController extends AbstractController
 {
     /**
-     * @Route("/{id}/ajouter", name="add")
+     * @Route("/{id}/add", name="add")
      */
     public function add($id, Request $request, EntityManagerInterface $em)
     {
-        /** 
-         * Comme le bouton "ajouter aux favoris" se situe dans la page de profil publique d'un candidat, il faudra rediriger 
-         * vers celle-ci à l'aide de l'id fourni.
-         * 
-         * Penser à vérifier que l'id est bien l'id d'un candidat existant avant de faire toute action
-         * si id non existant : return $this->redirectToRoute('candidates_list');
-         * */ 
-        
-
         $user = $this->getUser();
-        
        
         // je récupère sa fiche recruteur
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
@@ -46,30 +37,20 @@ class FavoriteController extends AbstractController
             $recruter->addIsCandidate($candidate);
             $em->persist($recruter);
             $em->flush();
-
-            $this->addFlash(
-                'notice',
-                'Ce candidat a bien été ajouté à vos favoris'
-            );
       
-
-        return $this->redirectToRoute('candidates_one', ['id' => $id]);
+            $response = ['success'];
         }
-
         // si le candidat n'existe pas alors
         else
         {
-            $this->addFlash(
-                'danger',
-                'Une erreur est survenue'
-            );
-            return $this->redirectToRoute('candidates_list');
+            $response = ['fail', 'Une erreur est survenue'];
         }
-            
+
+        return new JsonResponse($response);
     }
 
     /**
-     * @Route("/{id}/supprimer", name="delete")
+     * @Route("/{id}/delete", name="delete")
      */
     public function delete($id, Request $request, EntityManagerInterface $em)
     {
@@ -77,8 +58,9 @@ class FavoriteController extends AbstractController
          * Penser à vérifier que l'id est bien l'id d'un candidat existant avant de faire toute action
         */
         $user = $this->getUser();
-        
-       
+        $ajax = $request->query->get('ajax');
+        $error = false;
+
         // je récupère sa fiche recruteur
         $recruiterRepo = $em->getRepository(IsRecruiter::class);
         $recruter= $recruiterRepo->findOneBy(['user' => $user->getId()]);
@@ -87,33 +69,53 @@ class FavoriteController extends AbstractController
         $candidateRepo = $this->getDoctrine()->getRepository(IsCandidate::class);
         $candidate = $candidateRepo->findOneBy(['user' => $id]);
         
-        //si le candidate existe alors
-        if(!empty($candidate)){
+        // si le candidat n'existe pas error = true, s'il existe error = false
+        $error = empty($candidate)? true : false;
+
+        if(!$error)
+        {
             $recruter->removeIsCandidate($candidate);
             $em->persist($recruter);
             $em->flush();
-
-            $this->addFlash(
-                'notice',
-                'Ce candidat a bien été supprimé de vos favoris'
-            );
-      
-            // je récupère l'ancienne page et redirige dessus
-            $referer = $request->headers->get('referer');
-            return $this->redirect($referer);
         }
-        // si le candidat n'existe pas alors
+
+        // s'il n'y a pas eu d'erreur
+        if(!$error)
+        {
+            // si la requête à été faite via ajax
+            if($ajax)
+            {
+                $response = ['success'];
+            }
+            // si elle a été faite via la page profil du recruteur
+            else
+            {
+                $this->addFlash(
+                    'notice',
+                    'Ce candidat a bien été supprimé de vos favoris'
+                );
+            }
+        }
+        // si il y a eu une erreur
         else
         {
-            $this->addFlash('danger', 'Une erreur est survenue');
-            return $this->redirectToRoute('recruiter_profile');
+            // si requête faite via ajax
+            if($ajax)
+            {
+                $response = ['fail', 'Une erreur est survenue'];
+            }
+            // si requête faite via page profil du recruteur
+            else
+            {
+                $this->addFlash('danger', 'Une erreur est survenue');
+            }
         }
-            
+
+        if($ajax)
+        {
+            return new JsonResponse($response);
+        }
+
+        return $this->redirectToRoute('recruiter_profile');
     }
-
-
-    /** 
-    * Pas de méthode edit : le recruteur veut (add) ou ne veut pas (delete) un candidat,
-    * il n'y a rien à modifier à proprement parler.
-    */
 }
