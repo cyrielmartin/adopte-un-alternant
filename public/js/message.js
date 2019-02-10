@@ -1,17 +1,21 @@
 
 var msg = {
   url: '',
+  role: '',
   contactList: '',
   data: '',
   p: '',
   response: '',
-  reload: '',
+  reload: null,
   countMessage: 0,
 
   init: function()
   {
     // je récupère l'url dynamiquement
     msg.url = $('.container').data('url');
+    // je récupère le role du user connecté
+    msg.role = $('.container').data('role');
+    console.log(msg.role);
     // récupération de tout les contact
     msg.contactList = $('.contact-list');
     // listener sur tout les contacts
@@ -113,16 +117,35 @@ var msg = {
       $(span).html('le '+ date[0] +' à '+ date[1]);
 
       // si le message a été envoyé par le candidat (true)
-      if(messages[i].sendBy)
+      // ET que le user connecté est candidat
+      if(messages[i].candidate)
       {
-        $(pClone).addClass('text-light bg-info ml-auto')
-        $(span).addClass('text-dark');
+        // si le user connecté est un candidat
+        if(msg.role === 'Candidat' )
+        {
+          $(pClone).addClass('text-light bg-info ml-auto')
+          $(span).addClass('text-dark');
+        }
+        else
+        {
+          $(pClone).addClass('bg-light');
+          $(span).addClass('text-muted');
+        }
       }
-      // sinon c'est le recruteur (false)
-      else
+      // sinon c'est le recruteur qui a envoyé le message
+      else 
       {
-        $(pClone).addClass('bg-light');
-        $(span).addClass('text-muted');
+        // si le user connecté est un candidat
+        if(msg.role === 'Candidat' )
+        {
+          $(pClone).addClass('bg-light');
+          $(span).addClass('text-muted');
+        }
+        else
+        {
+          $(pClone).addClass('text-light bg-info ml-auto')
+          $(span).addClass('text-dark');
+        }
       }
       
       $(container).append(pClone);

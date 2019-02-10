@@ -24,7 +24,10 @@ class MessageController extends AbstractController
         $user = $this->getUser();
         $role = $user->getRole()->getCode();
         $contactList = array();
-
+        
+        // ceci est la variable que je récupère en js
+        $userRole = $user->getRole()->getName();
+        
         if($role === 'ROLE_CANDIDATE')
         {
             // je récupère sa fiche candidat
@@ -77,6 +80,7 @@ class MessageController extends AbstractController
 
         return $this->render('message/message.html.twig', [
             'contacts' => $contactList,
+            'role' => $userRole,
         ]);
     }
 
@@ -146,7 +150,7 @@ class MessageController extends AbstractController
                 {
                     $sortMessages[] = [
                         'content' => $msg->getContent(),
-                        'sendBy' => $msg->getSendBy(),
+                        'candidate' => $msg->getSendBy(),
                         'sendAt' => $msg->getSendAt()->format('d/m/Y H:m'),
                     ]; 
                 }
