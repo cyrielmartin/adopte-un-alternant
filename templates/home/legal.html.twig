@@ -8,27 +8,23 @@
 </div>
 
 <div class="container">
-        <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
-    <h5>Editeur du Site</h5>
-        <p>SARL ANTHEDESIGN 
-    <h5>Numéro de SIRET</h5> 
-        <p>75221735600019</p>
-    <h5>Responsable éditorial</h5> 
-        <p>HUGO ESSIQUE</p>
-    <h5>Adresse</h5>
-        <p>20 rue Tondu du Metz 60350 ATTICHY</p>
-    <h5>Téléphone</h5> 
-        <p>0360455713</p>
-    <h5>Hébergement</h5> 
-        <p>SARL ANTHEDESIGN 20 rue Tondu du Metz 60350 ATTICHY Site Web : www.anthedesign.fr</p>
-    <h5>Conditions d’utilisation</h5> 
-        <p>Ce site (www.anthedesign.fr) est proposé en différents langages web (HTML, HTML5, Javascript, CSS, etc…) pour un meilleur confort d’utilisation et un graphisme plus agréable, nous vous recommandons de recourir à des navigateurs modernes comme Internet explorer, Safari, Firefox, Google Chrome, etc… L’agence web AntheDesign met en œuvre tous les moyens dont elle dispose, pour assurer une information fiable et une mise à jour fiable de ses sites internet. Toutefois, des erreurs ou omissions peuvent survenir. L’internaute devra donc s’assurer de l’exactitude des informations auprès de , et signaler toutes modifications du site qu’il jugerait utile. n’est en aucun cas responsable de l’utilisation faite de ces informations, et de tout préjudice direct ou indirect pouvant en découler.</p> 
-    <h5>Propriété intellectuelle</h5> 
-        <p>Tout le contenu du présent site www.anthedesign.fr, incluant, de façon non limitative, les graphismes, images, textes, vidéos, animations, sons, logos, gifs et icônes ainsi que leur mise en forme sont la propriété exclusive de la société à l’exception des marques, logos ou contenus appartenant à d’autres sociétés partenaires ou auteurs.</p>
-        <p>Toute reproduction, distribution, modification, adaptation, retransmission ou publication, même partielle, de ces différents éléments est strictement interdite sans l’accord exprès par écrit de SARL ANTHEDESIGN. Cette représentation ou reproduction, par quelque procédé que ce soit, constitue une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle. Le non-respect de cette interdiction constitue une contrefaçon pouvant engager la responsabilité civile et pénale du contrefacteur. En outre, les propriétaires des Contenus copiés pourraient intenter une action en justice à votre encontre.</p>
-    <h5>Déclaration à la CNIL</h5>
-        <p>Conformément à la loi 78-17 du 6 janvier 1978 (modifiée par la loi 2004-801 du 6 août 2004 relative à la protection des personnes physiques à l’égard des traitements de données à caractère personnel) relative à l’informatique, aux fichiers et aux libertés, ce site a fait l’objet d’une déclaration 1656629 auprès de la Commission nationale de l’informatique et des libertés (www.cnil.fr).</h5>
+<p>
+Ce site a été réalisé en janvier/février 2019 par trois étudiants en fin de formation de développement web auprès de l'école <a href="https://oclock.io/">O'clock</a>. Il n'a aucune vocation à être commercialisé sous sa forme actuelle. 
+</p>
         <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
+
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
 
 {% endblock %}

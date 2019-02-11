@@ -1,18 +1,30 @@
 {% extends 'base.html.twig' %}
-{% block title %}Contacts{% endblock %}
+{% block title %}Contact{% endblock %}
 {% block body %}
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-6">Contacts</h1>
+    <h1 class="display-6">Nous contacter</h1>
   </div>
 </div>
 
 <div class="container">
-    <h5>Téléphone</h5> 
-        <p>0360455713</p>
-    <h5>Email</h5> 
-        <p>adopteunalternant@gmail.com</p>
-    <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
+<p>
+Ce site a été réalisé en janvier/février 2019 par trois étudiants en fin de formation de développement web auprès de l'école <a href="https://oclock.io/">O'clock</a>. Il n'a aucune vocation à être commercialisé sous sa forme actuelle. 
+</p>
+        <p><a href="{{path('home')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 </div>
+
+{% endblock %}
+
+{% block footer %}
+
+    <footer>
+        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+            <form class="form-inline">
+                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
+                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
+            </form>
+        </nav>
+    </footer>
 
 {% endblock %}
