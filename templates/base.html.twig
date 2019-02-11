@@ -40,6 +40,15 @@
                     </a>
                 </li>
             </ul>
+            {% if is_granted('ROLE_RECRUITER') %}
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{path('candidates_list')}}">
+                        Tous les candidats
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
 
             <ul class="navbar-nav mr-auto">
             </ul>
