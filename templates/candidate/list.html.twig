@@ -16,24 +16,26 @@
         </a>
     </p>
 
-    <div class="row col-12 col-md-11 mx-auto">
+    <div class="col-12 col-md-11 mx-auto">   
 
-    {# Messages flash #}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}   
-    {% for message in app.flashes('warning') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}   
+        <div class="col-12 col-md-3 mx-auto">
+        {# Messages flash #}
+        {% for message in app.flashes('notice') %}
+            <div class="alert alert-success flash-message mb-2 mx-auto">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}   
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-danger flash-message mb-2">
+                {{ message }}
+            </div>
+        {% endfor %} 
+        </div>  
 
     <div class="row col-12 mx-auto p-lg-0 d-flex justify-content-between"> {# Accordéon + aside #}
         <div class="accordion col-12 col-lg-8 p-0" id="accordionExample"> {# Accordéon #}

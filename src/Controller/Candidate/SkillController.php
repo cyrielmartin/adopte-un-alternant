@@ -69,7 +69,7 @@ class SkillController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', 'La compétence a bien été supprimée.');
+            $this->addFlash('notice', 'La compétence a bien été supprimée.');
         }
         // si la compétence n'existe pas
         else {

@@ -96,7 +96,7 @@ class WebsiteController extends AbstractController
                 $em->flush();
                 $this->addFlash(
                     'notice',
-                    'Votre site a bien été modifiée'
+                    'Votre site a bien été modifié'
                 );
                 
                 return $this->redirectToRoute('candidate_profile');
@@ -147,7 +147,7 @@ class WebsiteController extends AbstractController
              $em->remove($websiteToDelete);
              $em->flush();
  
-             $this->addFlash('success', 'Votre site a bien été supprimée.');
+             $this->addFlash('notice', 'Votre site a bien été supprimé.');
          }
          else
          {

@@ -188,7 +188,7 @@ class ExperienceController extends AbstractController
             $em->remove($experienceToDelete);
             $em->flush();
 
-            $this->addFlash('success', 'Votre expérience a bien été supprimée.');
+            $this->addFlash('notice', 'Votre expérience a bien été supprimée.');
         }
         else
         {

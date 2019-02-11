@@ -98,7 +98,7 @@ class MobilityController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            $this->addFlash('success', 'La ville a bien été supprimée.');
+            $this->addFlash('notice', 'La ville a bien été supprimée.');
         }
         // si la mobilité n'existe pas
         else

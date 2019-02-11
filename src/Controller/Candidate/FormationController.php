@@ -184,7 +184,7 @@ class FormationController extends AbstractController
             $em->remove($formation);
             $em->flush();
 
-            $this->addFlash('success', 'Votre formation a bien été supprimée.');
+            $this->addFlash('notice', 'Votre formation a bien été supprimée.');
         }
         else
         {

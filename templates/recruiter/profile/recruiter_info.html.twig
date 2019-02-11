@@ -16,15 +16,7 @@
         </a>
     </p>
 
-   {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger flash-message mb-2 text-center">
-            {{ message }}
-        </div>
-    {% endfor %}
-
 <h1>Modifier ma fiche recruteur</h1>
-
-
 
 {# Formulaire #}
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}

@@ -10,17 +10,6 @@
    <p><a href="{{path('candidate_profile')}}" class="btn btn-dark"><i class="fas fa-arrow-circle-left"></i> Retour</a></p>
 
 <h1>Modifier ma carte de visite</h1>
-    {# Messages flash #}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
 
     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(form) }}

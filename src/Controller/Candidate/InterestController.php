@@ -76,7 +76,7 @@ class InterestController extends AbstractController
             }
             
         }else {
-            $this->addFlash('danger', 'vous avez déjà 5 centres d\'intérêt, vous ne pouvez pas en ajouter d\'avantage');
+            $this->addFlash('danger', 'Vous avez déjà 5 centres d\'intérêt, vous ne pouvez pas en ajouter d\'avantage');
             return $this->redirectToRoute('candidate_profile');
         }
         
@@ -121,7 +121,7 @@ class InterestController extends AbstractController
                 $em->flush();
                 $this->addFlash(
                     'notice',
-                    'Votre centre d\'intérêt a bien été modifiée'
+                    'Votre centre d\'intérêt a bien été modifié'
                 );
                 
                 return $this->redirectToRoute('candidate_profile');
@@ -171,7 +171,7 @@ class InterestController extends AbstractController
             $em->remove($additionalToDelete);
             $em->flush();
 
-            $this->addFlash('success', 'Votre atout a bien été supprimé.');
+            $this->addFlash('notice', 'Votre atout a bien été supprimé.');
         }
         else
         {

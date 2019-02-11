@@ -81,7 +81,7 @@ class AssetController extends AbstractController
             }
             
         }else {
-            $this->addFlash('danger', 'vous avez déjà 5 atouts, vous ne pouvez pas en ajouter d\'avantage');
+            $this->addFlash('danger', 'Vous avez déjà 5 atouts, vous ne pouvez pas en ajouter d\'avantage');
             return $this->redirectToRoute('candidate_profile');
         }
         
@@ -127,7 +127,7 @@ class AssetController extends AbstractController
                 $em->flush();
                 $this->addFlash(
                     'notice',
-                    'Votre atout a bien été modifiée'
+                    'Votre atout a bien été modifié'
                 );
                 
                 return $this->redirectToRoute('candidate_profile');
@@ -177,7 +177,7 @@ class AssetController extends AbstractController
              $em->remove($additionalToDelete);
              $em->flush();
  
-             $this->addFlash('success', 'Votre atout a bien été supprimé.');
+             $this->addFlash('notice', 'Votre atout a bien été supprimé.');
          }
          else
          {

@@ -12,11 +12,12 @@
         </a>
     </p>
     
-    <div class="row col-12 col-md-11 mx-auto">
+    <div class="col-12 col-md-11 mx-auto">   
 
+        <div class="col-12 col-md-3 mx-auto">
         {# Messages flash #}
         {% for message in app.flashes('notice') %}
-            <div class="alert alert-success flash-message mb-2">
+            <div class="alert alert-success flash-message mb-2 mx-auto">
                 {{ message }}
             </div>
         {% endfor %}
@@ -29,7 +30,9 @@
             <div class="alert alert-danger flash-message mb-2">
                 {{ message }}
             </div>
-        {% endfor %}   
+        {% endfor %} 
+        </div>  
+
         {# Message d'erreur de js #} 
         <div class="alert alert-danger flash-js mb-2 d-none"></div>
 

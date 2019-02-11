@@ -11,18 +11,6 @@
 
 <h1>Modifier mon statut</h1>
 
-    {# Messages flash #}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger flash-message mb-2">
-            {{ message }}
-        </div>
-    {% endfor %}
-
 {# Formulaire champs A propos #}
 {{ form_start(adoptedForm, {'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_widget(adoptedForm) }}
