@@ -16,15 +16,7 @@
     {{ form_widget(form) }}
         <button type="submit" class="btn btn-secondary mb-2">Valider</button>
 {{ form_end(form) }}
+
+</div>
 {% endblock %}
 
-{% block footer %}
-    <footer>
-        <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
-            <form class="form-inline">
-                <a href="{{path('legal_mentions')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Mentions légales</button></a>
-                <a href="{{path('contact_us')}}"><button class="btn btn-sm btn-outline-secondary footer-button" type="button">Nous contacter</button></a>
-            </form>
-        </nav>
-    </footer>
-{% endblock %}
