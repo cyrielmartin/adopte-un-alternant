@@ -13,7 +13,7 @@
     
     <div class="col-12 col-md-11 mx-auto">   
 
-        <div class="col-12 col-md-3 mx-auto">
+        <div class="col-12 col-md-4 text-center mx-auto">
         {# Messages flash #}
         {% for message in app.flashes('notice') %}
             <div class="alert alert-success flash-message mb-2 mx-auto">
@@ -101,9 +101,9 @@
                                                 {% if candidateInformation.visibilityChoice == 0 %}
                                                     prénom et nom
                                                 {% elseif candidateInformation.visibilityChoice == 2 %}
-                                                    prénom uniquement
+                                                    prénom
                                                 {% else %}
-                                                    nom uniquement
+                                                    nom
                                                 {% endif %}
                                         </td>
                                     </tr>
