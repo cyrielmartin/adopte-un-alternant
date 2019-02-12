@@ -363,14 +363,20 @@
                                             </tr>
                                             <tr class ="d-flex justify-content-center">{# Date obtention diplôme OU formation toujours en cours #}
                                                 <th scope="row" class ="d-flex col-4">Date d'obtention du diplôme
-                                                </th>                                          
-                                                {% if formationInfo.status == 0 %}
-                                                <td class ="d-flex col-7">{{ formationInfo.obtainedAt|date("m/d/Y")}}</td>
-                                                {% elseif formationInfo.status == 1 %}
-                                                <td class ="d-flex col-7">en cours</td>
-                                                {% elseif formationInfo.status == 2 %}
-                                                <td class ="d-flex col-7">en cours et en recherche d'alternance</td>
-                                                {% endif %}
+                                                </th>
+                                                <td class ="d-flex col-7">                                          
+                                                    {% if formationInfo.status == 0 %}
+                                                        {% if formationInfo.obtainedAt is empty %}
+                                                            en cours
+                                                        {% else %}
+                                                            {{ formationInfo.obtainedAt|date("d/m/Y")}}
+                                                        {% endif %}
+                                                    {% elseif formationInfo.status == 1 %}
+                                                        en cours
+                                                    {% elseif formationInfo.status == 2 %}
+                                                    en cours et en recherche d'alternance
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
